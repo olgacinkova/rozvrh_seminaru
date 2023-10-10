@@ -2,7 +2,8 @@ VSTUP
 - csv se studenty (formát řádků: student;třída;zvolený seminář)
 - seznam seminářů a jejich profesorů (asi taky csv?) a pro kterou třídu semináře jsou 
 - "číslo B": počet bloků, do kterého se mám vejít (int)
-- počet bloků pro jednotlivé třídy (asi pole nebo dict - celkem jedno zatím)
+- počet bloků pro jednotlivé třídy (asi pole nebo dict - na tom nezáleží zatím)
+- šablona rozvrhu (nevím, co za formát)
 
 NAČÍTÁNÍ VSTUPU A TVORBA GRAFU
 1. načíst vstupní soubor csv (formát řádků: student;třída;zvolený seminář)
@@ -20,12 +21,32 @@ BARVENÍ OHODNOCENÉHO GRAFU
 7. jaké je chromatické číslo (barevnost grafu)?
     pokud je menší nebo stejné jako B: pokračuju na krok 9
     pokud je větší než B:
-        8. odeberu z grafu hranu s nejmenší hodnotou (tito studenti mají  smůlu :D) a opakuju kroky 6 a 7, dokud chromatické číslo není je menší nebo stejné jako B nebo odebraná hrana neměla hodnotu 500 (to by pak nevyhovovalo profesorům) - pokud odebraná hrana má hodnotu 500, pokračuju na krok 9
+        8. odeberu z grafu hranu s nejmenší hodnotou (tito studenti mají  smůlu a čím méně studentů má smůlu, tím lepší bude rozvrh :D) a opakuju kroky 6 a 7, dokud chromatické číslo není je menší nebo stejné jako B nebo odebraná hrana neměla hodnotu 500 (to by pak nevyhovovalo profesorům) - pokud odebraná hrana má hodnotu 500, pokračuju na krok 9
+    MYŠLENKA: nemůžu tady použít k určení chromatického čísla binární vyhledávání, aby se snížila složitost? jak si to bude rozumět s tím, že nejspíš dostanu na vstupu číslo B? a taky nevím, jak rychle se bude chromatické číslo zmenšovat, když budu odebírat ty hrany...
 
 SESKUPENÍ DO BLOKŮ
 9. seskupím vrcholy do polí podle barev = seskupím semináře do časových bloků
-10. u každého bloku, spočítám, kolik je v něm seminářů pro které třídy
+10. u každého bloku spočítám, kolik je v něm seminářů pro které třídy
 
 ROZVRH
-11.
- 
+11. vyberu blok, kde je nejvíc seminářů pro kvintu
+12. dám blok na nejdřívější možný neobsazený čas v rozvrhu (protože čím nižší třída, tím dřív má končit s výukou)
+13. uložím si někam, jaké další třídy mají seminář v tomto bloku a pro každou třídu si budu někam ukládat, kolik bloků seminářů pro ni už je v rozvrhu zařazeno 
+14. protože má kvinta 2 bloky k dispozici, provedu kroky 11. - 13. ještě jednou
+15. kouknu se, kolik už má sexta bloků v rozvrhu
+16. bubu provádět pro sextu kroky 12 a 13, dokud nebude v rozvrhu dost bloků pro sextu
+17. stejně to udělám i pro septimu a oktávu - opakuju krok 16. pro ně
+18. hotovo!
+    PROBLÉM: musím nějak zohlednit, že někteří profesoři nemají čas v libovolném bloku
+
+ODHAD SLOŽITOSTI:
+PŘIBLIŽNÉ pro nejhorší případ
+vstup je csv se studenty a seznam profesorů - délka vstupu = N
+projdu jednou vstup při tvorbě grafu - v nejhorším případě bude graf úplný (každý vrchol sousedí s každým) -> počet hran = počet vrcholů nad 2 = (počet seminářů * (počet seminářů - 1) ) / 2
+např. pro 58 seminářů je počet hran v grafu 1653 (asi celkem OK)
+na barvení použiju Welsh Powellův algoritmus (používá ho i knihovna network X , myslím), který má složitost O(n^2), kde n je počet vrcholů
+barvicí algoritmus teoreticky můžu použít nejvíc (počet seminářů * (počet seminářů - 1) ) / 2 krát, kdybych odebrala postupně všechny hrany (extrémní případ - ani by to nefungovalo, předpokládám)
+rozřazování do rozvrhu má složitost nejhůř počet bloků v rozvrhu nad počtem seminářů (předpokládám, že do každého bloku bych mohla dosadit každý seminář jednou)
+závěr: asi neumím počítat složitost u něčeho takového - musím si to ještě rozmyslet, ALE vzhledem, že seminářů bude max. 60 snad, a studentů ne víc než 4 * 2 * 30 (= 240), tak to snad doběhne
+
+
