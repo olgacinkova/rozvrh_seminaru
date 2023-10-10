@@ -1,3 +1,10 @@
+VSTUP
+- csv se studenty (formát řádků: student;třída;zvolený seminář)
+- seznam seminářů a jejich profesorů (asi taky csv?) a pro kterou třídu semináře jsou 
+- "číslo B": počet bloků, do kterého se mám vejít (int)
+- počet bloků pro jednotlivé třídy (asi pole nebo dict - celkem jedno zatím)
+
+NAČÍTÁNÍ VSTUPU A TVORBA GRAFU
 1. načíst vstupní soubor csv (formát řádků: student;třída;zvolený seminář)
     udělat z toho dictionary {student: [trida,seminar1, seminar2, ...]} nebo 3 pole [studenti], [tridy], [seminare]
 2. načíst seznam seminářů a jejich profesorů
@@ -7,5 +14,18 @@
     každá "profesorská" hrana bude mít hodnotu 500 (prostě hodnotu, která je vyšší než celkový počet studentů, aby studenti neměli větší hodnotu než 1 profesor)
 5. iterovat přes studenty:
     semináře daného studenta propojit hranami s hodnotou 1 (tak, aby každý sousedil s každým) - pokud už mezi danými semináři hrana je, přičtu k ní pouze hodnotu 1
-6. 
+
+BARVENÍ OHODNOCENÉHO GRAFU
+6. obarvím graf
+7. jaké je chromatické číslo (barevnost grafu)?
+    pokud je menší nebo stejné jako B: pokračuju na krok 9
+    pokud je větší než B:
+        8. odeberu z grafu hranu s nejmenší hodnotou (tito studenti mají  smůlu :D) a opakuju kroky 6 a 7, dokud chromatické číslo není je menší nebo stejné jako B nebo odebraná hrana neměla hodnotu 500 (to by pak nevyhovovalo profesorům) - pokud odebraná hrana má hodnotu 500, pokračuju na krok 9
+
+SESKUPENÍ DO BLOKŮ
+9. seskupím vrcholy do polí podle barev = seskupím semináře do časových bloků
+10. u každého bloku, spočítám, kolik je v něm seminářů pro které třídy
+
+ROZVRH
+11.
  
