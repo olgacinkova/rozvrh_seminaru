@@ -1,0 +1,11 @@
+1. načíst vstupní soubor csv (formát řádků: student;třída;zvolený seminář)
+    udělat z toho dictionary {student: [trida,seminar1, seminar2, ...]} nebo 3 pole [studenti], [tridy], [seminare]
+2. načíst seznam seminářů a jejich profesorů
+3. graf: nejspíš dictionary, kde {vrchol: [soused1, soused2, ...]}
+    vrcholy jsou semináře
+4. iterovat přes seznam profesorů: mezi všemi semináři, které profesor učí, budou hrany (tak, aby každý sousedil s každým)
+    každá "profesorská" hrana bude mít hodnotu 500 (prostě hodnotu, která je vyšší než celkový počet studentů, aby studenti neměli větší hodnotu než 1 profesor)
+5. iterovat přes studenty:
+    semináře daného studenta propojit hranami s hodnotou 1 (tak, aby každý sousedil s každým) - pokud už mezi danými semináři hrana je, přičtu k ní pouze hodnotu 1
+6. 
+ 
