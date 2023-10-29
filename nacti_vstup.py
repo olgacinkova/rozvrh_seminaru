@@ -14,6 +14,7 @@ def nacti_zaky(soubor):
 
 def nacti_zapsane(soubor):
     # nacita vstupni soubor zapsani.csv
+    # vystupem je pole poli, kde je vzdy zak a jeho seminar
     with open(soubor, encoding='utf-8-sig') as infile:
         lines = infile.readlines()
         zapsani = []
@@ -21,14 +22,16 @@ def nacti_zapsane(soubor):
         radek = x.rstrip("\n")
         radek = radek.replace("'","")
         radek = radek.split(";")
-        id, jmeno, trida, uzivjmeno = radek
-        zaci.append(id, trida)
-    print(zaci)
+        print(radek)
+        zak = int(radek[1])
+        seminar = int(radek[2])
+        zapsani.append([zak, seminar])
+    print(zapsani)
     return
 
 
 def main():
-    nacti_zaky("zaci")
+    nacti_zapsane("zapsani")
     return
 
 if __name__ == "__main__":
