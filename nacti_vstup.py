@@ -54,6 +54,27 @@ def zak_trida(soubor):
             tridy[trida].add(zak) # prida do mnoziny rovnou prvniho zaka
     return tridy
 
+def id_ucitelu(soubor):
+    # bere na vstupu seznam seminaru s uciteli
+    # ke kazdemu uciteli vymysli id cislo
+    df = pd.read_csv(soubor)
+    j= df.ucitel
+    jmena = set()
+    for jm in list(df.ucitel):
+        for x in jm.split(","): # obcas je nekde vic ucitelu u jednoho seminare
+            x = x.replace(" ","")
+            jmena.add(x)
+    ucitele = dict()
+    i = 1
+    for jm in jmena:
+        ucitele[jm] = i
+        i += 1
+    print(ucitele)
+    # odstranim to, co tam dela neplechu, co je nejednoznacne
+    del ucitele['budeupřesněno']
+    del ucitele['příp.M.Roháčková(podleúvazku)']
+    return ucitele
+
 def ucitel_seminar(soubor):
     # dictionary s mnozinou seminaru pro kazdeho ucitele
     #`id`, `cislo`, `nazev`, `ucitel`, `hodin`, `anotace`, `pro5`, `pro6`, `pro7`, 
@@ -74,24 +95,6 @@ def ucitel_seminar(soubor):
         seminare.append([ucitel, seminar])
     #print(zapsani)
     return seminare
-
-def id_ucitelu(soubor):
-    df = pd.read_csv(soubor)
-    j= df.ucitel #you can also use df['column_name']
-    jmena = set()
-    for jm in list(df.ucitel):
-        for x in jm.split(","):
-            x = x.replace(" ","")
-            if x != 'bude upřesněno' or x != 'příp. M. Roháčková (podle úvazku)':
-                jmena.add(x)
-    print(jmena)
-    ucitele = dict()
-    i = 1
-    for jm in jmena:
-        ucitele[jm] = i
-        i += 1
-    print(ucitele)
-    return ucitele
 
 
 def main():
