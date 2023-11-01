@@ -78,9 +78,20 @@ def ucitel_seminar(soubor):
 def id_ucitelu(soubor):
     df = pd.read_csv(soubor)
     j= df.ucitel #you can also use df['column_name']
-    jmena = df.ucitel
+    jmena = set()
+    for jm in list(df.ucitel):
+        for x in jm.split(","):
+            x = x.replace(" ","")
+            if x != 'bude upřesněno' or x != 'příp. M. Roháčková (podle úvazku)':
+                jmena.add(x)
     print(jmena)
-    return
+    ucitele = dict()
+    i = 1
+    for jm in jmena:
+        ucitele[jm] = i
+        i += 1
+    print(ucitele)
+    return ucitele
 
 
 def main():
