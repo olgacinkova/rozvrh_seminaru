@@ -76,17 +76,13 @@ def id_ucitelu(soubor):
     ## odstranim to, co tam dela neplechu, co je nejednoznacne
     #del ucitele['budeupřesněno']
     #del ucitele['příp.M.Roháčková(podleúvazku)']
-
-
-
     seminare = dict()
-    seminar = s.pop(0)
-    ucitel = j.pop(0)
     for x in range(len(s)):
-        #seminar = s.pop(0)
-        #ucitel = j.pop(0)
+        seminar = s.pop(0)
+        ucitel = j.pop(0)
         ucitel = ucitel.replace(' ','') 
-        ucitel = ucitel.split() # blbne to, kdyz je ucitelu u jednoho seminare vic nez jeden
+        ucitel = ucitel.split(",") # blbne to, kdyz je ucitelu u jednoho seminare vic nez jeden
+        print(ucitel)
         if type(ucitel) == list:
             for x in ucitel:
                 id_ucitele = ucitele[x]
