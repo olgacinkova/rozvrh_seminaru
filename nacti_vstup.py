@@ -57,10 +57,13 @@ def zak_trida(soubor):
 def id_ucitelu(soubor):
     # bere na vstupu seznam seminaru s uciteli
     # ke kazdemu uciteli vymysli id cislo
+    # vystup dict, kde je ke kazdemu uciteli 
+    # mnozina seminaru, ktere uci
     df = pd.read_csv(soubor)
-    j= df.ucitel
+    s = list(df.id) # id seminaru
+    j= list(df.ucitel) # jmena ucitelu
     jmena = set()
-    for jm in list(df.ucitel):
+    for jm in j:
         for x in jm.split(","): # obcas je nekde vic ucitelu u jednoho seminare
             x = x.replace(" ","")
             jmena.add(x)
@@ -70,31 +73,41 @@ def id_ucitelu(soubor):
         ucitele[jm] = i
         i += 1
     print(ucitele)
-    # odstranim to, co tam dela neplechu, co je nejednoznacne
-    del ucitele['budeupřesněno']
-    del ucitele['příp.M.Roháčková(podleúvazku)']
-    return ucitele
+    ## odstranim to, co tam dela neplechu, co je nejednoznacne
+    #del ucitele['budeupřesněno']
+    #del ucitele['příp.M.Roháčková(podleúvazku)']
 
-def ucitel_seminar(soubor):
-    # dictionary s mnozinou seminaru pro kazdeho ucitele
-    #`id`, `cislo`, `nazev`, `ucitel`, `hodin`, `anotace`, `pro5`, `pro6`, `pro7`, 
-    # `pro8`, `aktivni`, `hnizdo`, `uzavreny`, `kapacita`, `rozsirujici`
-    # nacita vstupni soubor zapsani
-    # vystupem je pole poli, kde je vzdy zak a jeho seminar
-    with open(soubor, encoding='utf-8-sig') as infile:
-        lines = infile.readlines()
-        seminare = []
-        lines.pop(0)
-    for x in lines:
-        radek = x.rstrip("\n")
-        radek = radek.replace("'","")
-        radek = radek.replace('"','')
-        radek = radek.split(",")
-        ucitel = int(radek[3])
-        seminar = int(radek[0])
-        seminare.append([ucitel, seminar])
-    #print(zapsani)
-    return seminare
+
+
+    seminare = dict()
+    seminar = s.pop(0)
+    ucitel = j.pop(0)
+    for x in range(len(s)):
+        #seminar = s.pop(0)
+        #ucitel = j.pop(0)
+        ucitel = ucitel.replace(' ','') 
+        ucitel = ucitel.split() # blbne to, kdyz je ucitelu u jednoho seminare vic nez jeden
+        if type(ucitel) == list:
+            for x in ucitel:
+                id_ucitele = ucitele[x]
+                if id_ucitele in seminare:
+                    seminare[id_ucitele].add(seminar)
+                else:
+                    seminare[id_ucitele] = set()
+                    seminare[id_ucitele].add(seminar)
+        else:
+            id_ucitele = ucitele[ucitel]
+            if id_ucitele in seminare:
+                seminare[id_ucitele].add(seminar)
+            else:
+                seminare[id_ucitele] = set()
+                seminare[id_ucitele].add(seminar)
+
+    return ucitele, seminare
+
+        
+    
+
 
 
 def main():
