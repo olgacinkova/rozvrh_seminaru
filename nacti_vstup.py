@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import networkx as nx
+from itertools import combinations
+
 def nacti_zaky(soubor):
     # nacita vstupni soubor zaci.csv
     df = pd.read_csv(soubor)
@@ -14,7 +16,7 @@ def nacti_zaky(soubor):
     return zaci
 
 
-def kam_trida(soubor):
+def zaci_tridy(soubor):
     # nacita soubor zaci
     #do jakych trid chodi zaci
     # vystup: dict, trida : mnozina jejich zaku
@@ -32,7 +34,7 @@ def kam_trida(soubor):
             kam_trida[trida].add(zak) # prida do mnoziny rovnou prvniho zaka
     return kam_trida
 
-def kam_seminar(soubor):
+def zaci_seminare(soubor):
     # nacita vstupni soubor zapsani.csv
     # vystupem je dict, kde je vzdy zak a jeho seminare
     df = pd.read_csv(soubor)
@@ -96,15 +98,25 @@ def id_ucitelu(soubor):
 
     return ucitele, seminare, id_seminaru
 
-def udelej_graf(ucitele, seminare, id_seminaru):
+def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
     G = nx.Graph() # ma neorientovane grafy
     G.add_nodes_from(id_seminaru)
 
     ### profesorske hrany
     for x in seminare.keys():
-        for vrchol in seminare[x]: # propojit vsechny se vsemi, protoze sdili profesora
-            G.add_edge(x, weight=100)
-            
+        # pro kazdy prvek z mnoziny seminaru u jednoho profesora
+        # propojit vsechny se vsemi, protoze sdili profesora
+        vrcholy = seminare[x]
+        hrany = combinations(vrcholy, 2) # vsechny mozne dvojice
+        G.add_edges_from(hrany, weight = 100)
+    
+    ### studentske hrany
+    for x in kam_seminar.keys():
+        # pro kazdy prvek z mnoziny seminaru u jednoho zaka
+        # propojit vsechny se vsemi, protoze sdili zaka
+        vrcholy = kam_seminar[x]
+        hrany = combinations(vrcholy, 2) # vsechny mozne dvojice
+        G.add_edges_from(hrany, weight = 1)
 
     # Visualize the graph
     pos = nx.spring_layout(G)
@@ -119,11 +131,11 @@ def udelej_graf(ucitele, seminare, id_seminaru):
 
 
 def main():
-    ks = kam_seminar("zapsani.csv")
-    kt = kam_trida("zaci.csv")
+    ks = zaci_seminare("zapsani.csv")
+    kt = zaci_tridy("zaci.csv")
     ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
     print(seminare, id_seminaru)
-    print(udelej_graf(ucitele, seminare, id_seminaru))
+    print(udelej_graf(ucitele, seminare, id_seminaru, ks))
     return
 
 if __name__ == "__main__":
