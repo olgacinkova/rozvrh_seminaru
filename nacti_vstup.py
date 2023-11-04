@@ -1,58 +1,50 @@
 import pandas as pd
 def nacti_zaky(soubor):
     # nacita vstupni soubor zaci.csv
-    with open(soubor, encoding='utf-8-sig') as infile:
-        lines = infile.readlines()
-        zaci = []
-    for x in lines:
-        radek = x.rstrip("\n")
-        radek = radek.replace("'","")
-        radek = radek.split(",")
-        id, jmeno, trida, uzivjmeno = radek
-        zaci.append(id, trida)
-    print(zaci)
-    return
-
-def nacti_zapsane(soubor):
-    # nacita vstupni soubor zapsani
-    # vystupem je pole poli, kde je vzdy zak a jeho seminar
-    with open(soubor, encoding='utf-8-sig') as infile:
-        lines = infile.readlines()
-        zapsani = []
-        lines.pop(0)
-    for x in lines:
-        radek = x.rstrip("\n")
-        radek = radek.replace("'","")
-        radek = radek.replace('"','')
-        radek = radek.split(",")
-        zak = int(radek[1])
-        seminar = int(radek[2])
-        zapsani.append([zak, seminar])
-    #print(zapsani)
-    return zapsani
+    df = pd.read_csv(soubor)
+    id = list(df.id) # id zaku
+    tridy = list(df.trida) # kam patri
+    zaci = []
+    for i in range(len(id)):
+        zak = id.pop(0)
+        trida = tridy.pop(0)
+        zaci[zak] = trida
+    return zaci
 
 def zak_trida(soubor):
     # nacita soubor zaci
     #do jakych trid chodi zaci
-    # vystup: dict, trida : mnozina
-    #  jejich zaku
-    with open(soubor, encoding='utf-8-sig') as infile:
-        lines = infile.readlines()
-        tridy = dict()
-        lines.pop(0)
-    for x in lines:
-        radek = x.rstrip("\n")
-        radek = radek.replace("'","")
-        radek = radek.replace('"','')
-        radek = radek.split(",")
-        trida = radek[2].replace(" ", "") # odstranim mezery z nazvu tridy
-        zak = int(radek[0]) # resp id zaka
-        if trida in tridy:
-            tridy[trida].add(zak) # prida do mnoziny noveho zaka
+    # vystup: dict, trida : mnozina jejich zaku
+    df = pd.read_csv(soubor)
+    id = list(df.id) # id zaku
+    tridy = list(df.trida) # kam patri
+    kam_trida = dict()
+    for i in range(len(id)):
+        trida = tridy.pop(0).replace(" ", "")
+        zak = id. pop(0) #id zaka
+        if trida in kam_trida:
+            kam_trida[trida].add(zak) # prida do mnoziny noveho zaka
         else:
-            tridy[trida] =set() # vytvori novou prazdnou mnozinu
-            tridy[trida].add(zak) # prida do mnoziny rovnou prvniho zaka
-    return tridy
+            kam_trida[trida] =set() # vytvori novou prazdnou mnozinu
+            kam_trida[trida].add(zak) # prida do mnoziny rovnou prvniho zaka
+    return kam_trida
+
+def nacti_zapsane(soubor):
+    # nacita vstupni soubor zapsani.csv
+    # vystupem je dict, kde je vzdy zak a jeho seminare
+    df = pd.read_csv(soubor)
+    id = list(df.zak) # id zaka
+    seminare = list(df.seminar) # kam patri
+    kam_seminar = dict()
+    for i in range(len(id)):
+        zak = id.pop(0)
+        seminar = seminare.pop(0)
+        if zak in kam_seminar:
+            kam_seminar[zak].add(seminar) # prida do mnoziny novy seminar
+        else:
+            kam_seminar[zak] =set() # vytvori novou prazdnou mnozinu
+            kam_seminar[zak].add(seminar) 
+    return kam_seminar
 
 def id_ucitelu(soubor):
     # bere na vstupu seznam seminaru s uciteli
@@ -72,7 +64,6 @@ def id_ucitelu(soubor):
     for jm in jmena:
         ucitele[jm] = i
         i += 1
-    print(ucitele)
     ## odstranim to, co tam dela neplechu, co je nejednoznacne
     #del ucitele['budeupřesněno']
     #del ucitele['příp.M.Roháčková(podleúvazku)']
@@ -101,16 +92,17 @@ def id_ucitelu(soubor):
 
     return ucitele, seminare
 
+def udelej_graf(ucitele, seminare):
+    pass
+
         
     
 
-
-
 def main():
-    #print(nacti_zapsane("zapsani.csv"))
+    print(nacti_zapsane("zapsani.csv"))
     #print(zak_trida("zaci.csv"))
     #print(ucitel_seminar("seminare.csv"))
-    print(id_ucitelu("seminare.csv"))
+    #print(id_ucitelu("seminare.csv"))
     return
 
 if __name__ == "__main__":
