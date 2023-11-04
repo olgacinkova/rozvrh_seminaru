@@ -56,6 +56,7 @@ def id_ucitelu(soubor):
     # mnozina seminaru, ktere uci
     df = pd.read_csv(soubor)
     s = list(df.id) # id seminaru
+    id_seminaru = list(df.id)
     j= list(df.ucitel) # jmena ucitelu
     jmena = set()
     for jm in j:
@@ -93,16 +94,17 @@ def id_ucitelu(soubor):
                 seminare[id_ucitele] = set()
                 seminare[id_ucitele].add(seminar)
 
-    return ucitele, seminare, s 
+    return ucitele, seminare, id_seminaru
 
-def udelej_graf(ucitele, seminare, s):
-    G = nx.Graph()
-    G.add_nodes_from(s)
+def udelej_graf(ucitele, seminare, id_seminaru):
+    G = nx.Graph() # ma neorientovane grafy
+    G.add_nodes_from(id_seminaru)
+
     ### profesorske hrany
-    #for x in ucitele
-    G.add_edge(1, 2, weight=4)
-    G.add_edge(1, 3, weight=2)
-    G.add_edge(3, 2, weight=8)
+    for x in seminare.keys():
+        for vrchol in seminare[x]: # propojit vsechny se vsemi, protoze sdili profesora
+            G.add_edge(x, weight=100)
+            
 
     # Visualize the graph
     pos = nx.spring_layout(G)
@@ -119,9 +121,9 @@ def udelej_graf(ucitele, seminare, s):
 def main():
     ks = kam_seminar("zapsani.csv")
     kt = kam_trida("zaci.csv")
-    ucitele, seminare, s = id_ucitelu("seminare.csv")
-    print(ucitele, seminare, s)
-    print(udelej_graf(ucitele, seminare, s))
+    ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
+    print(seminare, id_seminaru)
+    print(udelej_graf(ucitele, seminare, id_seminaru))
     return
 
 if __name__ == "__main__":
