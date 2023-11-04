@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import networkx as nx
 def nacti_zaky(soubor):
     # nacita vstupni soubor zaci.csv
     df = pd.read_csv(soubor)
@@ -11,7 +13,8 @@ def nacti_zaky(soubor):
         zaci[zak] = trida
     return zaci
 
-def zak_trida(soubor):
+
+def kam_trida(soubor):
     # nacita soubor zaci
     #do jakych trid chodi zaci
     # vystup: dict, trida : mnozina jejich zaku
@@ -29,7 +32,7 @@ def zak_trida(soubor):
             kam_trida[trida].add(zak) # prida do mnoziny rovnou prvniho zaka
     return kam_trida
 
-def nacti_zapsane(soubor):
+def kam_seminar(soubor):
     # nacita vstupni soubor zapsani.csv
     # vystupem je dict, kde je vzdy zak a jeho seminare
     df = pd.read_csv(soubor)
@@ -90,19 +93,35 @@ def id_ucitelu(soubor):
                 seminare[id_ucitele] = set()
                 seminare[id_ucitele].add(seminar)
 
-    return ucitele, seminare
+    return ucitele, seminare, s 
 
-def udelej_graf(ucitele, seminare):
-    pass
+def udelej_graf(ucitele, seminare, s):
+    G = nx.Graph()
+    G.add_nodes_from(s)
+    ### profesorske hrany
+    #for x in ucitele
+    G.add_edge(1, 2, weight=4)
+    G.add_edge(1, 3, weight=2)
+    G.add_edge(3, 2, weight=8)
 
-        
-    
+    # Visualize the graph
+    pos = nx.spring_layout(G)
+    nx.draw_networkx_nodes(G, pos)
+    nx.draw_networkx_edges(G, pos, edge_color="red")
+    nx.draw_networkx_labels(G, pos)
+    nx.draw_networkx_edge_labels(
+        G, pos, edge_labels={(u, v): d["weight"] for u, v, d in G.edges(data=True)}
+    )
+    plt.show()
+    return G
+
 
 def main():
-    print(nacti_zapsane("zapsani.csv"))
-    #print(zak_trida("zaci.csv"))
-    #print(ucitel_seminar("seminare.csv"))
-    #print(id_ucitelu("seminare.csv"))
+    ks = kam_seminar("zapsani.csv")
+    kt = kam_trida("zaci.csv")
+    ucitele, seminare, s = id_ucitelu("seminare.csv")
+    print(ucitele, seminare, s)
+    print(udelej_graf(ucitele, seminare, s))
     return
 
 if __name__ == "__main__":
