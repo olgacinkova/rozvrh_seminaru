@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.colors as mpl
 import networkx as nx
 from itertools import combinations
 
@@ -99,7 +100,7 @@ def id_ucitelu(soubor):
     return ucitele, seminare, id_seminaru
 
 def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
-    P = nx.Graph() # ma neorientovane grafy
+    P = nx.MultiGraph() # ma neorientovane grafy
     P.add_nodes_from(id_seminaru)
 
     ### profesorske hrany
@@ -127,7 +128,10 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
         else:
         # If the edge doesn't exist, create a new one
             G.add_edge(u, v, weight=data['weight'])
-        
+    # tisknu vystup
+    for u, v, data in G.edges(data=True):
+        weight = data['weight']
+        print(f"Edge: ({u}, {v}), Weight: {weight}")
     # Vizualizace
     pos = nx.spring_layout(G)
     nx.draw_networkx_nodes(G, pos)
@@ -139,13 +143,41 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
     plt.show()
     return G
 
+def obarvi_graf(G):
+        # Apply greedy coloring
+    graph_coloring = nx.greedy_color(G)
+    unique_colors = set(graph_coloring.values())
+
+    # Assign colors to nodes based on the greedy coloring
+    graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
+    node_colors = [graph_color_to_mpl_color[graph_coloring[n]] for n in G.nodes()]
+    labels = {e: G.edges[e]['weight'] for e in G.edges}
+    pos = nx.spring_layout(G, seed=14)
+    nx.draw(
+        G,
+        pos, 
+        with_labels=True,
+        node_size=500,
+        node_color=node_colors,
+        edge_color="grey",
+        font_size=12,
+        font_color="#333333",
+        width=2
+    )
+    labels = {e: G.edges[e]['weight'] for e in G.edges}
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+    plt.show()
+    return G
+
 
 def main():
     ks = zaci_seminare("zapsani.csv")
     kt = zaci_tridy("zaci.csv")
     ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
     print(seminare, id_seminaru)
-    print(udelej_graf(ucitele, seminare, id_seminaru, ks))
+    graf = udelej_graf(ucitele, 
+                      seminare, id_seminaru, ks)
+    print(obarvi_graf(graf))
     return
 
 if __name__ == "__main__":
