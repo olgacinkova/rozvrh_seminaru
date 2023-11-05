@@ -99,8 +99,8 @@ def id_ucitelu(soubor):
     return ucitele, seminare, id_seminaru
 
 def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
-    G = nx.Graph() # ma neorientovane grafy
-    G.add_nodes_from(id_seminaru)
+    P = nx.Graph() # ma neorientovane grafy
+    P.add_nodes_from(id_seminaru)
 
     ### profesorske hrany
     for x in seminare.keys():
@@ -108,7 +108,7 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
         # propojit vsechny se vsemi, protoze sdili profesora
         vrcholy = seminare[x]
         hrany = combinations(vrcholy, 2) # vsechny mozne dvojice
-        G.add_edges_from(hrany, weight = 100)
+        P.add_edges_from(hrany, weight = 100)
     
     ### studentske hrany
     for x in kam_seminar.keys():
@@ -116,9 +116,19 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
         # propojit vsechny se vsemi, protoze sdili zaka
         vrcholy = kam_seminar[x]
         hrany = combinations(vrcholy, 2) # vsechny mozne dvojice
-        G.add_edges_from(hrany, weight = 1)
+        P.add_edges_from(hrany, weight = 1)
 
-    # Visualize the graph
+    # graf se souctem hran z P
+    G = nx.Graph()
+    for u, v, data in P.edges(data=True):
+        if G.has_edge(u, v):
+        # If an edge already exists, add the weights
+            G[u][v]['weight'] += data['weight']
+        else:
+        # If the edge doesn't exist, create a new one
+            G.add_edge(u, v, weight=data['weight'])
+        
+    # Vizualizace
     pos = nx.spring_layout(G)
     nx.draw_networkx_nodes(G, pos)
     nx.draw_networkx_edges(G, pos, edge_color="red")
