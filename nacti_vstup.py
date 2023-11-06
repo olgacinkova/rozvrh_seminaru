@@ -72,8 +72,6 @@ def id_ucitelu(soubor):
         ucitele[jm] = i
         i += 1
     ## odstranim to, co tam dela neplechu, co je nejednoznacne
-    #del ucitele['budeupřesněno']
-    #del ucitele['příp.M.Roháčková(podleúvazku)']
     seminare = dict()
     for x in range(len(s)):
         seminar = s.pop(0)
@@ -170,7 +168,7 @@ def obarvi_graf(G):
     return G
 
 
-def main():
+"""def main():
     ks = zaci_seminare("zapsani.csv")
     kt = zaci_tridy("zaci.csv")
     ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
@@ -182,3 +180,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    """
