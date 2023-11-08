@@ -4,21 +4,6 @@ import matplotlib.colors as mpl
 import networkx as nx
 from itertools import combinations
 
-"""def nacti_zaky(soubor):
-    # nacita vstupni soubor zaci.csv
-    # výstupem 
-    df = pd.read_csv(soubor)
-    id = list(df.id) # id zaku
-    tridy = list(df.trida) # kam patri
-    zaci = []
-    for i in range(len(id)):
-        zak = id.pop(0)
-        trida = tridy.pop(0)
-        zaci[zak] = trida
-        print(zaci)
-    return zaci
-"""
-
 def zaci_tridy(soubor):
     # načítá soubor zaci.csv
     # do jakých tříd chodí žáci
@@ -102,54 +87,48 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
     # semináře budou spojeny hranou, pokud sdílí žáka nebo učitele
     # hrany jsou ohodnocené: žák má hodnotu 1, učitel má hodnotu 100
     P = nx.MultiGraph() # multigraf = má mezi dvojicí vrcholů víc než dvě hrany
-    P.add_nodes_from(id_seminaru)
+    P.add_nodes_from(id_seminaru) # každý vrchol je jeden seminář (resp. id semináře)
 
-    ### profesorske hrany
-    for x in seminare.keys():
-        # pro kazdy prvek z mnoziny seminaru u jednoho profesora
-        # propojit vsechny se vsemi, protoze sdili profesora
-        vrcholy = seminare[x]
-        hrany = combinations(vrcholy, 2) # vsechny mozne dvojice
-        P.add_edges_from(hrany, weight = 100)
+    ### učitelské hrany
+    for x in seminare.keys(): # pro každého profesora
+        vrcholy = seminare[x] # množina seminářů profesora
+        hrany = combinations(vrcholy, 2) # všechny možné dvojice seminářů v množině 
+        P.add_edges_from(hrany, weight = 100) # pro každou dvojici udělá hranu o hodnotě 100 (úplný graf)
     
-    ### studentske hrany
-    for x in kam_seminar.keys():
-        # pro kazdy prvek z mnoziny seminaru u jednoho zaka
-        # propojit vsechny se vsemi, protoze sdili zaka
-        vrcholy = kam_seminar[x]
-        hrany = combinations(vrcholy, 2) # vsechny mozne dvojice
-        P.add_edges_from(hrany, weight = 1)
+    ### žákovské hrany
+    for x in kam_seminar.keys(): # pro každý prvek z množiny seminářů u jednoho žáka
+        vrcholy = kam_seminar[x] # množina seminářů žáka
+        hrany = combinations(vrcholy, 2) # všechny možné dvojice seminářů v množině 
+        P.add_edges_from(hrany, weight = 1) # pro každou dvojici udělá hranu o hodnotě 1 (úplný graf)
 
-    # graf se souctem hran z P
+    # graf se součtem hodnot hran z P
+    # udělá s multigrafu P normální ohodnocený graf
     G = nx.Graph()
-    for u, v, data in P.edges(data=True):
-        if G.has_edge(u, v):
-        # If an edge already exists, add the weights
-            G[u][v]['weight'] += data['weight']
+    for u, v, data in P.edges(data=True): # pro všechny vrcholy
+        if G.has_edge(u, v): # pokud hrana existuje
+            G[u][v]['weight'] += data['weight'] # přidám k váze hrany
         else:
-        # If the edge doesn't exist, create a new one
-            G.add_edge(u, v, weight=data['weight'])
-    # tisknu vystup
+            G.add_edge(u, v, weight=data['weight']) # pokud hrana neexistuje, vytvořím ji
+    # tisknu graf na textový výstup - není nutné
     for u, v, data in G.edges(data=True):
         weight = data['weight']
         print(f"Edge: ({u}, {v}), Weight: {weight}")
-    # Vizualizace
-    pos = nx.spring_layout(G)
-    nx.draw_networkx_nodes(G, pos)
-    nx.draw_networkx_edges(G, pos, edge_color="red")
+
+    # vizualizace grafu
+    pos = nx.spring_layout(G) # rozmístění vrcholů a hran
+    nx.draw_networkx_nodes(G, pos) # nakreslím vrcholy
+    nx.draw_networkx_edges(G, pos, edge_color="red") # nakreslím hrany
     nx.draw_networkx_labels(G, pos)
     nx.draw_networkx_edge_labels(
         G, pos, edge_labels={(u, v): d["weight"] for u, v, d in G.edges(data=True)}
-    )
+    ) # u každé hrany zobrazuji její hodnotu
     plt.show()
     return G
 
 def obarvi_graf(G):
-        # Apply greedy coloring
+    # obarvím graf hladovým barvicím algoritmem
     graph_coloring = nx.greedy_color(G)
     unique_colors = set(graph_coloring.values())
-
-    # Assign colors to nodes based on the greedy coloring
     graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
     node_colors = [graph_color_to_mpl_color[graph_coloring[n]] for n in G.nodes()]
     labels = {e: G.edges[e]['weight'] for e in G.edges}
@@ -165,22 +144,6 @@ def obarvi_graf(G):
         font_color="#333333",
         width=2
     )
-    labels = {e: G.edges[e]['weight'] for e in G.edges}
     nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
-    plt.show()
+    plt.show() # zobrazí graf
     return G
-
-
-"""def main():
-    ks = zaci_seminare("zapsani.csv")
-    kt = zaci_tridy("zaci.csv")
-    ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
-    print(seminare, id_seminaru)
-    graf = udelej_graf(ucitele, 
-                      seminare, id_seminaru, ks)
-    print(obarvi_graf(graf))
-    return
-
-if __name__ == "__main__":
-    main()
-    """
