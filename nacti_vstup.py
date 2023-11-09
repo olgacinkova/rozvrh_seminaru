@@ -41,8 +41,7 @@ def zaci_seminare(soubor):
 
 def id_ucitelu(soubor):
     # bere na vstupu seznam seminářů s učiteli
-    # ke každému učiteli vymyslí id čísl
-    # o
+    # ke každému učiteli vymyslí id číslo
     # výstup dict, kde je ke každému učiteli množina seminářů, které učí
     df = pd.read_csv(soubor) # načtu seznam seminářů jako dataframe
     id_seminaru = list(df.id) # id seminářů
@@ -112,7 +111,7 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
     # tisknu graf na textový výstup - není nutné
     for u, v, data in G.edges(data=True):
         weight = data['weight']
-        print(f"Edge: ({u}, {v}), Weight: {weight}")
+        print(f"hrana: ({u}, {v}), hodnota: {weight}")
 
     # vizualizace grafu
     pos = nx.spring_layout(G) # rozmístění vrcholů a hran
