@@ -11,7 +11,7 @@ def zaci_tridy(soubor):
     df = pd.read_csv(soubor)
     id = list(df.id) # id žáků
     tridy = list(df.trida) # do jaké třídy patří
-    kam_trida = dict() # dictionary, kdo kam chodí
+    kam_trida = dict() # dictionary - kdo kam chodí
     for i in range(len(id)): # projdu všechny žáky
         trida = tridy.pop(0).replace(" ", "")
         zak = id. pop(0) #id prvního žáka ze seznamu
