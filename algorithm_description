@@ -26,6 +26,13 @@ BARVENÍ OHODNOCENÉHO GRAFU
         8. odeberu z grafu hranu s nejmenší hodnotou (tito studenti mají  smůlu a čím méně studentů má smůlu, tím lepší bude rozvrh :D) a opakuju kroky 6 a 7, dokud chromatické číslo není je menší nebo stejné jako B nebo odebraná hrana neměla hodnotu profesora (to by pak nevyhovovalo profesorům) - pokud odebraná hrana má hodnotu profesora, pokračuju na krok 9
     MYŠLENKA: nemůžu tady použít k určení chromatického čísla binární vyhledávání, aby se snížila složitost? jak si to bude rozumět s tím, že nejspíš dostanu na vstupu číslo B? a taky nevím, jak rychle se bude chromatické číslo zmenšovat, když budu odebírat ty hrany...
 
+MUSÍM ještě v barvení:
+zvětšuju postupně graf
+nejdřív jen 5. a 6. 
+obarvit a pak prihodit další semináře
+kvinta a sexta víc odpoledne
+septima víc v poledne 
+
 SESKUPENÍ DO BLOKŮ
 9. seskupím vrcholy do polí podle barev = seskupím semináře do časových bloků
 10. u každého bloku spočítám, kolik je v něm seminářů pro které třídy

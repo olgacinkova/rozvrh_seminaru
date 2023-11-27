@@ -1,4 +1,5 @@
 from nacti_vstup import *
+from barveni import *
 def main():
     ks = zaci_seminare("zapsani.csv")
     kt = zaci_tridy("zaci.csv")
