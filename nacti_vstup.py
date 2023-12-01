@@ -20,6 +20,22 @@ def zaci_tridy(soubor):
         else:
             kam_trida[trida] =set() # vytvoří novou prázdnou množinu pro třídu
             kam_trida[trida].add(zak) # přidá do množiny rovnou prvního žáka
+    # do jakeho rocniku chodi kteri zaci
+    kam_rocnik = {5:set(), 6:set(), 7:set(), 8:set()}
+    for x in kam_trida.keys():
+        if x == '4.A' or x == '4.B' or x == '4.C':
+            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+                kam_rocnik[5].add(e)
+        if x == '5.A' or x == '5.B' or x == '5.C':
+            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+                kam_rocnik[6].add(e)
+        if x == '6.A' or x == '6.B' or x == '6.C':
+            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+                kam_rocnik[7].add(e)
+        if x == '7.A' or x == '7.B' or x == '7.C':
+            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+                kam_rocnik[8].add(e)
+    
     return kam_trida
 
 def zaci_seminare(soubor):
@@ -80,6 +96,11 @@ def id_ucitelu(soubor):
                 seminare[id_ucitele].add(seminar)
     # vrací dict učitelů a jejich id, dict učitelů a množin jejich seminářů, seznam id seminaru
     return ucitele, seminare, id_seminaru
+
+def ktery_seminar_pro_kterou_tridu(soubor):
+    # udela dict trida_seminar, kde bude pro kazdou tridu, jake seminare jsou pro ni
+    trida_seminar = {5:set(), 6: set(), 7:set(), 8:set()}
+    pass
 
 def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
     # tvorba neorientovaného grafu, kde vrcholy jsou semináře
