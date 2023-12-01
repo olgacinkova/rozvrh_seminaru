@@ -109,9 +109,9 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
         else:
             G.add_edge(u, v, weight=data['weight']) # pokud hrana neexistuje, vytvořím ji
     # tisknu graf na textový výstup - není nutné
-    for u, v, data in G.edges(data=True):
-        weight = data['weight']
-        print(f"hrana: ({u}, {v}), hodnota: {weight}")
+    #for u, v, data in G.edges(data=True):
+    #    weight = data['weight']
+    #    print(f"hrana: ({u}, {v}), hodnota: {weight}")
         
 
     # vizualizace grafu

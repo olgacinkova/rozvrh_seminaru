@@ -7,7 +7,7 @@ def main():
     print(seminare, id_seminaru)
     graf = udelej_graf(ucitele, 
                       seminare, id_seminaru, ks)
-    obarvi_graf_lip(graf, 9)
+    obarvi_graf_lip(graf, 4)
     return
 
 if __name__ == "__main__":
