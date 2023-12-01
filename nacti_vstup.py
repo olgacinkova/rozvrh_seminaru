@@ -112,6 +112,7 @@ def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
     for u, v, data in G.edges(data=True):
         weight = data['weight']
         print(f"hrana: ({u}, {v}), hodnota: {weight}")
+        
 
     # vizualizace grafu
     pos = nx.spring_layout(G) # rozmístění vrcholů a hran
