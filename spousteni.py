@@ -3,11 +3,11 @@ from barveni import *
 def main():
     ks = zaci_seminare("zapsani.csv")
     kt = zaci_tridy("zaci.csv")
+    ktery_seminar_pro_kterou_tridu("seminare.csv")
     ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
-    print(seminare, id_seminaru)
-    graf = udelej_graf(ucitele, 
-                      seminare, id_seminaru, ks)
+    graf = udelej_graf(seminare, id_seminaru, ks)
     obarvi_graf_lip(graf, 4)
+    print(seskup_seminare_do_bloku(graf))
     return
 
 if __name__ == "__main__":

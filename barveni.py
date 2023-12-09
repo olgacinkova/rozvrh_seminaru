@@ -38,10 +38,6 @@ def obarvi_graf_lip(G, B): # G = graf, B = pozadovane chrom. c.
     
     # vytvorim seznam hran podle velikosti - zacina hranou s nejmensi hodnotou
     serazene_hrany = sorted(G.edges(data=True), key=lambda x: x[2]['weight'])
-    # tisknu pro kontrolu
-    #for u, v, data in serazene_hrany:
-    #    weight = data['weight']
-    #    print(f"hrana: ({u}, {v}), vaha: {weight}")
 
     # obarvím graf hladovým barvicím algoritmem
     chrom = 0
@@ -77,5 +73,23 @@ def obarvi_graf_lip(G, B): # G = graf, B = pozadovane chrom. c.
         )
     nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
     plt.show() # zobrazí graf
-    print("hotovo")
+    print(G)
     return G, chrom
+
+
+def seskup_seminare_do_bloku(G):
+    # Get the weighted adjacency list representation
+    weighted_adjacency_list = nx.to_dict_of_dicts(G)
+
+# Convert to a dictionary of lists
+    adjacency_list_of_lists = {node: [(neighbor, data['weight']) for neighbor, data in neighbors.items()] for node, neighbors in weighted_adjacency_list.items()}
+
+# Display the adjacency list as text
+    print("Weighted graph as text (dictionary of lists):")
+    for node, neighbors in adjacency_list_of_lists.items():
+        print(f"{node}: {neighbors}")
+    """for node, neighbors in graf_jako_slovnik.items():
+        neighbor_list = [f"{neighbor} (weight: {data['weight']})" for neighbor, data in neighbors.items()]
+        print(f"{node}: {neighbor_list}")
+        print("Weighted graph as text (dictionary of lists):")"""
+    return 

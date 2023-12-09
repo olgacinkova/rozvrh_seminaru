@@ -24,19 +24,18 @@ def zaci_tridy(soubor):
     kam_rocnik = {5:set(), 6:set(), 7:set(), 8:set()}
     for x in kam_trida.keys():
         if x == '4.A' or x == '4.B' or x == '4.C':
-            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+            for e in kam_trida[x]: # presunu zaky dane tridy do daneho rocniku
                 kam_rocnik[5].add(e)
         if x == '5.A' or x == '5.B' or x == '5.C':
-            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+            for e in kam_trida[x]:# presunu zaky dane tridy do daneho rocniku
                 kam_rocnik[6].add(e)
         if x == '6.A' or x == '6.B' or x == '6.C':
-            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+            for e in kam_trida[x]:# presunu zaky dane tridy do daneho rocniku
                 kam_rocnik[7].add(e)
         if x == '7.A' or x == '7.B' or x == '7.C':
-            for e in kam_trida[x] # presunu zaky dane tridy do daneho rocniku
+            for e in kam_trida[x]: # presunu zaky dane tridy do daneho rocniku
                 kam_rocnik[8].add(e)
-    
-    return kam_trida
+    return kam_rocnik
 
 def zaci_seminare(soubor):
     # načítá vstupní soubor zapsani.csv
@@ -99,10 +98,24 @@ def id_ucitelu(soubor):
 
 def ktery_seminar_pro_kterou_tridu(soubor):
     # udela dict trida_seminar, kde bude pro kazdou tridu, jake seminare jsou pro ni
-    trida_seminar = {5:set(), 6: set(), 7:set(), 8:set()}
-    pass
+    rocnik_seminar = {5:set(), 6: set(), 7:set(), 8:set()}
+    df = pd.read_csv(soubor) # načtu soubor jako dataframe
+    for index, radek in df.iterrows():
+        if radek['pro5'] == 1:
+            id_seminare = radek['id']
+            rocnik_seminar[5].add(id_seminare)
+        if radek['pro6'] == 1:
+            id_seminare = radek['id']
+            rocnik_seminar[6].add(id_seminare)
+        if radek['pro7'] == 1:
+            id_seminare = radek['id']
+            rocnik_seminar[7].add(id_seminare)
+        if radek['pro8'] == 1:
+            id_seminare = radek['id']
+            rocnik_seminar[8].add(id_seminare)
+    return rocnik_seminar
 
-def udelej_graf(ucitele, seminare, id_seminaru, kam_seminar):
+def udelej_graf(seminare, id_seminaru, kam_seminar):
     # tvorba neorientovaného grafu, kde vrcholy jsou semináře
     # semináře budou spojeny hranou, pokud sdílí žáka nebo učitele
     # hrany jsou ohodnocené: žák má hodnotu 1, učitel má hodnotu 100
