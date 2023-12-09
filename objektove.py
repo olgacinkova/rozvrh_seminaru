@@ -7,7 +7,34 @@ class Rocnik():
     def __init__(self, rocnik, zaci):
         self.rocnik = rocnik # jaky rocnik to je
         self.zaci = zaci # kteri zaci tam chodi
-    def udelej_graf(seminare, id_seminaru, kam_seminar):
+        self.ucitele_rocniku = None 
+        self.seminare_rocniku = None 
+        self.zaci_rocniku = None
+        self.kam_rocnik = dict()
+        self.G = None
+
+
+    def data_pro_dany_rocnik(self, cislo_rocniku, kam_rocnik, rocnik_seminar, kam_seminar, seminare):
+        zaci_rocniku = kam_rocnik[cislo_rocniku] # mnozina zaku z rocniku
+        seminare_rocniku = rocnik_seminar[cislo_rocniku]
+        ucitele_rocniku = dict()
+        for ucitel in seminare.keys():
+            seminare_ucitele = seminare[ucitel] 
+            overlap = seminare_ucitele.intersection(seminare_rocniku)
+            if len(overlap) > 0:
+                ucitele_rocniku[ucitel] = overlap
+        for zak in zaci_rocniku:
+            aktualni_seminare = kam_seminar[zak]
+            kam_rocnik[zak] = aktualni_seminare
+        return
+
+    def udelej_graf(self, seminare, id_seminaru, kam_seminar):
+        id_seminaru = self.seminare_rocniku
+        seminare_a_ucitele_rocniku = dict()
+        for u in seminare.keys():
+            if u in self.ucitele_rocniku:
+                seminare_a_ucitele_rocniku[u] = seminare[u]
+
         # tvorba neorientovaného grafu, kde vrcholy jsou semináře
         # semináře budou spojeny hranou, pokud sdílí žáka nebo učitele
         # hrany jsou ohodnocené: žák má hodnotu 1, učitel má hodnotu 100
@@ -15,8 +42,8 @@ class Rocnik():
         P.add_nodes_from(id_seminaru) # každý vrchol je jeden seminář (resp. id semináře)
 
         ### učitelské hrany
-        for x in seminare.keys(): # pro každého profesora
-            vrcholy = seminare[x] # množina seminářů profesora
+        for x in seminare_a_ucitele_rocniku.keys(): # pro každého profesora
+            vrcholy = seminare_a_ucitele_rocniku[x] # množina seminářů profesora
             hrany = combinations(vrcholy, 2) # všechny možné dvojice seminářů v množině 
             P.add_edges_from(hrany, weight = 100) # pro každou dvojici udělá hranu o hodnotě 100 (úplný graf)
         
@@ -49,8 +76,4 @@ class Rocnik():
             G, pos, edge_labels={(u, v): d["weight"] for u, v, d in G.edges(data=True)}
         ) # u každé hrany zobrazuji její hodnotu
         plt.show()
-        return G
-    # Instance method
-    def description(self):
-
-        return f"{self.name} is {self.age} years old"
+        return

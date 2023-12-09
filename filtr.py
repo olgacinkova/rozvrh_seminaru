@@ -15,14 +15,14 @@ def kvinta(kam_rocnik, rocnik_seminar, kam_seminar, seminare):
     for zak in zaci_kvinty:
         aktualni_seminare = kam_seminar[zak]
         kam_kvintani[zak] = aktualni_seminare
-    return ucitele_kvinta, kvinta_seminare, zaci_kvinty
+    return ucitele_kvinta, kvinta_seminare, zaci_kvinty, kam_kvintani
 
 
 def main():
     ks = zaci_seminare("zapsani.csv")
     kt = zaci_tridy("zaci.csv")
     print(kt)
-    print(ktery_seminar_pro_kterou_tridu("seminare.csv"))
+    print(ktery_seminar_pro_ktery_rocnik("seminare.csv"))
     ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
     print(seminare, id_seminaru)
     graf = udelej_graf(seminare, id_seminaru, ks)
