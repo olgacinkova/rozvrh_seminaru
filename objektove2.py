@@ -1,31 +1,34 @@
+# ke grafu
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mpl
 import networkx as nx
 from itertools import combinations
-from nacti_vstup import *
-from barveni import *
+# k objektum
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import List, Optional
 
+@dataclass
 class Rocnik():
-    def __init__(self):
-        self.rocnik = int # jaky rocnik to je
+    def __init__(self, rocnik):
+        self.rocnik = rocnik # jaky rocnik to je
         self.ucitele_rocniku = None 
         self.seminare_rocniku = None 
         self.zaci_rocniku = None
         self.kam_rocnik = dict()
-        self.G = None # graf pro dany rocnik
+        self.G = None
 
-
-    def data_pro_dany_rocnik(self,rocnik_seminar, kam_seminar, seminare):
-        self.zaci_rocniku = self.kam_rocnik[self.rocnik] # mnozina zaku z rocniku
-        self.seminare_rocniku = rocnik_seminar[self.rocnik]
+    def data_pro_dany_rocnik(self, cislo_rocniku, rocnik_seminar, kam_seminar, seminare):
+        self.zaci_rocniku = self.kam_rocnik[cislo_rocniku] # mnozina zaku z rocniku
+        self.seminare_rocniku = rocnik_seminar[cislo_rocniku]
         ucitele_rocniku = dict()
         for ucitel in seminare.keys():
             seminare_ucitele = seminare[ucitel] 
-            overlap = seminare_ucitele.intersection(self.seminare_rocniku)
+            overlap = seminare_ucitele.intersection(self, seminare_rocniku)
             if len(overlap) > 0:
                 ucitele_rocniku[ucitel] = overlap
-        for zak in self.zaci_rocniku:
+        for zak in zaci_rocniku:
             aktualni_seminare = kam_seminar[zak]
             self.kam_rocnik[zak] = aktualni_seminare
         return
@@ -81,19 +84,13 @@ class Rocnik():
         return
     
 def main():
-    kam_seminar = zaci_seminare("zapsani.csv")
-    kam_trida = zaci_tridy("zaci.csv")
-    rocnik_seminar = ktery_seminar_pro_ktery_rocnik("seminare.csv")
+    ks = zaci_seminare("zapsani.csv")
+    kt = zaci_tridy("zaci.csv")
+    ktery_seminar_pro_ktery_rocnik("seminare.csv")
     ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
 
-    kvinta  = Rocnik()
-    kvinta.rocnik = 5 # jaky rocnik to je
-    kvinta.ucitele_rocniku =  
-    kvinta.seminare_rocniku = rocnik_seminar[5]
-    kvinta.zaci_rocniku = kam_trida
-    kvinta.kam_rocnik = dict()
-    kvinta.G = None
-    print(kvinta.data_pro_dany_rocnik())
+    kvinta  = Rocnik(5)
+    kvinta.data_pro_dany_rocnik()
 
 if __name__ == "__main__":
     main()

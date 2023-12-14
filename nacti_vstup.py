@@ -96,8 +96,8 @@ def id_ucitelu(soubor):
     # vrací dict učitelů a jejich id, dict učitelů a množin jejich seminářů, seznam id seminaru
     return ucitele, seminare, id_seminaru
 
-def ktery_seminar_pro_kterou_tridu(soubor):
-    # udela dict trida_seminar, kde bude pro kazdou tridu, jake seminare jsou pro ni
+def ktery_seminar_pro_ktery_rocnik(soubor):
+    # udela dict rocnik_seminar, kde bude pro kazdy rocnik, jake seminare jsou pro nej
     rocnik_seminar = {5:set(), 6: set(), 7:set(), 8:set()}
     df = pd.read_csv(soubor) # načtu soubor jako dataframe
     for index, radek in df.iterrows():
