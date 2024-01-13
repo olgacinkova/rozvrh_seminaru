@@ -38,6 +38,7 @@ def obarvi_graf_lip(G, B): # G = graf, B = pozadovane chrom. c.
     
     # vytvorim seznam hran podle velikosti - zacina hranou s nejmensi hodnotou
     serazene_hrany = sorted(G.edges(data=True), key=lambda x: x[2]['weight'])
+    print(serazene_hrany)
 
     # obarvím graf hladovým barvicím algoritmem
     chrom = 0
@@ -50,6 +51,7 @@ def obarvi_graf_lip(G, B): # G = graf, B = pozadovane chrom. c.
     labels = {e: G.edges[e]['weight'] for e in G.edges}
     while chrom > B:
         nejmensi = serazene_hrany.pop(0) # hrana s nejmensi hodnotou
+        print(nejmensi)
         G.remove_edge(nejmensi[0], nejmensi[1])
         graph_coloring = nx.greedy_color(G)
         unique_colors = set(graph_coloring.values())
@@ -79,7 +81,7 @@ def obarvi_graf_lip(G, B): # G = graf, B = pozadovane chrom. c.
 def seskup_seminare_do_bloku(G):
     # Get the weighted adjacency list representation
     weighted_adjacency_list = nx.to_dict_of_dicts(G)
-
+    
 # Convert to a dictionary of lists
     adjacency_list_of_lists = {node: [(neighbor, data['weight']) for neighbor, data in neighbors.items()] for node, neighbors in weighted_adjacency_list.items()}
 

@@ -43,14 +43,21 @@ ROZVRH
 13. uložím si někam, jaké další třídy mají seminář v tomto bloku a pro každou třídu si budu někam ukládat, kolik bloků seminářů pro ni už je v rozvrhu zařazeno 
 14. protože má kvinta 2 bloky k dispozici, provedu kroky 11. - 13. ještě jednou
 15. kouknu se, kolik už má sexta bloků v rozvrhu
-16. bubu provádět pro sextu kroky 12 a 13, dokud nebude v rozvrhu dost bloků pro sextu
+16. budu provádět pro sextu kroky 12 a 13, dokud nebude v rozvrhu dost bloků pro sextu
 17. stejně to udělám i pro septimu a oktávu - opakuju krok 16. pro ně
 18. hotovo!
     PROBLÉM: musím nějak zohlednit, že někteří profesoři nemají čas v libovolném bloku
 seznam barev: vybírat dle specifického pořadí
     nejdřív kvinty, sexty
-    kvinty, sexty později
-    ostatní spíš k poledni
+        muzou se obarvit dohromady
+        jedna instance to muze byt
+        2 * 9. a 10.
+
+    pak septimy samostatne - 2* 7. a 8. predevsim, pak 9. a 10. 
+    pak oktavy - 3* az 4* 7. a 8.
+    
+    uz vedet, ktera barva bude ktery casovy blok
+    casove moznosti profesoru z tab kolize
 
 ODHAD SLOŽITOSTI:
 nemusím řešit, pokud bude běhat

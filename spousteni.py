@@ -6,7 +6,8 @@ def main():
     ktery_seminar_pro_ktery_rocnik("seminare.csv")
     ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
     graf = udelej_graf(seminare, id_seminaru, ks)
-    obarvi_graf_lip(graf, 4)
+    obarvi_graf(graf)
+    obarvi_graf_lip(graf, 7)
     print(seskup_seminare_do_bloku(graf))
     return
 
