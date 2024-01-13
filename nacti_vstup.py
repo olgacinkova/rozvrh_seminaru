@@ -10,10 +10,10 @@ def parsuj_tridu(cislo_rocniku: str): # napr z 4.A udela 5
     return int(cislo_rocniku.lstrip()[0])
 
 
-def zaci_tridy(soubor):
+def nacti_zaky_rocniku(soubor):
     # načítá soubor zaci
     # do jakých tříd chodí žáci
-    # výstup: dictionary ve formátu třída : množina jejích žáků
+    # výstup: dictionary ve formátu rocnik : množina jeho žáků
     df = pd.read_csv(soubor, delimiter=';')
     kam_trida = dict()  # dictionary - kdo kam chodí
     for zak, trida in zip(df.id, df.trida): # projdu všechny žáky
@@ -33,7 +33,7 @@ def zaci_tridy(soubor):
     return kam_rocnik
 
 
-def nacti_zaky_seminare(soubor):
+def nacti_zaky_seminaru(soubor):
     # načítá vstupní soubor zapsani.csv
     # výstupem je dict, kde je vždy zak množina seminářů, kam chodí
     df = pd.read_csv(soubor)  # načtu soubor jako dataframe
@@ -46,28 +46,37 @@ def nacti_zaky_seminare(soubor):
             kam_seminar[zak].add(seminar)  # přidám tam nový seminář
     return kam_seminar
 
-
-def id_ucitelu(soubor):
-    # bere na vstupu seznam seminářů s učiteli
-    # ke každému učiteli vymyslí id číslo
-    # výstup dict, kde je ke každému učiteli množina seminářů, které učí
+def nacti_id_vsech_seminaru(soubor):
+    # bere na vstupu soubor seminare.csv
+    # udela seznam id vsech seminaru
     df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
-    id_seminaru = list(df.id)  # id seminářů
+    id_vsech_seminaru = list(df.id)  # id seminářů
+    return id_vsech_seminaru
+
+def nacti_id_vsech_ucitelu(soubor):
+    # bere na vstupu soubor seminare.csv
+    df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
     j = list(df.ucitel)  # jména učitelů
     jmena = set()  # množina jmen učitelů
     for jm in j:
         for x in jm.split(","):  # obcas je nekde vic ucitelu u jednoho seminare
             x = x.replace(" ", "")
             jmena.add(x)
-    ucitele_id = dict()  # dict, kde je učitel a k němu jeho id
 
+    id_vsech_ucitelu = dict()  # dict, kde je učitel a k němu jeho id
     for id, jmeno in enumerate(jmena, 1):  # ocisluje ucitele, zacina 1
-        ucitele_id[jmeno] = id
-
+        id_vsech_ucitelu[jmeno] = id
+    return id_vsech_ucitelu
+    
+def nacti_id_ucitelu(soubor):
+    # bere na vstupu seznam seminářů s učiteli
+    # ke každému učiteli vymyslí id číslo
+    # výstup dict, kde je ke každému učiteli množina seminářů, které učí
+    df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
     # TUDU : use defaultdict(set)
     seminare_ucitelu = dict()  # dictionary, kde je vždy učitel k němu množina jeho seminářů
-    for x in range(len(id_seminaru)):  # pro každý seminář
-        seminar = id_seminaru.pop(0)  # aktuální seminář
+    for x in range(len(id_vsech_seminaru)):  # pro každý seminář
+        seminar = id_vsech_seminaru.pop(0)  # aktuální seminář
         ucitel = j.pop(0)  # aktuální učitel
         # odstraním pro jistotu mezery ze jmen učitelů
         ucitel = ucitel.replace(' ', '')
@@ -76,7 +85,7 @@ def id_ucitelu(soubor):
         ucitel = ucitel.split(",")
         if type(ucitel) == list:  # pokud víc než jeden učitel
             for x in ucitel:  # vezmu jednoho učitele
-                id_ucitele = ucitele_id[x]  # kouknu na jeho id
+                id_ucitele = id_vsech_ucitelu[x]  # kouknu na jeho id
                 if id_ucitele in seminare_ucitelu:  # pokud má už množinu svých seminářů
                     seminare_ucitelu[id_ucitele].add(
                         seminar)  # přidám další seminář
@@ -86,15 +95,14 @@ def id_ucitelu(soubor):
                     # rovnou do množiny přidám seminář
                     seminare_ucitelu[id_ucitele].add(seminar)
         else:
-            id_ucitele = ucitele_id[ucitel]  # vezmu aktuálního učitele
+            id_ucitele = id_vsech_ucitelu[ucitel]  # vezmu aktuálního učitele
             if id_ucitele in seminare_ucitelu:  # to stejné, co v ifu výše
                 seminare_ucitelu[id_ucitele].add(seminar)
             else:
                 seminare_ucitelu[id_ucitele] = set()
                 seminare_ucitelu[id_ucitele].add(seminar)
     # vrací dict učitelů a jejich id, dict učitelů a množin jejich seminářů, seznam id seminaru
-    return ucitele_id, seminare_ucitelu, id_seminaru
-
+    return seminare_ucitelu, id_vsech_ucitelu, id_vsech_seminaru
 
 def ktery_seminar_pro_ktery_rocnik(soubor):
     # udela dict rocnik_seminar, kde bude pro kazdy rocnik, jake seminare jsou pro nej

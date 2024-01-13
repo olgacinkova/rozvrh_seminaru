@@ -1,23 +1,29 @@
 from nacti_vstup import *
 from barveni import *
+
+class Rocnik:
+    def __init__(self, kolikaty: [int]): # kvuli spojeni kvinty a sexty
+        self.__kolikaty = kolikaty # kolikaty je to rocnik
+        self.zaci = None
+        self.seminare = None
+        self.ucitele = None
+
 def main():
 
-    # zalozit rocnikove objekty
-    # Rocnik([5,6]), Rocnik(7), Rocnik(8)
-    # dict: rocnik to objekt rocniku
-    # 5 ->  Rocnik([5,6])
-    # 6 ->  Rocnik([5,6])
-    # 7 ->  Rocnik(7)
-    # ...
-    # poslat mapu do nacitacich fci
-    zaci_seminare = nacti_zaky_seminare("zapsani")
-    tridy = zaci_tridy("zaci")
-    ktery_seminar_pro_ktery_rocnik("seminare.csv")
-    ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
-
+    zaci_seminaru = nacti_zaky_seminaru("zapsani")
+    zaci_rocniku = nacti_zaky_rocniku("zaci")
+    id_vsech_seminaru = nacti_id_vsech_seminaru("seminare.csv")
+    id_vsech_ucitelu = nacti_id_vsech_ucitelu("seminare.csv")
+    seminare_rocniku = ktery_seminar_pro_ktery_rocnik("seminare.csv")
+    ucitele_seminaru = nacti_id_ucitelu("seminare.csv")
+    
     # rozšťouchat do objektu
-
-    graf = udelej_graf(seminare, id_seminaru, zaci_seminare)
+    kvinta_sexta = Rocnik([5, 6]) 
+    # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
+    septima = Rocnik([7])
+    oktava = Rocnik([8])
+    septima.zaci = zaci_rocniku[7]
+    graf = udelej_graf(zaci_seminaru)
     obarvi_graf(graf)
     obarvi_graf_lip(graf, 7)
     print(seskup_seminare_do_bloku(graf))
