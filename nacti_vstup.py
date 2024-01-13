@@ -1,3 +1,4 @@
+from collections import defaultdict
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.colors as mpl
@@ -5,21 +6,17 @@ import networkx as nx
 from itertools import combinations
 
 
-def parse_class(class_name: str):
-    return int(class_name.lstrip()[0])
+def parsuj_tridu(cislo_rocniku: str): # napr z 4.A udela 5
+    return int(cislo_rocniku.lstrip()[0])
 
 
 def zaci_tridy(soubor):
-    # načítá soubor zaci.csv
+    # načítá soubor zaci
     # do jakých tříd chodí žáci
     # výstup: dictionary ve formátu třída : množina jejích žáků
-    df = pd.read_csv(soubor)
-    id = list(df.id)  # id žáků
-    tridy = list(df.trida)  # do jaké třídy patří
+    df = pd.read_csv(soubor, delimiter=';')
     kam_trida = dict()  # dictionary - kdo kam chodí
-    for i in range(len(id)):  # projdu všechny žáky
-        trida = tridy.pop(0).replace(" ", "")
-        zak = id. pop(0)  # id prvního žáka ze seznamu
+    for zak, trida in zip(df.id, df.trida): # projdu všechny žáky
         if trida in kam_trida:  # pokud už je třída v dictionary
             kam_trida[trida].add(zak)  # přidá do množiny nového žáka
         else:
@@ -29,22 +26,19 @@ def zaci_tridy(soubor):
     # do jakeho rocniku chodi kteri zaci
     kam_rocnik = {5: set(), 6: set(), 7: set(), 8: set()}
     for rocnik in kam_trida.keys():
-        cilovy_rocnik = parse_class(rocnik) + 1
-        for e in kam_trida[rocnik]: # presunu zaky dane tridy do daneho rocniku
+        cilovy_rocnik = parsuj_tridu(rocnik) + 1
+        for e in kam_trida[rocnik]:  # presunu zaky dane tridy do daneho rocniku
             kam_rocnik[cilovy_rocnik].add(e)
+
     return kam_rocnik
 
 
-def zaci_seminare(soubor):
+def nacti_zaky_seminare(soubor):
     # načítá vstupní soubor zapsani.csv
     # výstupem je dict, kde je vždy zak množina seminářů, kam chodí
     df = pd.read_csv(soubor)  # načtu soubor jako dataframe
-    id = list(df.zak)  # seznam id žáků (sloupec)
-    seminare = list(df.seminar)  # seznam seminářů žáků (sloupec)
     kam_seminar = dict()  # výstupní dictionary
-    for i in range(len(id)):  # pro každého žáka
-        zak = id.pop(0)  # aktuální žák
-        seminar = seminare.pop(0)  # seminář, na který chodí
+    for zak, seminar in zip(df.zak, df.seminar):
         if zak in kam_seminar:  # pokud už žák má množinu v dictu
             kam_seminar[zak].add(seminar)  # přidám do množiny nový seminář
         else:
@@ -65,39 +59,41 @@ def id_ucitelu(soubor):
         for x in jm.split(","):  # obcas je nekde vic ucitelu u jednoho seminare
             x = x.replace(" ", "")
             jmena.add(x)
-    ucitele = dict()  # dict, kde je učitel a k němu množina jeho seminářů
-    i = 1
-    for jm in jmena:  # každému učiteli vymyslí jeho id
-        ucitele[jm] = i
-        i += 1
+    ucitele_id = dict()  # dict, kde je učitel a k němu jeho id
 
-    seminare = dict()  # dictionary, kde je vždy učitel k němu množina jeho seminářů
+    for id, jmeno in enumerate(jmena, 1):  # ocisluje ucitele, zacina 1
+        ucitele_id[jmeno] = id
+
+    # TUDU : use defaultdict(set)
+    seminare_ucitelu = dict()  # dictionary, kde je vždy učitel k němu množina jeho seminářů
     for x in range(len(id_seminaru)):  # pro každý seminář
         seminar = id_seminaru.pop(0)  # aktuální seminář
         ucitel = j.pop(0)  # aktuální učitel
         # odstraním pro jistotu mezery ze jmen učitelů
         ucitel = ucitel.replace(' ', '')
+
         # u některých seminářů je víc učitelů - rozdělím je
         ucitel = ucitel.split(",")
         if type(ucitel) == list:  # pokud víc než jeden učitel
             for x in ucitel:  # vezmu jednoho učitele
-                id_ucitele = ucitele[x]  # kouknu na jeho id
-                if id_ucitele in seminare:  # pokud má už množinu svých seminářů
-                    seminare[id_ucitele].add(seminar)  # přidám další seminář
+                id_ucitele = ucitele_id[x]  # kouknu na jeho id
+                if id_ucitele in seminare_ucitelu:  # pokud má už množinu svých seminářů
+                    seminare_ucitelu[id_ucitele].add(
+                        seminar)  # přidám další seminář
                 else:  # pokud učitel ještě nemá množinu svých seminářů
                     # vytvořím mu prázdnou množinu
-                    seminare[id_ucitele] = set()
+                    seminare_ucitelu[id_ucitele] = set()
                     # rovnou do množiny přidám seminář
-                    seminare[id_ucitele].add(seminar)
+                    seminare_ucitelu[id_ucitele].add(seminar)
         else:
-            id_ucitele = ucitele[ucitel]  # vezmu aktuálního učitele
-            if id_ucitele in seminare:  # to stejné, co v ifu výše
-                seminare[id_ucitele].add(seminar)
+            id_ucitele = ucitele_id[ucitel]  # vezmu aktuálního učitele
+            if id_ucitele in seminare_ucitelu:  # to stejné, co v ifu výše
+                seminare_ucitelu[id_ucitele].add(seminar)
             else:
-                seminare[id_ucitele] = set()
-                seminare[id_ucitele].add(seminar)
+                seminare_ucitelu[id_ucitele] = set()
+                seminare_ucitelu[id_ucitele].add(seminar)
     # vrací dict učitelů a jejich id, dict učitelů a množin jejich seminářů, seznam id seminaru
-    return ucitele, seminare, id_seminaru
+    return ucitele_id, seminare_ucitelu, id_seminaru
 
 
 def ktery_seminar_pro_ktery_rocnik(soubor):
@@ -129,20 +125,20 @@ def udelej_graf(seminare, id_seminaru, kam_seminar):
     P.add_nodes_from(id_seminaru)
 
     # učitelské hrany
-    for x in seminare.keys():  # pro každého profesora
-        vrcholy = seminare[x]  # množina seminářů profesora
+    for ucitel in seminare.keys():  # pro každého profesora
+        vrcholy = seminare[ucitel]  # množina seminářů profesora
         # všechny možné dvojice seminářů v množině
-        hrany = combinations(vrcholy, 2)
+        kombinace_vrcholu = combinations(vrcholy, 2)
         # pro každou dvojici udělá hranu o hodnotě 100 (úplný graf)
-        P.add_edges_from(hrany, weight=100)
+        P.add_edges_from(kombinace_vrcholu, weight=100)
 
     # žákovské hrany
-    for x in kam_seminar.keys():  # pro každý prvek z množiny seminářů u jednoho žáka
-        vrcholy = kam_seminar[x]  # množina seminářů žáka
+    for zak in kam_seminar.keys():  # pro každý prvek z množiny seminářů u jednoho žáka
+        vrcholy = kam_seminar[zak]  # množina seminářů žáka
         # všechny možné dvojice seminářů v množině
-        hrany = combinations(vrcholy, 2)
+        kombinace_vrcholu = combinations(vrcholy, 2)
         # pro každou dvojici udělá hranu o hodnotě 1 (úplný graf)
-        P.add_edges_from(hrany, weight=1)
+        P.add_edges_from(kombinace_vrcholu, weight=1)
 
     # graf se součtem hodnot hran z P
     # udělá s multigrafu P normální ohodnocený graf
