@@ -67,11 +67,7 @@ def nacti_id_vsech_ucitelu(soubor):
     for id, jmeno in enumerate(jmena, 1):  # ocisluje ucitele, zacina 1
         id_vsech_ucitelu[jmeno] = id
     return id_vsech_ucitelu
-    
-def nacti_ucitele_rocniku(soubor):
-    # bere na vstupu soubor seminare.csv
-    # na vystupu dict, kde ke kazdemu rocniku 
-    return ucitele_rocniku
+
 def nacti_ucitele_seminaru(soubor):
     # bere na vstupu seznam seminářů s učiteli
     # ke každému učiteli vymyslí id číslo
