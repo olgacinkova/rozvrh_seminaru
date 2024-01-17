@@ -23,7 +23,7 @@ def nacti_zaky_rocniku(soubor):
             # vytvoří novou prázdnou množinu pro třídu
             kam_trida[trida] = set()
             kam_trida[trida].add(zak)  # přidá do množiny rovnou prvního žáka
-    # do jakeho rocniku chodi kteri zaci
+    # do jakeho rocniku chodi (resp. kam budou chodit pristi rok) kteri zaci
     kam_rocnik = {5: set(), 6: set(), 7: set(), 8: set()}
     for rocnik in kam_trida.keys():
         cilovy_rocnik = parsuj_tridu(rocnik) + 1
@@ -68,11 +68,29 @@ def nacti_id_vsech_ucitelu(soubor):
         id_vsech_ucitelu[jmeno] = id
     return id_vsech_ucitelu
     
-def nacti_id_ucitelu(soubor):
+def nacti_ucitele_rocniku(soubor):
+    # bere na vstupu soubor seminare.csv
+    # na vystupu dict, kde ke kazdemu rocniku 
+    return ucitele_rocniku
+def nacti_ucitele_seminaru(soubor):
     # bere na vstupu seznam seminářů s učiteli
     # ke každému učiteli vymyslí id číslo
     # výstup dict, kde je ke každému učiteli množina seminářů, které učí
     df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
+    # bere na vstupu soubor seminare.csv
+    # udela seznam id vsech seminaru
+    df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
+    id_vsech_seminaru = list(df.id)  # id seminářů
+    j = list(df.ucitel)  # jména učitelů
+    jmena = set()  # množina jmen učitelů
+    for jm in j:
+        for x in jm.split(","):  # obcas je nekde vic ucitelu u jednoho seminare
+            x = x.replace(" ", "")
+            jmena.add(x)
+
+    id_vsech_ucitelu = dict()  # dict, kde je učitel a k němu jeho id
+    for id, jmeno in enumerate(jmena, 1):  # ocisluje ucitele, zacina 1
+        id_vsech_ucitelu[jmeno] = id
     # TUDU : use defaultdict(set)
     seminare_ucitelu = dict()  # dictionary, kde je vždy učitel k němu množina jeho seminářů
     for x in range(len(id_vsech_seminaru)):  # pro každý seminář
@@ -102,9 +120,10 @@ def nacti_id_ucitelu(soubor):
                 seminare_ucitelu[id_ucitele] = set()
                 seminare_ucitelu[id_ucitele].add(seminar)
     # vrací dict učitelů a jejich id, dict učitelů a množin jejich seminářů, seznam id seminaru
-    return seminare_ucitelu, id_vsech_ucitelu, id_vsech_seminaru
+    return seminare_ucitelu
 
 def ktery_seminar_pro_ktery_rocnik(soubor):
+    # bere seminare.csv
     # udela dict rocnik_seminar, kde bude pro kazdy rocnik, jake seminare jsou pro nej
     rocnik_seminar = {5: set(), 6: set(), 7: set(), 8: set()}
     df = pd.read_csv(soubor)  # načtu soubor jako dataframe

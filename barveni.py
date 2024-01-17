@@ -60,7 +60,7 @@ def obarvi_graf_lip(G, B): # G = graf, B = pozadovane chrom. c.
         pouzite_barvy = set(node_colors)
         chrom= len(pouzite_barvy)
         labels = {e: G.edges[e]['weight'] for e in G.edges}
-        pos = nx.spring_layout(G)
+    pos = nx.spring_layout(G)
     nx.draw(
         G,
         pos, 
