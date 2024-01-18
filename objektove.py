@@ -81,10 +81,10 @@ class Rocnik():
         return
     
 def main():
-    kam_seminar = zaci_seminare("zapsani.csv")
-    kam_trida = zaci_tridy("zaci.csv")
+    kam_seminar = nacti_zaky_seminaru("zapsani.csv")
+    kam_trida = nacti_zaky_rocniku("zaci.csv")
     rocnik_seminar = ktery_seminar_pro_ktery_rocnik("seminare.csv")
-    ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
+    ucitele, seminare, id_seminaru = nacti_id_ucitelu("seminare.csv")
 
     kvinta  = Rocnik()
     kvinta.rocnik = 5 # jaky rocnik to je

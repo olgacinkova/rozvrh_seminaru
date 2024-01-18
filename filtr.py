@@ -35,11 +35,12 @@ def kvinta(kam_rocnik, rocnik_seminar, kam_seminar, seminare):
 
 
 def main():
-    ks = zaci_seminare("zapsani.csv")
-    kt = zaci_tridy("zaci.csv")
+    ks = nacti_zaky_seminaru("zapsani.csv")
+    kt = nacti_zaky_rocniku("zaci.csv")
+    #kvinta = rocnik(cislo_rocniku, kam_rocnik, rocnik_seminar, kam_seminar, seminare)
     print(kt)
     print(ktery_seminar_pro_ktery_rocnik("seminare.csv"))
-    ucitele, seminare, id_seminaru = id_ucitelu("seminare.csv")
+    ucitele, seminare, id_seminaru = nacti_id_ucitelu("seminare.csv")
     print(seminare, id_seminaru)
     graf = udelej_graf(seminare, id_seminaru, ks)
     obarvi_graf_lip(graf, 8)
