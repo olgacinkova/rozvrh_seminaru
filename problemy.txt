@@ -1,0 +1,5 @@
+11. proc nebrat v uvahu neco prumer rocniku zaku bloku
+napr. 9 kvintanu, 7 sextanu, 
+12. problem: muze se mozna stat, ze blok bude sdilet maxima seminaru
+
+

@@ -105,15 +105,15 @@ class Rocnik:
 
 def main():
 
-    zaci_seminaru = nacti_zaky_seminaru("zapsani")
-    zaci_rocniku = nacti_zaky_rocniku("zaci")
+    zaci_seminaru = nacti_zaky_seminaru("zapsani.csv")
+    zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
     id_vsech_seminaru = nacti_id_vsech_seminaru("seminare.csv")
     id_vsech_ucitelu = nacti_id_vsech_ucitelu("seminare.csv")
     seminare_rocniku = ktery_seminar_pro_ktery_rocnik("seminare.csv")
     ucitele_seminaru = nacti_ucitele_seminaru("seminare.csv")
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik("seminare.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
-    breakpoint()
+
     vsechny_seminare: list = []
     vsechny_seminare = [Seminar(id) for id in id_vsech_seminaru]
     for e in vsechny_seminare:

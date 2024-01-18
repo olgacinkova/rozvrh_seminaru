@@ -38,11 +38,9 @@ def nacti_zaky_seminaru(soubor):
     # výstupem je dict, kde je vždy zak množina seminářů, kam chodí
     df = pd.read_csv(soubor)  # načtu soubor jako dataframe
     kam_seminar = dict()  # výstupní dictionary
-    breakpoint()
     for zak, seminar in zip(df.zak, df.seminar):
         if zak in kam_seminar:  # pokud už žák má množinu v dictu
             kam_seminar[zak].add(seminar)  # přidám do množiny nový seminář
-            breakpoint()
         else:
             kam_seminar[zak] = set()  # vytvoří novou prázdnou množinu
             kam_seminar[zak].add(seminar)  # přidám tam nový seminář
