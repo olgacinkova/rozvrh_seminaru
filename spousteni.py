@@ -3,13 +3,20 @@ from barveni import *
 
 class Seminar:
     def __init__(self, id_seminare):
-        self.__id_seminare = id_seminare 
+        self.__id = id_seminare 
         self.pro_ktere_rocniky: set = set() # muze byt pro vice rocniku
         self.kteri_zaci_tam_chodi: set = set()
         self.kdo_seminar_uci: set = set() # muze ucit i vice ucitelu
+
+
+    @property
+    def id(self):
+        return self.__id
+
+
     def uloz_pro_ktere_rocniky(self, soubor_seminare): # nacita soubor seminare.csv
         df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
-        index = self.__id_seminare - 1
+        index = self.__id - 1
         radek = df.loc[index]
         if radek['pro5'] == 1:
                 self.pro_ktere_rocniky.add(5)
@@ -22,13 +29,13 @@ class Seminar:
         
 
     def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani): #nacita soubor zapsani
-        df = pd.read_csv(soubor_zapsani) 
+        df = pd.read_csv(soubor_zapsani, delimiter=';') 
         for zak, seminar in zip(df.zak, df.seminar):
-            if seminar == self.__id_seminare:
+            if seminar == self.__id:
                 self.kteri_zaci_tam_chodi.add(zak)
     def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu): # nacita soubor seminare.csv a promennou id_vsech_ucitelu
         df = pd.read_csv(soubor_seminare)
-        radek = self.__id_seminare -1 
+        radek = self.__id -1 
         sloupec = 'ucitel'
         jmeno_ucitele = df.at[radek,sloupec]
         jmeno_ucitele = str(jmeno_ucitele)
@@ -63,29 +70,27 @@ class Rocnik:
      
     def uloz_zaci(self, zaci_rocniku):
         for rocnik in self.__kolikaty:
-            self.zaci.union(zaci_rocniku[rocnik])
-            breakpoint()
+            self.zaci = self.zaci.union(zaci_rocniku[rocnik])
 
     def uloz_zaci_kam_na_seminare(self):
         self.zaci = self.zaci_kam_na_seminare.keys()
     
     def uloz_ucitele(self, vsechny_seminare):
         for e in vsechny_seminare:
-            self.ucitele.union(e.kdo_seminar_uci)
+            self.ucitele = self.ucitele.union(e.kdo_seminar_uci)
     
     def uloz_id_seminaru_rocniku(self, seminare_rocniky):
         # udela seznam id seminaru daneho rocniku
         for rocnik in self.__kolikaty:
-            self.id_seminaru_rocniku.union(seminare_rocniky[rocnik])
+            self.id_seminaru_rocniku = self.id_seminaru_rocniku.union(seminare_rocniky[rocnik])
     
     def uloz_ucitele_a_jejich_seminare(self, ucitele_seminaru, vsechny_seminare):
         for ucitel in self.ucitele:
             mnozina_seminaru_konkretniho_ucitele = ucitele_seminaru[ucitel]
             self.ucitele_a_jejich_seminare[ucitel] = mnozina_seminaru_konkretniho_ucitele
         for mnozina in self.ucitele_a_jejich_seminare.values(): # projdu kazdemu uciteli rocniku jeho mnozinu seminaru
-            breakpoint()
             for konkretni_seminar in mnozina: # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
-                if vsechny_seminare[konkretni_seminar].pro_ktere_rocniky == self.__kolikaty: #pokud je seminar pro dany rocnik
+                if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty: #pokud je seminar pro dany rocnik
                     self.ucitele_a_jejich_seminare[mnozina].discard(konkretni_seminar)
             
             
@@ -95,7 +100,8 @@ class Rocnik:
         ### zopakovat si algoritmus na prirazovani do bloku
     """
     def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru):
-        self.uloz_zaci_kam_na_seminare()
+        # self.uloz_zaci_kam_na_seminare()
+        self.uloz_zaci(zaci_rocniku)
         self.uloz_ucitele(vsechny_seminare)
         self.uloz_id_seminaru_rocniku(seminare_rocniky)
         self.uloz_ucitele_a_jejich_seminare(ucitele_seminaru, vsechny_seminare)
@@ -114,12 +120,11 @@ def main():
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik("seminare.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
 
-    vsechny_seminare: list = []
     vsechny_seminare = [Seminar(id) for id in id_vsech_seminaru]
     for e in vsechny_seminare:
-        e.uloz_data_pro_seminar("zapsani" , "seminare.csv", id_vsech_ucitelu)
+        e.uloz_data_pro_seminar("zapsani.csv" , "seminare.csv", id_vsech_ucitelu)
+
         #print(vars(e)) # tisknu si hodnoty z instanci
-    #breakpoint()
 
 
     # instance: jednotlive rocniky

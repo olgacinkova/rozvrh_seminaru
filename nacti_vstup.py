@@ -36,7 +36,7 @@ def nacti_zaky_rocniku(soubor):
 def nacti_zaky_seminaru(soubor):
     # načítá vstupní soubor zapsani.csv
     # výstupem je dict, kde je vždy zak množina seminářů, kam chodí
-    df = pd.read_csv(soubor)  # načtu soubor jako dataframe
+    df = pd.read_csv(soubor, delimiter=';')  # načtu soubor jako dataframe
     kam_seminar = dict()  # výstupní dictionary
     for zak, seminar in zip(df.zak, df.seminar):
         if zak in kam_seminar:  # pokud už žák má množinu v dictu
