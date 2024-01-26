@@ -62,18 +62,15 @@ class Rocnik:
             raise Exception("Spatny argument")
         
         self.zaci: set = set() # mnozina zaku, kteri chodi do daneho rocniku
-        self.zaci_kam_na_seminare: dict = dict() # dictionary ktery zak chodi na ktery seminar
         self.ucitele: set = set()  # mnozina ucitelu uci seminare daneho rocniku
         self.id_seminaru_rocniku: set = set()
         self.graf = None
         self.ucitele_a_jejich_seminare: dict = dict()
+        self.zaci_a_jejich_seminare: dict = dict()
      
     def uloz_zaci(self, zaci_rocniku):
         for rocnik in self.__kolikaty:
             self.zaci = self.zaci.union(zaci_rocniku[rocnik])
-
-    def uloz_zaci_kam_na_seminare(self):
-        self.zaci = self.zaci_kam_na_seminare.keys()
     
     def uloz_ucitele(self, vsechny_seminare):
         for e in vsechny_seminare:
@@ -92,7 +89,18 @@ class Rocnik:
             for konkretni_seminar in mnozina: # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty: #pokud je seminar pro dany rocnik
                     self.ucitele_a_jejich_seminare[mnozina].discard(konkretni_seminar)
-            
+    
+    def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
+        for zak in self.zaci:
+            mnozina_seminaru_konkretniho_zaka = zaci_seminaru[zak]
+            self.zaci_a_jejich_seminare[zak] = mnozina_seminaru_konkretniho_zaka
+            breakpoint()
+        """for mnozina in self.zaci_a_jejich_seminare.values(): # projdu kazdemu zakovi rocniku jeho mnozinu seminaru
+            for konkretni_seminar in mnozina: # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
+                breakpoint()
+                if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty: #pokud je seminar pro dany rocnik
+                    self.zaci_a_jejich_seminare[mnozina].discard(konkretni_seminar)"""
+          
             
     """def uloz_graf(self):
         self.graf = udelej_graf_pro_jeden_rocnik(self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci)
@@ -100,11 +108,11 @@ class Rocnik:
         ### zopakovat si algoritmus na prirazovani do bloku
     """
     def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru):
-        # self.uloz_zaci_kam_na_seminare()
         self.uloz_zaci(zaci_rocniku)
         self.uloz_ucitele(vsechny_seminare)
         self.uloz_id_seminaru_rocniku(seminare_rocniky)
         self.uloz_ucitele_a_jejich_seminare(ucitele_seminaru, vsechny_seminare)
+        self.uloz_zaky_a_jejich_seminare(zaci_seminaru, vsechny_seminare)
         #self.uloz_graf()
 
 
@@ -131,14 +139,15 @@ def main():
     kvinta_sexta = Rocnik([5,6])
     kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                             seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    breakpoint()
+
     septima = Rocnik(7)
     septima.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
+    breakpoint()
     # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
-    print(vars(kvinta_sexta))
+
 
 
     """graf = udelej_graf(ucitele_seminaru, id_vsech_seminaru, zaci_seminaru)
