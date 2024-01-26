@@ -1,5 +1,6 @@
 from nacti_vstup import *
 from barveni import *
+from seminare_rocniky import *
 
 def main():
 
