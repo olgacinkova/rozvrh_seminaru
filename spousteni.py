@@ -5,8 +5,6 @@ from seminare_rocniky import *
 def main():
 
     zaci_seminaru = nacti_zaky_seminaru("zapsani.csv")
-    print(zaci_seminaru.keys())
-    
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
     id_vsech_seminaru = nacti_id_vsech_seminaru("seminare.csv")
     id_vsech_ucitelu = nacti_id_vsech_ucitelu("seminare.csv")
@@ -32,8 +30,9 @@ def main():
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    breakpoint()
     # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
+    print(kvinta_sexta.zaci_a_jejich_seminare)
+    
 
 
 

@@ -7,11 +7,9 @@ class Seminar:
         self.kteri_zaci_tam_chodi: set = set()
         self.kdo_seminar_uci: set = set() # muze ucit i vice ucitelu
 
-
     @property
     def id(self):
         return self.__id
-
 
     def uloz_pro_ktere_rocniky(self, soubor_seminare): # nacita soubor seminare.csv
         df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
@@ -26,12 +24,12 @@ class Seminar:
         if radek['pro8'] == 1:
                 self.pro_ktere_rocniky.add(8)
         
-
     def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani): #nacita soubor zapsani
         df = pd.read_csv(soubor_zapsani, delimiter=';') 
         for zak, seminar in zip(df.zak, df.seminar):
             if seminar == self.__id:
                 self.kteri_zaci_tam_chodi.add(zak)
+
     def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu): # nacita soubor seminare.csv a promennou id_vsech_ucitelu
         df = pd.read_csv(soubor_seminare)
         radek = self.__id -1 
@@ -91,15 +89,16 @@ class Rocnik:
     
     def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
         for zak in self.zaci:
-            mnozina_seminaru_konkretniho_zaka = zaci_seminaru[zak]
-            self.zaci_a_jejich_seminare[zak] = mnozina_seminaru_konkretniho_zaka
+            if zak in zaci_seminaru.keys(): # protoze zak cislo 35 tam neni
+                mnozina_seminaru_konkretniho_zaka = zaci_seminaru[zak]
+                self.zaci_a_jejich_seminare[zak] = mnozina_seminaru_konkretniho_zaka
+
         """for mnozina in self.zaci_a_jejich_seminare.values(): # projdu kazdemu zakovi rocniku jeho mnozinu seminaru
             for konkretni_seminar in mnozina: # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
                 breakpoint()
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty: #pokud je seminar pro dany rocnik
                     self.zaci_a_jejich_seminare[mnozina].discard(konkretni_seminar)"""
-          
-            
+
     """def uloz_graf(self):
         self.graf = udelej_graf_pro_jeden_rocnik(self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci)
         ### to do: udelat funkci udelej_graf jenze pro jeden rocnik
