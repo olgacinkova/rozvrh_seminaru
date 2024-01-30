@@ -17,23 +17,19 @@ def main():
     for e in vsechny_seminare:
         e.uloz_data_pro_seminar("zapsani.csv" , "seminare.csv", id_vsech_ucitelu)
 
-        #print(vars(e)) # tisknu si hodnoty z instanci
-
-
     # instance: jednotlive rocniky
+    # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
     kvinta_sexta = Rocnik([5,6])
     kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                             seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-
+    #breakpoint()
     septima = Rocnik(7)
     septima.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
+    #breakpoint()
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
-    print(kvinta_sexta.zaci_a_jejich_seminare)
-    
-
+    #breakpoint()
 
 
     """graf = udelej_graf(ucitele_seminaru, id_vsech_seminaru, zaci_seminaru)

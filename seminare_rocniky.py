@@ -93,21 +93,20 @@ class Rocnik:
                 mnozina_seminaru_konkretniho_zaka = zaci_seminaru[zak]
                 self.zaci_a_jejich_seminare[zak] = mnozina_seminaru_konkretniho_zaka
 
-        """for mnozina in self.zaci_a_jejich_seminare.values(): # projdu kazdemu zakovi rocniku jeho mnozinu seminaru
+        for mnozina in self.zaci_a_jejich_seminare.values(): # projdu kazdemu zakovi rocniku jeho mnozinu seminaru
             for konkretni_seminar in mnozina: # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
-                breakpoint()
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty: #pokud je seminar pro dany rocnik
-                    self.zaci_a_jejich_seminare[mnozina].discard(konkretni_seminar)"""
+                    self.zaci_a_jejich_seminare[mnozina].discard(konkretni_seminar)
 
-    """def uloz_graf(self):
-        self.graf = udelej_graf_pro_jeden_rocnik(self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci)
+    def uloz_graf(self):
+        self.graf = udelej_graf_pro_jeden_rocnik(self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci_a_jejich_seminare)
         ### to do: udelat funkci udelej_graf jenze pro jeden rocnik
         ### zopakovat si algoritmus na prirazovani do bloku
-    """
+
     def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru):
         self.uloz_zaci(zaci_rocniku)
         self.uloz_ucitele(vsechny_seminare)
         self.uloz_id_seminaru_rocniku(seminare_rocniky)
         self.uloz_ucitele_a_jejich_seminare(ucitele_seminaru, vsechny_seminare)
         self.uloz_zaky_a_jejich_seminare(zaci_seminaru, vsechny_seminare)
-        #self.uloz_graf()
+        self.uloz_graf()
