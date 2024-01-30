@@ -30,6 +30,7 @@ def main():
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     #breakpoint()
+    oktava.obarvi_graf_lip(6)
 
 
     """graf = udelej_graf(ucitele_seminaru, id_vsech_seminaru, zaci_seminaru)
