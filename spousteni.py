@@ -31,6 +31,7 @@ def main():
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     #breakpoint()
     oktava.obarvi_graf_lip(10)
+    zobraz_graf(oktava.obarveny_graf)
 
     # pozorovani:
     #   na 10 barev to jeste jde - cokoliv pod hazi errory

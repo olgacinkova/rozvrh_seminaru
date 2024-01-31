@@ -160,4 +160,4 @@ class Rocnik:
             width=2
             )
         nx.draw_networkx_edge_labels(self.obarveny_graf, pos, edge_labels=labels)
-        plt.show() # zobrazí graf
+        #plt.show() # zobrazí graf

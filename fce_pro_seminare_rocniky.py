@@ -236,3 +236,6 @@ def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_
                              for u, v, d in G.edges(data=True)}
     )  # u každé hrany zobrazuji její hodnotu
     return G
+
+def zobraz_graf(libovolny_graf):
+    plt.show()
