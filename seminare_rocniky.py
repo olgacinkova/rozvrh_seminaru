@@ -1,5 +1,7 @@
 from nacti_vstup import *
 from barveni import *
+from copy import *
+
 class Seminar:
     def __init__(self, id_seminare):
         self.__id = id_seminare 
@@ -61,9 +63,10 @@ class Rocnik:
         self.zaci: set = set() # mnozina zaku, kteri chodi do daneho rocniku
         self.ucitele: set = set()  # mnozina ucitelu uci seminare daneho rocniku
         self.id_seminaru_rocniku: set = set()
-        self.graf = None
         self.ucitele_a_jejich_seminare: dict = dict()
         self.zaci_a_jejich_seminare: dict = dict()
+        self.graf = None
+        self.obarveny_graf = None
      
     def uloz_zaci(self, zaci_rocniku):
         for rocnik in self.__kolikaty:
@@ -144,32 +147,34 @@ class Rocnik:
         # pokud odebraná hrana má hodnotu profesora, vratim graf a jeho chrom cislo
         
         # vytvorim seznam hran podle velikosti - zacina hranou s nejmensi hodnotou
-        serazene_hrany = sorted(self.graf.edges(data=True), key=lambda x: x[2]['weight'])
+
+        self.obarveny_graf = deepcopy(self.graf) # abych nezmenila puvodni graf
+        serazene_hrany = sorted(self.obarveny_graf.edges(data=True), key=lambda x: x[2]['weight'])
         print(serazene_hrany)
 
         # obarvím graf hladovým barvicím algoritmem
         chrom = 0
-        graph_coloring = nx.greedy_color(self.graf)
+        graph_coloring = nx.greedy_color(self.obarveny_graf)
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
-        node_colors = [graph_color_to_mpl_color[graph_coloring[n]] for n in self.graf.nodes()]
+        node_colors = [graph_color_to_mpl_color[graph_coloring[n]] for n in self.obarveny_graf.nodes()]
         pouzite_barvy = set(node_colors)
         chrom = len(pouzite_barvy) # chromaticke cislo = kolik barev pouzito
-        labels = {e: self.graf.edges[e]['weight'] for e in self.graf.edges}
+        labels = {e: self.obarveny_graf.edges[e]['weight'] for e in self.obarveny_graf.edges}
         while chrom > B:
             nejmensi = serazene_hrany.pop(0) # hrana s nejmensi hodnotou
             print(nejmensi)
             self.graf.remove_edge(nejmensi[0], nejmensi[1])
-            graph_coloring = nx.greedy_color(self.graf)
+            graph_coloring = nx.greedy_color(self.obarveny_graf)
             unique_colors = set(graph_coloring.values())
             graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
-            node_colors = [graph_color_to_mpl_color[graph_coloring[n]] for n in self.graf.nodes()]
+            node_colors = [graph_color_to_mpl_color[graph_coloring[n]] for n in self.obarveny_graf.nodes()]
             pouzite_barvy = set(node_colors)
             chrom= len(pouzite_barvy)
-            labels = {e: self.graf.edges[e]['weight'] for e in self.graf.edges}
+            labels = {e: self.obarveny_graf.edges[e]['weight'] for e in self.obarveny_graf.edges}
         pos = nx.spring_layout(self.graf)
         nx.draw(
-            self.graf,
+            self.obarveny_graf,
             pos, 
             with_labels=True,
             node_size=500,
@@ -179,6 +184,5 @@ class Rocnik:
             font_color="#333333",
             width=2
             )
-        nx.draw_networkx_edge_labels(self.graf, pos, edge_labels=labels)
+        nx.draw_networkx_edge_labels(self.obarveny_graf, pos, edge_labels=labels)
         plt.show() # zobrazí graf
-
