@@ -5,10 +5,8 @@ import matplotlib.colors as mpl
 import networkx as nx
 from itertools import combinations
 
-
 def parsuj_tridu(cislo_rocniku: str): # napr z 4.A udela 5
     return int(cislo_rocniku.lstrip()[0])
-
 
 def nacti_zaky_rocniku(soubor):
     # načítá soubor zaci
@@ -237,5 +235,4 @@ def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_
         G, pos, edge_labels={(u, v): d["weight"]
                              for u, v, d in G.edges(data=True)}
     )  # u každé hrany zobrazuji její hodnotu
-    plt.show()
     return G

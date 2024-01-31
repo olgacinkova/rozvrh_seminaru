@@ -1,4 +1,4 @@
-from nacti_vstup import *
+from fce_pro_seminare_rocniky import *
 from barveni import *
 from seminare_rocniky import *
 
@@ -30,7 +30,10 @@ def main():
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     #breakpoint()
-    oktava.obarvi_graf_lip(6)
+    oktava.obarvi_graf_lip(10)
+
+    # pozorovani:
+    #   na 10 barev to jeste jde - cokoliv pod hazi errory
 
 
     """graf = udelej_graf(ucitele_seminaru, id_vsech_seminaru, zaci_seminaru)

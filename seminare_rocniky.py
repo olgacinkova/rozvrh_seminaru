@@ -1,4 +1,4 @@
-from nacti_vstup import *
+from fce_pro_seminare_rocniky import *
 from barveni import *
 from copy import *
 
@@ -113,30 +113,6 @@ class Rocnik:
         self.uloz_ucitele_a_jejich_seminare(ucitele_seminaru, vsechny_seminare)
         self.uloz_zaky_a_jejich_seminare(zaci_seminaru, vsechny_seminare)
         self.uloz_graf()
-
-    def obarvi_graf(self):
-        # obarvím graf hladovým barvicím algoritmem
-        graph_coloring = nx.greedy_color(self.graf)
-        unique_colors = set(graph_coloring.values())
-        graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
-        node_colors = [graph_color_to_mpl_color[graph_coloring[n]] for n in self.graf.nodes()]
-        pouzite_barvy = set(node_colors)
-        chrom = len(pouzite_barvy) # chromaticke cislo = kolik barev pouzito
-        labels = {e: self.graf.edges[e]['weight'] for e in self.graf.edges}
-        pos = nx.spring_layout(self.graf, seed=14)
-        nx.draw(
-            self.graf,
-            pos, 
-            with_labels=True,
-            node_size=500,
-            node_color=node_colors,
-            edge_color="grey",
-            font_size=12,
-            font_color="#333333",
-            width=2
-        )
-        nx.draw_networkx_edge_labels(self.graf, pos, edge_labels=labels)
-        plt.show() # zobrazí graf
 
     def obarvi_graf_lip(self, B): # B = pozadovane chrom. c.
         # obarvím graf
