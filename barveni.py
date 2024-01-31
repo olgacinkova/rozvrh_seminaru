@@ -94,3 +94,4 @@ def seskup_seminare_do_bloku(G):
         print(f"{node}: {neighbor_list}")
         print("Weighted graph as text (dictionary of lists):")"""
     return 
+

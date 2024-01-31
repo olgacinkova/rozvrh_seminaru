@@ -1,5 +1,5 @@
 from fce_pro_seminare_rocniky import *
-from barveni import *
+#from barveni import *
 from copy import *
 
 class Seminar:
@@ -148,6 +148,8 @@ class Rocnik:
             chrom= len(pouzite_barvy)
             labels = {e: self.obarveny_graf.edges[e]['weight'] for e in self.obarveny_graf.edges}
         pos = nx.spring_layout(self.obarveny_graf)
+        nazev_okna = "obarveny graf"
+        plt.title(nazev_okna)
         nx.draw(
             self.obarveny_graf,
             pos, 
@@ -160,4 +162,12 @@ class Rocnik:
             width=2
             )
         nx.draw_networkx_edge_labels(self.obarveny_graf, pos, edge_labels=labels)
-        #plt.show() # zobrazí graf
+        #nazev_okna = str(self.__kolikaty) + "obarveny graf"
+
+        print("obarveno")
+
+        plt.show() # zobrazí graf
+
+        #def zobraz_obarveny_graf(self):
+        #    self.obarveny_graf.show()
+

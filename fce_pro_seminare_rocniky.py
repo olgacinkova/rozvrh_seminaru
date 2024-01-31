@@ -184,7 +184,6 @@ def udelej_graf(seminare, id_seminaru, kam_seminar):
         G, pos, edge_labels={(u, v): d["weight"]
                              for u, v, d in G.edges(data=True)}
     )  # u každé hrany zobrazuji její hodnotu
-    plt.show()
     return G
 
 def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_jejich_seminare):
@@ -235,7 +234,8 @@ def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_
         G, pos, edge_labels={(u, v): d["weight"]
                              for u, v, d in G.edges(data=True)}
     )  # u každé hrany zobrazuji její hodnotu
+    nazev_okna = "neobarveny graf"
+    plt.title(nazev_okna)
+    plt.show()
     return G
 
-def zobraz_graf(libovolny_graf):
-    plt.show()
