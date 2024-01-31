@@ -150,8 +150,6 @@ class Rocnik:
 
         self.obarveny_graf = deepcopy(self.graf) # abych nezmenila puvodni graf
         serazene_hrany = sorted(self.obarveny_graf.edges(data=True), key=lambda x: x[2]['weight'])
-        print(serazene_hrany)
-
         # obarvím graf hladovým barvicím algoritmem
         chrom = 0
         graph_coloring = nx.greedy_color(self.obarveny_graf)
@@ -162,8 +160,9 @@ class Rocnik:
         chrom = len(pouzite_barvy) # chromaticke cislo = kolik barev pouzito
         labels = {e: self.obarveny_graf.edges[e]['weight'] for e in self.obarveny_graf.edges}
         while chrom > B:
+            if len(serazene_hrany) == 0:
+                raise Exception("moc malinke pozadovane chromaticke cislo :( to nejde obarvit")
             nejmensi = serazene_hrany.pop(0) # hrana s nejmensi hodnotou
-            print(nejmensi)
             self.graf.remove_edge(nejmensi[0], nejmensi[1])
             graph_coloring = nx.greedy_color(self.obarveny_graf)
             unique_colors = set(graph_coloring.values())
@@ -172,7 +171,7 @@ class Rocnik:
             pouzite_barvy = set(node_colors)
             chrom= len(pouzite_barvy)
             labels = {e: self.obarveny_graf.edges[e]['weight'] for e in self.obarveny_graf.edges}
-        pos = nx.spring_layout(self.graf)
+        pos = nx.spring_layout(self.obarveny_graf)
         nx.draw(
             self.obarveny_graf,
             pos, 
