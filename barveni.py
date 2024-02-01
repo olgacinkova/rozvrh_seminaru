@@ -73,8 +73,8 @@ def obarvi_graf_lip(G, B): # G = graf, B = pozadovane chrom. c.
         width=2
         )
     nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
-    plt.show() # zobrazí graf
-    print(G)
+    #plt.show() # zobrazí graf
+    #print(G)
     return G, chrom
 
 

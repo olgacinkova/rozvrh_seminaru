@@ -105,6 +105,18 @@ class Rocnik:
         self.graf = udelej_graf_pro_jeden_rocnik(self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci_a_jejich_seminare)
         ### to do: udelat funkci udelej_graf jenze pro jeden rocnik
         ### zopakovat si algoritmus na prirazovani do bloku
+    
+    def zobraz_graf(self):
+        nazev_okna = "graf pro " + str(self.__kolikaty[0])
+        plt.get_current_fig_manager().set_window_title(nazev_okna)
+        #plt.title(nazev_okna)
+        plt.show()
+
+    def zobraz_obarveny_graf(self):
+        nazev_okna = "obarvený graf pro " + str(self.__kolikaty[0])
+        plt.get_current_fig_manager().set_window_title(nazev_okna)
+        #plt.title(nazev_okna)
+        plt.show()
 
     def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru):
         self.uloz_zaci(zaci_rocniku)
@@ -148,8 +160,8 @@ class Rocnik:
             chrom= len(pouzite_barvy)
             labels = {e: self.obarveny_graf.edges[e]['weight'] for e in self.obarveny_graf.edges}
         pos = nx.spring_layout(self.obarveny_graf)
-        nazev_okna = "obarveny graf"
-        plt.title(nazev_okna)
+        #nazev_okna = "obarveny graf"
+        #plt.title(nazev_okna)
         nx.draw(
             self.obarveny_graf,
             pos, 
@@ -166,8 +178,7 @@ class Rocnik:
 
         print("obarveno")
 
-        plt.show() # zobrazí graf
+        #plt.show() # zobrazí graf
 
-        #def zobraz_obarveny_graf(self):
-        #    self.obarveny_graf.show()
+
 

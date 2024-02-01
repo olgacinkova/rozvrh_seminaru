@@ -29,9 +29,11 @@ def main():
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
+    oktava.zobraz_graf()
+
     #breakpoint()
     oktava.obarvi_graf_lip(10)
-    #zobraz_graf(oktava.obarveny_graf)
+    oktava.zobraz_obarveny_graf()
 
     # pozorovani:
     #   na 10 barev to jeste jde - cokoliv pod hazi errory
