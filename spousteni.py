@@ -3,7 +3,6 @@ from barveni import *
 from seminare_rocniky import *
 
 def main():
-
     zaci_seminaru = nacti_zaky_seminaru("zapsani.csv")
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
     id_vsech_seminaru = nacti_id_vsech_seminaru("seminare.csv")
@@ -38,8 +37,6 @@ def main():
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     oktava.zobraz_graf()
-
-    #breakpoint()
     oktava.obarvi_graf_lip(10)
     oktava.zobraz_obarveny_graf()
 
