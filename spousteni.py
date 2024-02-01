@@ -22,9 +22,17 @@ def main():
     kvinta_sexta = Rocnik([5,6])
     kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                             seminare_rocniky, vsechny_seminare, ucitele_seminaru)
+    kvinta_sexta.zobraz_graf()
+    kvinta_sexta.obarvi_graf_lip(6)
+    kvinta_sexta.zobraz_obarveny_graf()
+
     #breakpoint()
     septima = Rocnik(7)
     septima.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
+    septima.zobraz_graf()
+    septima.obarvi_graf_lip(6)
+    septima.zobraz_obarveny_graf()
+    
     #breakpoint()
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
