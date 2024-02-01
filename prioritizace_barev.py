@@ -266,7 +266,7 @@ STRATEGIES = {
 
 
 
-def barveni(G, strategy='largest_first',colors={},poradi=[1,3,5,4,2,6,7,10,11,12]):
+def priotitizovane_barveni(G, strategy='largest_first',colors={},poradi=[1,3,5,4,2,6,7,10,11,12]):
     """Color a graph using various strategies of greedy graph coloring.
 
     Attempts to color a graph using as few colors as possible, where no

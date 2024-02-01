@@ -43,14 +43,6 @@ def main():
     # pozorovani:
     #   na 10 barev to jeste jde - cokoliv pod hazi errory
 
-
-    """graf = udelej_graf(ucitele_seminaru, id_vsech_seminaru, zaci_seminaru)
-    obarvi_graf(graf)
-    obarvi_graf_lip(graf, 7)
-    print(seskup_seminare_do_bloku(graf))"""
-    # co kdyz misto postupneho barveni seradim kazdy seminar v barve podle majoritniho rocniku
-    # a podle toho budu obsazovat bloky
-    # zjistim, jake
     return
 
 

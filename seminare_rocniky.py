@@ -118,7 +118,8 @@ class Rocnik:
         #plt.title(nazev_okna)
         plt.show()
 
-    def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru):
+    def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru, 
+                             seminare_rocniky, vsechny_seminare, ucitele_seminaru):
         self.uloz_zaci(zaci_rocniku)
         self.uloz_ucitele(vsechny_seminare)
         self.uloz_id_seminaru_rocniku(seminare_rocniky)
