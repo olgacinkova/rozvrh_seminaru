@@ -1,6 +1,7 @@
 from fce_pro_seminare_rocniky import *
 #from barveni import *
 from copy import *
+#from prioritizace_barev import *
 
 class Seminar:
     def __init__(self, id_seminare):

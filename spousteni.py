@@ -1,6 +1,7 @@
 from fce_pro_seminare_rocniky import *
 from barveni import *
 from seminare_rocniky import *
+from copy import *
 
 def main():
     zaci_seminaru = nacti_zaky_seminaru("zapsani.csv")
@@ -42,6 +43,26 @@ def main():
 
     # pozorovani:
     #   na 10 barev to jeste jde - cokoliv pod hazi errory
+
+
+    ### rozsirovani grafu o jednotlive rocniky a jeho obarvovani
+    # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
+    vsichni = Rocnik(0)
+    vsichni.graf = deepcopy(kvinta_sexta.graf)
+    vsichni.obarvi_graf_lip(6)
+
+    # do jiz obarveneho grafu, kde je zatim jen kvinta a sexta, pridam i septimu
+    vsichni.graf = deepcopy(vsichni.obarveny_graf)
+    breakpoint()
+    vsichni.graf = nx.union(vsichni.graf, septima.graf)
+    vsichni.obarvi_graf_lip(6)
+    breakpoint()
+
+    # po obarveni pridavam jeste oktavu
+    vsichni.graf = nx.union(vsichni.graf, oktava.graf)
+    vsichni.obarvi_graf_lip(10)
+    vsichni.graf = deepcopy(vsichni.obarveny_graf)
+    vsichni.zobraz_obarveny_graf()
 
     return
 
