@@ -22,24 +22,23 @@ def main():
     kvinta_sexta = Rocnik([5,6])
     kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                             seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    kvinta_sexta.zobraz_graf()
-    kvinta_sexta.obarvi_graf_lip(6)
-    kvinta_sexta.zobraz_obarveny_graf()
+    #kvinta_sexta.zobraz_graf()
+    #kvinta_sexta.obarvi_graf_lip(6)
+    #kvinta_sexta.zobraz_obarveny_graf(*kvinta_sexta.obarvi_graf_lip(6))
 
-    #breakpoint()
     septima = Rocnik(7)
     septima.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    septima.zobraz_graf()
-    septima.obarvi_graf_lip(6)
-    septima.zobraz_obarveny_graf()
-    
+    #septima.zobraz_graf()
+    #septima.obarvi_graf_lip(6)
+    #septima.zobraz_obarveny_graf(*septima.obarvi_graf_lip(6))
+
     #breakpoint()
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                         seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    oktava.zobraz_graf()
-    oktava.obarvi_graf_lip(10)
-    oktava.zobraz_obarveny_graf()
+    #oktava.zobraz_graf()
+    #oktava.obarvi_graf_lip(10)
+    #oktava.zobraz_obarveny_graf(*oktava.obarvi_graf_lip(10))
 
     # pozorovani:
     #   na 10 barev to jeste jde - cokoliv pod hazi errory
@@ -49,21 +48,23 @@ def main():
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
     vsichni = Rocnik(0)
     vsichni.graf = deepcopy(kvinta_sexta.graf)
-    vsichni.obarvi_graf_lip(6)
+    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(6))
+    #vsichni.obarvi_graf_lip(6)
+    #vsichni.zobraz_obarveny_graf()
 
     # do jiz obarveneho grafu, kde je zatim jen kvinta a sexta, pridam i septimu
     vsichni.graf = deepcopy(vsichni.obarveny_graf)
     breakpoint()
-    vsichni.graf = nx.union(vsichni.graf, septima.graf)
-    vsichni.obarvi_graf_lip(6)
-    breakpoint()
+    vsichni.graf = nx.compose(vsichni.graf, septima.graf)
+    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(7))
+    #vsichni.obarvi_graf_lip(7)
+    #vsichni.zobraz_obarveny_graf()
 
     # po obarveni pridavam jeste oktavu
-    vsichni.graf = nx.union(vsichni.graf, oktava.graf)
-    vsichni.obarvi_graf_lip(10)
+    vsichni.graf = nx.compose(vsichni.graf, oktava.graf)
     vsichni.graf = deepcopy(vsichni.obarveny_graf)
-    vsichni.zobraz_obarveny_graf()
-
+    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(10))
+    
     return
 
 

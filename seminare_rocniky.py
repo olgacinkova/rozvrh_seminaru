@@ -104,19 +104,47 @@ class Rocnik:
 
     def uloz_graf(self):
         self.graf = udelej_graf_pro_jeden_rocnik(self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci_a_jejich_seminare)
-        ### to do: udelat funkci udelej_graf jenze pro jeden rocnik
         ### zopakovat si algoritmus na prirazovani do bloku
     
     def zobraz_graf(self):
         nazev_okna = "graf pro " + str(self.__kolikaty[0])
         plt.get_current_fig_manager().set_window_title(nazev_okna)
         #plt.title(nazev_okna)
+        pos = nx.spring_layout(self.graf)  # rozmístění vrcholů a hran
+        nx.draw_networkx_nodes(self.graf, pos)  # nakreslím vrcholy
+        nx.draw_networkx_edges(self.graf, pos, edge_color="red")  # nakreslím hrany
+        nx.draw_networkx_labels(self.graf, pos)
+        nx.draw_networkx_edge_labels(
+            self.graf, pos, edge_labels={(u, v): d["weight"] for u, v, d in self.graf.edges(data=True)}
+        )  # u každé hrany zobrazuji její hodnotu
+        plt.box(False)
+        #plt.show()
+        #self.graf.show()
         plt.show()
 
-    def zobraz_obarveny_graf(self):
+    def zobraz_obarveny_graf(self, node_colors, labels):
+        plt.clf()
+        pos = nx.spring_layout(self.obarveny_graf)
+        #nazev_okna = "obarveny graf"
+        #plt.title(nazev_okna)
+        nx.draw(
+            self.obarveny_graf,
+            pos, 
+            with_labels=True,
+            node_size=500,
+            node_color=node_colors,
+            edge_color="grey",
+            font_size=12,
+            font_color="#333333",
+            width=2
+            )
+        nx.draw_networkx_edge_labels(self.obarveny_graf, pos, edge_labels=labels)
+        
+        #nazev_okna = str(self.__kolikaty) + "obarveny graf"
         nazev_okna = "obarvený graf pro " + str(self.__kolikaty[0])
         plt.get_current_fig_manager().set_window_title(nazev_okna)
         #plt.title(nazev_okna)
+       # self.obarveny_graf.show()
         plt.show()
 
     def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru, 
@@ -161,26 +189,12 @@ class Rocnik:
             pouzite_barvy = set(node_colors)
             chrom= len(pouzite_barvy)
             labels = {e: self.obarveny_graf.edges[e]['weight'] for e in self.obarveny_graf.edges}
-        pos = nx.spring_layout(self.obarveny_graf)
-        #nazev_okna = "obarveny graf"
-        #plt.title(nazev_okna)
-        nx.draw(
-            self.obarveny_graf,
-            pos, 
-            with_labels=True,
-            node_size=500,
-            node_color=node_colors,
-            edge_color="grey",
-            font_size=12,
-            font_color="#333333",
-            width=2
-            )
-        nx.draw_networkx_edge_labels(self.obarveny_graf, pos, edge_labels=labels)
-        #nazev_okna = str(self.__kolikaty) + "obarveny graf"
+
 
         print("obarveno")
 
         #plt.show() # zobrazí graf
+        return (node_colors, labels)
 
 
 
