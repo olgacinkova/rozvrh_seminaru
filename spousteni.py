@@ -2,6 +2,7 @@ from fce_pro_seminare_rocniky import *
 from barveni import *
 from seminare_rocniky import *
 from copy import *
+from tvorba_rozvrhu import *
 
 
 def main():
@@ -46,11 +47,14 @@ def main():
     # pozorovani:
     #   na 10 barev to jeste jde - cokoliv pod hazi errory
 
+    rozvrh = Rozvrh()
+    rozvrh.nacti_povolene_bloky_seminaru("seminare_kolize.csv")
+
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
     vsichni = Rocnik(0)
     vsichni.graf = deepcopy(kvinta_sexta.graf)
-    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(6))
+    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
     # vsichni.obarvi_graf_lip(6)
     # vsichni.zobraz_obarveny_graf()
 
@@ -58,14 +62,14 @@ def main():
     vsichni.graf = deepcopy(vsichni.obarveny_graf)
     breakpoint()
     vsichni.graf = nx.compose(vsichni.graf, septima.graf)
-    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(7))
+    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(7, rozvrh.povolene_bloky_seminaru))
     # vsichni.obarvi_graf_lip(7)
     # vsichni.zobraz_obarveny_graf()
 
     # po obarveni pridavam jeste oktavu
     vsichni.graf = nx.compose(vsichni.graf, oktava.graf)
     vsichni.graf = deepcopy(vsichni.obarveny_graf)
-    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(10))
+    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru))
 
     return
 

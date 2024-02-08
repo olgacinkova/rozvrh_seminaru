@@ -1,6 +1,7 @@
 import pandas as pd
 import networkx as nx
 
+
 class Rozvrh:
     def __init__(self):
         self.bloky_ve_ktery_cas: dict = {"po7": 1, "po9": 2, "ut7": 3, "ut9": 4,
@@ -24,15 +25,4 @@ class Rozvrh:
         for seminar in id:
             self.povolene_bloky_seminaru[seminar] = povolene_bloky.pop(0)
         print(self.povolene_bloky_seminaru)
-    
 
-
-
-def main():
-    rozvrh_test = Rozvrh()
-    rozvrh_test.nacti_povolene_bloky_seminaru("seminare_kolize.csv")
-    return
-
-
-if __name__ == "__main__":
-    main()

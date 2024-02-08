@@ -1,8 +1,7 @@
 from fce_pro_seminare_rocniky import *
 # from barveni import *
 from copy import *
-from prioritizace_barev import *
-
+from prioritizace_barev import prioritizovane_barveni
 
 class Seminar:
     def __init__(self, id_seminare):
@@ -174,7 +173,7 @@ class Rocnik:
         self.uloz_zaky_a_jejich_seminare(zaci_seminaru, vsechny_seminare)
         self.uloz_graf()
 
-    def obarvi_graf_lip(self, B):  # B = pozadovane chrom. c.
+    def obarvi_graf_lip(self, B, povolene_bloky_seminaru):  # B = pozadovane chrom. c.
         # obarvím graf
         # jaké je chromatické číslo (barevnost grafu)?
         # pokud je menší nebo stejné jako B: vratim obarveny graf a jeho chrom cislo
@@ -190,7 +189,7 @@ class Rocnik:
             data=True), key=lambda x: x[2]['weight'])
         # obarvím graf hladovým barvicím algoritmem
         chrom = 0
-        graph_coloring = nx.greedy_color(self.obarveny_graf)
+        graph_coloring = prioritizovane_barveni(self.obarveny_graf, povolene_bloky_seminaru)
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
         node_colors = [graph_color_to_mpl_color[graph_coloring[n]]
@@ -205,7 +204,7 @@ class Rocnik:
                     "moc malinke pozadovane chromaticke cislo :( to nejde obarvit")
             nejmensi = serazene_hrany.pop(0)  # hrana s nejmensi hodnotou
             self.graf.remove_edge(nejmensi[0], nejmensi[1])
-            graph_coloring = nx.greedy_color(self.obarveny_graf)
+            graph_coloring = prioritizovane_barveni(self.obarveny_graf, povolene_bloky_seminaru)
             unique_colors = set(graph_coloring.values())
             graph_color_to_mpl_color = dict(
                 zip(unique_colors, mpl.TABLEAU_COLORS))

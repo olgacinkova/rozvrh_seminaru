@@ -249,6 +249,8 @@ STRATEGIES = {
 }
 
 
+#####################################################
+
 def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first', colors={}, 
                            poradi=[1, 3, 5, 4, 2, 6, 7, 10, 11, 12]):
     """Color a graph using various strategies of greedy graph coloring.
@@ -344,6 +346,11 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
 
     for u in nodes:
         if u not in colors:
+            if u not in povolene_bloky_seminaru.keys():
+                # pokud neni v tabulce pozadavku ucitelu, dam k nemu, ze muze byt ve vsech blocich
+                povolene_bloky_seminaru[u] = set()
+                povolene_bloky_seminaru[u].update([1,2,3,4,5,6,7])
+
             # Set to keep track of colors of neighbours
             neighbour_colors = {colors[v] for v in G[u] if v in colors}
             # Find the first unused color.
