@@ -5,8 +5,10 @@ import matplotlib.colors as mpl
 import networkx as nx
 from itertools import combinations
 
-def parsuj_tridu(cislo_rocniku: str): # napr z 4.A udela 5
+
+def parsuj_tridu(cislo_rocniku: str):  # napr z 4.A udela 5
     return int(cislo_rocniku.lstrip()[0])
+
 
 def nacti_zaky_rocniku(soubor):
     # načítá soubor zaci
@@ -14,7 +16,7 @@ def nacti_zaky_rocniku(soubor):
     # výstup: dictionary ve formátu rocnik : množina jeho žáků
     df = pd.read_csv(soubor, delimiter=';')
     kam_trida = dict()  # dictionary - kdo kam chodí
-    for zak, trida in zip(df.id, df.trida): # projdu všechny žáky
+    for zak, trida in zip(df.id, df.trida):  # projdu všechny žáky
         if trida in kam_trida:  # pokud už je třída v dictionary
             kam_trida[trida].add(zak)  # přidá do množiny nového žáka
         else:
@@ -44,12 +46,14 @@ def nacti_zaky_seminaru(soubor):
             kam_seminar[zak].add(seminar)  # přidám tam nový seminář
     return kam_seminar
 
+
 def nacti_id_vsech_seminaru(soubor):
     # bere na vstupu soubor seminare.csv
     # udela seznam id vsech seminaru
     df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
     id_vsech_seminaru = list(df.id)  # id seminářů
     return id_vsech_seminaru
+
 
 def nacti_id_vsech_ucitelu(soubor):
     # bere na vstupu soubor seminare.csv
@@ -66,11 +70,11 @@ def nacti_id_vsech_ucitelu(soubor):
         id_vsech_ucitelu[jmeno] = id
     return id_vsech_ucitelu
 
+
 def nacti_ucitele_seminaru(soubor):
     # bere na vstupu seznam seminářů s učiteli
     # ke každému učiteli vymyslí id číslo
     # výstup dict, kde je ke každému učiteli množina seminářů, které učí
-    df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
     # bere na vstupu soubor seminare.csv
     # udela seznam id vsech seminaru
     df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
@@ -115,6 +119,7 @@ def nacti_ucitele_seminaru(soubor):
                 seminare_ucitelu[id_ucitele].add(seminar)
     # vrací dict učitelů a jejich id, dict učitelů a množin jejich seminářů, seznam id seminaru
     return seminare_ucitelu
+
 
 def ktery_seminar_pro_ktery_rocnik(soubor):
     # bere seminare.csv
@@ -186,6 +191,7 @@ def udelej_graf(seminare, id_seminaru, kam_seminar):
     )  # u každé hrany zobrazuji její hodnotu
     return G
 
+
 def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_jejich_seminare):
     # tvorba neorientovaného grafu, kde vrcholy jsou semináře
     # semináře budou spojeny hranou, pokud sdílí žáka nebo učitele
@@ -196,15 +202,16 @@ def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_
 
     # učitelské hrany
     for ucitel in ucitele_a_jejich_seminare.keys():  # pro každého profesora
-        vrcholy = ucitele_a_jejich_seminare[ucitel]  # množina seminářů profesora
+        # množina seminářů profesora
+        vrcholy = ucitele_a_jejich_seminare[ucitel]
         # všechny možné dvojice seminářů v množině
         kombinace_vrcholu = combinations(vrcholy, 2)
         # pro každou dvojici udělá hranu o hodnotě 100 (úplný graf)
         P.add_edges_from(kombinace_vrcholu, weight=100)
-    
+
     # žákovské hrany
     for zak in zaci_a_jejich_seminare.keys():  # pro každý prvek z množiny seminářů u jednoho žáka
-        vrcholy = zaci_a_jejich_seminare[zak]  
+        vrcholy = zaci_a_jejich_seminare[zak]
         # množina seminářů žáka
         # všechny možné dvojice seminářů v množině
         kombinace_vrcholu = combinations(vrcholy, 2)
@@ -235,6 +242,5 @@ def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_
                              for u, v, d in G.edges(data=True)}
     )  # u každé hrany zobrazuji její hodnotu
     plt.box(False)
-    #plt.show()
+    # plt.show()
     return G
-

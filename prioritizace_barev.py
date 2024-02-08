@@ -23,7 +23,6 @@ __all__ = ['greedy_color', 'strategy_connected_sequential',
            'strategy_saturation_largest_first', 'strategy_smallest_last']
 
 
-
 def strategy_largest_first(G, colors):
     """Returns a list of the nodes of ``G`` in decreasing order by
     degree.
@@ -32,8 +31,6 @@ def strategy_largest_first(G, colors):
 
     """
     return sorted(G, key=G.degree, reverse=True)
-
-
 
 
 @py_random_state(2)
@@ -49,8 +46,6 @@ def strategy_random_sequential(G, colors, seed=None):
     nodes = list(G)
     seed.shuffle(nodes)
     return nodes
-
-
 
 
 def strategy_smallest_last(G, colors):
@@ -110,7 +105,6 @@ def strategy_smallest_last(G, colors):
     return result
 
 
-
 def _maximal_independent_set(G):
     """Returns a maximal independent set of nodes in ``G`` by repeatedly
     choosing an independent node of minimum degree (with respect to the
@@ -125,7 +119,6 @@ def _maximal_independent_set(G):
         result.add(v)
         remaining -= set(G[v]) | {v}
     return result
-
 
 
 def strategy_independent_set(G, colors):
@@ -153,8 +146,6 @@ def strategy_independent_set(G, colors):
             yield v
 
 
-
-
 def strategy_connected_sequential_bfs(G, colors):
     """Returns an iterable over nodes in ``G`` in the order given by a
     breadth-first traversal.
@@ -168,8 +159,6 @@ def strategy_connected_sequential_bfs(G, colors):
     return strategy_connected_sequential(G, colors, 'bfs')
 
 
-
-
 def strategy_connected_sequential_dfs(G, colors):
     """Returns an iterable over nodes in ``G`` in the order given by a
     depth-first traversal.
@@ -181,8 +170,6 @@ def strategy_connected_sequential_dfs(G, colors):
 
     """
     return strategy_connected_sequential(G, colors, 'dfs')
-
-
 
 
 def strategy_connected_sequential(G, colors, traversal='bfs'):
@@ -213,8 +200,6 @@ def strategy_connected_sequential(G, colors, traversal='bfs'):
         yield source
         for (_, end) in traverse(component, source):
             yield end
-
-
 
 
 def strategy_saturation_largest_first(G, colors):
@@ -250,7 +235,6 @@ def strategy_saturation_largest_first(G, colors):
                 distinct_colors[v].add(color)
 
 
-
 #: Dictionary mapping name of a strategy as a string to the strategy function.
 STRATEGIES = {
     'largest_first': strategy_largest_first,
@@ -265,10 +249,8 @@ STRATEGIES = {
 }
 
 
-
-
-
-def prioritizovane_barveni(G, strategy='largest_first',colors={},poradi=[1,3,5,4,2,6,7,10,11,12]):
+def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first', colors={}, 
+                           poradi=[1, 3, 5, 4, 2, 6, 7, 10, 11, 12]):
     """Color a graph using various strategies of greedy graph coloring.
 
     Attempts to color a graph using as few colors as possible, where no
@@ -361,14 +343,14 @@ def prioritizovane_barveni(G, strategy='largest_first',colors={},poradi=[1,3,5,4
     nodes = strategy(G, colors)
 
     for u in nodes:
-      if u not in colors:
-        # Set to keep track of colors of neighbours
-        neighbour_colors = {colors[v] for v in G[u] if v in colors}
-        # Find the first unused color.
-        #for color in itertools.count(1):
-        for color in itertools.cycle(poradi):
-            if (color not in neighbour_colors) and (color not in u.zakazano):
-                break
-        # Assign the new color to the current node.
-        colors[u] = color
+        if u not in colors:
+            # Set to keep track of colors of neighbours
+            neighbour_colors = {colors[v] for v in G[u] if v in colors}
+            # Find the first unused color.
+            # for color in itertools.count(1):
+            for color in itertools.cycle(poradi):
+                if (color not in neighbour_colors) and (color in povolene_bloky_seminaru[u]):
+                    break
+            # Assign the new color to the current node.
+            colors[u] = color
     return colors

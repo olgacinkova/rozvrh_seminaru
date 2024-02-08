@@ -1,7 +1,7 @@
 from fce_pro_seminare_rocniky import *
 # from barveni import *
 from copy import *
-# from prioritizace_barev import *
+from prioritizace_barev import *
 
 
 class Seminar:
