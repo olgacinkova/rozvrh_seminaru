@@ -72,6 +72,8 @@ def main():
     
     vsichni.obarveny_graf = nx.from_dict_of_dicts(zmergovany_graf)
     vsichni.obarveny_graf_colors = zmergovane_barvy
+    print(vsichni.obarveny_graf)
+    print(vsichni.obarveny_graf_colors)
     # for node, data in vsichni.obarveny_graf.nodes(data=True):
     # > data jsou daty prazdna, takze to nikam
     # > nic nepriradi
