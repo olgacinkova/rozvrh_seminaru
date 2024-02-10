@@ -3,6 +3,7 @@ from barveni import *
 from seminare_rocniky import *
 from copy import *
 from tvorba_rozvrhu import *
+from mergovani_grafu import *
 
 
 def main():
@@ -52,30 +53,32 @@ def main():
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
     vsichni = Rocnik(0)
-    vsichni.graf = deepcopy(kvinta_sexta.graf)
+    """vsichni.graf = deepcopy(kvinta_sexta.graf)
     print("dict")
     print(vsichni.graf_dict)
     print("colors")
     print(vsichni.graf_colors)
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))"""
 
     # vsichni.obarvi_graf_lip(6)
     # vsichni.zobraz_obarveny_graf()
 
     # do jiz obarveneho grafu, kde je zatim jen kvinta a sexta, pridam i septimu
     # vsichni.graf = deepcopy(vsichni.obarveny_graf)
-    vsichni.graf = nx.compose(septima.graf, vsichni.obarveny_graf)
-    for node, data in vsichni.obarveny_graf.nodes(data=True):
-        # ondri komentar> data jsou daty prazdna, takze to nikam
-        # > nic nepriradi
-        # > barvy vracis z obarvi_graf_lip jako node_colors
-        # > doufam, ze jsme se neseknul...
-        # > jeste v tom nevidim, proc ten compose vypestuje kopie neceho
-        # > nemuze v tom hrat roli hashovani vrcholu?
-        # kdybys potrebovala, tak piiiis
-        if 'color' in data:
-            vsichni.graf.nodes[node]['color'] = data['color']
+    # vsichni.graf = nx.compose(septima.graf, vsichni.obarveny_graf)
+    zmergovany_graf, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
+                                         kvinta_sexta.obarveny_graf_dict, kvinta_sexta.obarveny_graf_colors)
+    
+    vsichni.obarveny_graf = nx.from_dict_of_dicts(zmergovany_graf)
+    vsichni.obarveny_graf_colors = zmergovane_barvy
+    # for node, data in vsichni.obarveny_graf.nodes(data=True):
+    # > data jsou daty prazdna, takze to nikam
+    # > nic nepriradi
+    # > barvy vracis z obarvi_graf_lip jako node_colors
+    # > doufam, ze jsme se neseknul...
+    # if 'color' in data:
+    #    vsichni.graf.nodes[node]['color'] = data['color']
 
     vsichni.zobraz_graf()
     vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
