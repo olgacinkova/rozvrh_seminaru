@@ -49,25 +49,38 @@ def main():
 
     rozvrh = Rozvrh()
     rozvrh.nacti_povolene_bloky_seminaru("seminare_kolize.csv")
-
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
     vsichni = Rocnik(0)
     vsichni.graf = deepcopy(kvinta_sexta.graf)
-    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
+    print("dict")
+    print(vsichni.graf_dict)
+    print("colors")
+    print(vsichni.graf_colors)
+    vsichni.zobraz_obarveny_graf(
+        *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
+
     # vsichni.obarvi_graf_lip(6)
     # vsichni.zobraz_obarveny_graf()
 
     # do jiz obarveneho grafu, kde je zatim jen kvinta a sexta, pridam i septimu
-    #vsichni.graf = deepcopy(vsichni.obarveny_graf)
-    vsichni.graf = nx.compose(vsichni.obarveny_graf, septima.graf)
-    #for node, data in vsichni.obarveny_graf.nodes(data=True):
-    #if 'color' in data:
-    #        vsichni.graf.nodes[node]['color'] = data['color']
+    # vsichni.graf = deepcopy(vsichni.obarveny_graf)
+    vsichni.graf = nx.compose(septima.graf, vsichni.obarveny_graf)
+    for node, data in vsichni.obarveny_graf.nodes(data=True):
+        # ondri komentar> data jsou daty prazdna, takze to nikam
+        # > nic nepriradi
+        # > barvy vracis z obarvi_graf_lip jako node_colors
+        # > doufam, ze jsme se neseknul...
+        # > jeste v tom nevidim, proc ten compose vypestuje kopie neceho
+        # > nemuze v tom hrat roli hashovani vrcholu?
+        # kdybys potrebovala, tak piiiis
+        if 'color' in data:
+            vsichni.graf.nodes[node]['color'] = data['color']
 
     vsichni.zobraz_graf()
     vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
-    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
+    vsichni.zobraz_obarveny_graf(
+        *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
     # vsichni.obarvi_graf_lip(7)
     # vsichni.zobraz_obarveny_graf()
 
@@ -77,8 +90,9 @@ def main():
         if 'color' in data:
             vsichni.graf.nodes[node]['color'] = data['color']
 
-    #vsichni.graf = deepcopy(vsichni.obarveny_graf)
-    vsichni.zobraz_obarveny_graf(*vsichni.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru))
+    # vsichni.graf = deepcopy(vsichni.obarveny_graf)
+    vsichni.zobraz_obarveny_graf(
+        *vsichni.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru))
 
     return
 
