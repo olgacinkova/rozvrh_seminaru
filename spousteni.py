@@ -61,9 +61,9 @@ def main():
     # do jiz obarveneho grafu, kde je zatim jen kvinta a sexta, pridam i septimu
     #vsichni.graf = deepcopy(vsichni.obarveny_graf)
     vsichni.graf = nx.compose(vsichni.obarveny_graf, septima.graf)
-    for node, data in vsichni.obarveny_graf.nodes(data=True):
-        if 'color' in data:
-            vsichni.graf.nodes[node]['color'] = data['color']
+    #for node, data in vsichni.obarveny_graf.nodes(data=True):
+    #if 'color' in data:
+    #        vsichni.graf.nodes[node]['color'] = data['color']
 
     vsichni.zobraz_graf()
     vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
