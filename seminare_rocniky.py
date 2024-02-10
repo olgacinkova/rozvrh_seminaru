@@ -126,7 +126,6 @@ class Rocnik:
         # dictionary, kde je vzdy vrchol a jeho barva - tady vsechny vrcholy stejne barevne
         colors = {node: color_for_all_nodes for node in self.graf.nodes()}
         nx.set_node_attributes(self.graf, colors, 'color')
-
         self.graf_dict = nx.to_dict_of_dicts(self.graf)
 
     def zobraz_graf(self):
@@ -149,7 +148,6 @@ class Rocnik:
         plt.show()
 
     def zobraz_obarveny_graf(self, node_colors, labels):
-        print(self.obarveny_graf_dict)
         plt.clf()
         pos = nx.spring_layout(self.obarveny_graf)
         # nazev_okna = "obarveny graf"
@@ -229,8 +227,6 @@ class Rocnik:
             labels = {e: self.obarveny_graf.edges[e]['weight']
                       for e in self.obarveny_graf.edges}
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
-
-        print("obarveno")
 
         # plt.show() # zobrazí graf
         return (node_colors, labels)

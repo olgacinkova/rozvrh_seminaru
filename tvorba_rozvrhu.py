@@ -24,5 +24,5 @@ class Rozvrh:
 
         for seminar in id:
             self.povolene_bloky_seminaru[seminar] = povolene_bloky.pop(0)
-        print(self.povolene_bloky_seminaru)
+
 
