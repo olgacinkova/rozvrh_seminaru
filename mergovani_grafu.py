@@ -28,22 +28,3 @@ def merge_weighted_graphs(graph1, colors1, graph2, colors2):
                 merged_graph[node][neighbor]['weight'] = attributes['weight']
 
     return merged_graph, merged_colors
-
-# Example usage:
-graph1 = {
-    1: {2: {'weight': 3}, 3: {'weight': 2}},
-    2: {1: {'weight': 3}, 3: {'weight': 1}},
-    3: {1: {'weight': 2}, 2: {'weight': 1}}
-}
-colors1 = {1: 8, 2: 8, 3: 8}
-
-graph2 = {
-    3: {4: {'weight': 4}, 5: {'weight': 5}},
-    4: {3: {'weight': 4}},
-    5: {3: {'weight': 5}}
-}
-colors2 = {3: 3, 4: 4, 5: 5}
-
-merged_graph, merged_colors = merge_weighted_graphs(graph1, colors1, graph2, colors2)
-print("Merged Graph:", merged_graph)
-print("Merged Colors:", merged_colors)

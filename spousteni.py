@@ -67,6 +67,13 @@ def main():
     # do jiz obarveneho grafu, kde je zatim jen kvinta a sexta, pridam i septimu
     # vsichni.graf = deepcopy(vsichni.obarveny_graf)
     # vsichni.graf = nx.compose(septima.graf, vsichni.obarveny_graf)
+    print("septima")
+    print(septima.graf_dict)
+    print(septima.graf_colors)
+    print("kvinta_sexta")
+    print(kvinta_sexta.obarveny_graf_dict)
+    print(kvinta_sexta.obarveny_graf_colors)
+
     zmergovany_graf, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
                                          kvinta_sexta.obarveny_graf_dict, kvinta_sexta.obarveny_graf_colors)
     
