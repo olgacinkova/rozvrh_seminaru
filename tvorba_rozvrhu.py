@@ -3,7 +3,20 @@ import networkx as nx
 
 
 class Rozvrh:
+    """ 
+    Obsahuje informace o časovém rozložení bloků a o časových možnostech učitelů jednotlivých seminářů. 
+    
+    Atributy: 
+        bloky_ve_ktery_cas (dict): Dictionary, kde je uloženo, kde je který blok v rozvrhu.
+        povolene_bloku_seminaru (dict): Dictionary, kde je uloženo, který seminář může být ve kterém bloku. 
+    """
     def __init__(self):
+        """"
+        Konstruktor Rozvrhu. 
+
+        Parametry: 
+            (žádné - bloky jsou pevně dané níže v konstruktoru, podle obvyklého rozvrhu)
+        """
         self.bloky_ve_ktery_cas: dict = {"po7": 1, "po9": 2, "ut7": 3, "ut9": 4,
                                          "st7": 8, "ct7": 5, "ct9": 6, "pa7": 7}
         # key = ktery den od ktere vyucovaci hodiny
@@ -12,6 +25,13 @@ class Rozvrh:
         self.povolene_bloky_seminaru: dict = dict()
 
     def nacti_povolene_bloky_seminaru(self, soubor):
+        """
+        Načítá dictionary, kde je uloženo, ve kterých blocích mohou být které semináře
+        (tento dictionary je inicializován již v konstruktoru jako self.povolene_bloky_seminaru).
+
+        Parametry:
+            soubor (.csv): Soubor ve formátu csv - jmenuje se seminare_kolize.csv
+        """
         # nacita ze souboru seminare_kolize.csv
         # udela dict, kde ke kazdemu seminari je seznam jeho povolenych bloku
         # načtu seznam seminářů jako dataframe
