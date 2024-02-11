@@ -117,7 +117,7 @@ def nacti_ucitele_seminaru(soubor):
             else:
                 seminare_ucitelu[id_ucitele] = set()
                 seminare_ucitelu[id_ucitele].add(seminar)
-    # vrací dict učitelů a jejich id, dict učitelů a množin jejich seminářů, seznam id seminaru
+    # vrací dict učitelů a množin jejich seminářů
     return seminare_ucitelu
 
 

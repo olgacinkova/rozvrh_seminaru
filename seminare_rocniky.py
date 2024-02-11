@@ -43,7 +43,7 @@ class Seminar:
         """
 
         df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
-        index = self.__id - 1 # protože indexuji od nuly
+        index = self.__id - 1  # protože indexuji od nuly
         radek = df.loc[index]
         if radek['pro5'] == 1:
             self.pro_ktere_rocniky.add(5)  # kvinta
@@ -54,7 +54,7 @@ class Seminar:
         if radek['pro8'] == 1:
             self.pro_ktere_rocniky.add(8)  # oktáva
 
-    def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani): 
+    def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani):
         """
         Ukládá, kteří žáci na seminář chodí. 
 
@@ -103,7 +103,32 @@ class Seminar:
 
 
 class Rocnik:
-    def __init__(self, kolikaty):  # kvuli spojeni kvinty a sexty
+    """
+    Obsahuje vše o jednotlivých ročnících.
+
+    Atributy:
+        __kolikaty (int/list): Který ročník, to je. (Může být i pro dva ročníky zároveň, kvůli spojení kvinty a sexty.)
+        zaci (set): Množina žáků, kteří chodí do daného ročníku.
+        ucitele (set): Množina učitelů, kteří učí semináře daného ročníku.
+        id_seminaru_rocniku (set): Množina ID všech seminářů ročníku.
+        ucitele_a_jejich_seminare (dict): Dictionary, kde je vždy učitel a množina seminářů, které učí.
+        zaci_a_jejich_seminare (dict): Dictionary, kde je vždy žák a množina seminářů, kam chodí.
+        graf (networkx graph): Graf, kde vrcholy jsou semináře. Semináře které sdílí učitele a/nebo žáky jsou spojeny ohodnocenou hranou. Za každého sdíleného učitele se hodnota hrany zvyšuje o 100, za každého sdíleného žáka o 1.
+        graf_dict (dict): Stejný graf jako self.graf, ale převedený do formátu dictionary dle nx.to_dict_of_dicts()
+        graf_colors (dict): Dictionary, kde je vždy vrchol grafu a jeho barva. Jde o tzv. neobarvený graf, proto jsou barvy všech vrcholů stejné. Všechny vrcholy mají barvu 8. 
+        obarveny_graf (networkx graph): Graf self.graf po obarvení vrcholů, tak aby žádné vrcholy se stejnou barvou nebyly spojeny hranou.
+        obarveny_graf_dict (dict): Obarvený graf převedený do formátu dictionary dle nx.to_dict_of_dicts()
+        obarveny_graf_colors (dict): Dictionary, kde je vždy vrchol grafu a jeho barva.
+
+    """
+
+    def __init__(self, kolikaty: int | list):  # kvuli spojeni kvinty a sexty
+        """
+        Konstruktor třídy Rocnik.
+
+        Parametry:
+            kolikaty (int/list): O kolikátý ročník, popř. kolikáté ročníky, se jedná. 
+        """
         if type(kolikaty) == int:
             # aby mohl byt zadan i samostatny int a nemusel byt []
             self.__kolikaty = [kolikaty]
@@ -127,20 +152,44 @@ class Rocnik:
         self.obarveny_graf_colors: dict = dict()
 
     def uloz_zaci(self, zaci_rocniku):
+        """
+        Načítá atribut zaci, který byl inicializován v konstruktoru. Čerpá data ze souboru ve formátu csv.
+
+        Parametry: 
+            zaci_rocniku (.csv): Soubor ve formátu csv, kde jsou uloženy informace o žácích. Jmenuje se zaci.csv
+        """
         for rocnik in self.__kolikaty:
             self.zaci = self.zaci.union(zaci_rocniku[rocnik])
 
-    def uloz_ucitele(self, vsechny_seminare):
+    def uloz_ucitele(self, vsechny_seminare: list):
+        """
+        Načítá atribut ucitele, který byl inicializován v konstruktoru. Čerpá data o učitelích, ze seznamu objektů jednotlivých seminářů.
+
+        Parametry: 
+            vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
+        """
         for e in vsechny_seminare:
             self.ucitele = self.ucitele.union(e.kdo_seminar_uci)
 
-    def uloz_id_seminaru_rocniku(self, seminare_rocniky):
-        # udela seznam id seminaru daneho rocniku
+    def uloz_id_seminaru_rocniku(self, seminare_rocniky: dict):
+        """
+        Načítá atribut id_seminaru_rocniku, který byl inicializován v konstruktoru. Udělá seznam ID seminářů pro ročník.
+
+        Parametry: 
+            seminare_rocniky (dict): Dictionary, kde je pro každý ročník, jaké semináře jsou pro něj. Vrací jej funkce ktery_seminar_pro_ktery_rocnik, když je volána na soubor seminare.csv.
+        """
         for rocnik in self.__kolikaty:
             self.id_seminaru_rocniku = self.id_seminaru_rocniku.union(
                 seminare_rocniky[rocnik])
 
-    def uloz_ucitele_a_jejich_seminare(self, ucitele_seminaru, vsechny_seminare):
+    def uloz_ucitele_a_jejich_seminare(self, ucitele_seminaru: dict, vsechny_seminare: list):
+        """
+        Načítá atribut ucitele_a_jejich_seminare, který byl inicializován v konstruktoru. 
+
+        Parametry: 
+            ucitele_seminaru (dict): Dictionary, učitelů a množin jejich seminářů. Vrací jej funkce nacti_ucitele_seminaru volaná na soubor seminare.csv
+            vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
+        """
         for ucitel in self.ucitele:
             mnozina_seminaru_konkretniho_ucitele = ucitele_seminaru[ucitel]
             self.ucitele_a_jejich_seminare[ucitel] = mnozina_seminaru_konkretniho_ucitele
@@ -153,6 +202,14 @@ class Rocnik:
                         konkretni_seminar)
 
     def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
+        """
+        Načítá atribut zaci_a_jejich_seminare, který byl inicializován v konstruktoru. 
+
+        Parametry: 
+            zaci_seminaru (dict): Dictionary, kde je vždy žák a množina seminářů, kam chodí. Je to výstup funkce nacti_zaky_seminaru volané na soubor zapsani.csv
+            vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
+        """
+        
         for zak in self.zaci:
             if zak in zaci_seminaru.keys():  # protoze zak cislo 35 tam neni
                 mnozina_seminaru_konkretniho_zaka = zaci_seminaru[zak]
@@ -167,6 +224,10 @@ class Rocnik:
                         konkretni_seminar)
 
     def uloz_graf(self):
+        """
+        Ukládá atributy graf a graf_dict, které byl inicializovány v konstruktoru. Je to networkx graf pro jeden ročník. Ještě neobarvený. Pak uloží graf jako dictionary of dictionaries (výstup funkce nx.to_dict_of_dicts)
+        """
+
         self.graf = udelej_graf_pro_jeden_rocnik(
             self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci_a_jejich_seminare)
 
@@ -177,10 +238,10 @@ class Rocnik:
         self.graf_dict = nx.to_dict_of_dicts(self.graf)
 
     def zobraz_graf(self):
-        nazev_okna = "graf pro " + str(self.__kolikaty[0])
-        print(self.graf_dict)
-        plt.get_current_fig_manager().set_window_title(nazev_okna)
-        # plt.title(nazev_okna)
+        """
+        Zobrazuje v okně networkx graf pro jeden ročník. Ještě neobarvený.
+        """
+        plt.clf()
         pos = nx.spring_layout(self.graf)  # rozmístění vrcholů a hran
         nx.draw_networkx_nodes(self.graf, pos)  # nakreslím vrcholy
         nx.draw_networkx_edges(
@@ -190,12 +251,16 @@ class Rocnik:
             self.graf, pos, edge_labels={
                 (u, v): d["weight"] for u, v, d in self.graf.edges(data=True)}
         )  # u každé hrany zobrazuji její hodnotu
+        nazev_okna = "graf pro " + str(self.__kolikaty[0])
+        plt.get_current_fig_manager().set_window_title(nazev_okna)
         plt.box(False)
-        # plt.show()
-        # self.graf.show()
         plt.show()
 
     def zobraz_obarveny_graf(self, node_colors, labels):
+        """
+        Zobrazuje v okně networkx graf pro jeden ročník obarvený prioritizovaným barvením.
+        ############################## TUDU: jsou tam opravdu třeba node_colors a labels???
+        """
         plt.clf()
         pos = nx.spring_layout(self.obarveny_graf)
         # nazev_okna = "obarveny graf"
@@ -213,12 +278,9 @@ class Rocnik:
         )
         nx.draw_networkx_edge_labels(
             self.obarveny_graf, pos, edge_labels=labels)
-
-        # nazev_okna = str(self.__kolikaty) + "obarveny graf"
         nazev_okna = "obarvený graf pro " + str(self.__kolikaty[0])
         plt.get_current_fig_manager().set_window_title(nazev_okna)
-        # plt.title(nazev_okna)
-       # self.obarveny_graf.show()
+        plt.box(False)
         plt.show()
 
     def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru,
@@ -278,4 +340,4 @@ class Rocnik:
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
 
         # plt.show() # zobrazí graf
-        return (node_colors, labels)
+        return node_colors, labels

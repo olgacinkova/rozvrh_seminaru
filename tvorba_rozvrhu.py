@@ -12,7 +12,7 @@ class Rozvrh:
     """
     def __init__(self):
         """"
-        Konstruktor Rozvrhu. 
+        Konstruktor třídy Rozvrh. 
 
         Parametry: 
             (žádné - bloky jsou pevně dané níže v konstruktoru, podle obvyklého rozvrhu)
