@@ -1,6 +1,7 @@
 from fce_pro_seminare_rocniky import *
 from barveni import *
 from seminare_rocniky import *
+from matplotlib import pyplot
 from copy import *
 from tvorba_rozvrhu import *
 from mergovani_grafu import *
@@ -68,20 +69,20 @@ def main():
     # do jiz obarveneho grafu, kde je zatim jen kvinta a sexta, pridam i septimu
     # vsichni.graf = deepcopy(vsichni.obarveny_graf)
     # vsichni.graf = nx.compose(septima.graf, vsichni.obarveny_graf)
-    print("septima")
-    print(septima.graf_dict)
-    print(septima.graf_colors)
-    print("kvinta_sexta")
-    print(kvinta_sexta.obarveny_graf_dict)
-    print(kvinta_sexta.obarveny_graf_colors)
+    #print("septima")
+    #print(septima.graf_dict)
+    #print(septima.graf_colors)
+    #print("kvinta_sexta")
+    #print(kvinta_sexta.obarveny_graf_dict)
+    #print(kvinta_sexta.obarveny_graf_colors)
 
     zmergovany_graf, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
                                          kvinta_sexta.obarveny_graf_dict, kvinta_sexta.obarveny_graf_colors)
     
     vsichni.obarveny_graf = nx.from_dict_of_dicts(zmergovany_graf)
     vsichni.obarveny_graf_colors = zmergovane_barvy
-    print(vsichni.obarveny_graf)
-    print(vsichni.obarveny_graf_colors)
+    #print(vsichni.obarveny_graf)
+    #print(vsichni.obarveny_graf_colors)
     # for node, data in vsichni.obarveny_graf.nodes(data=True):
     # > data jsou daty prazdna, takze to nikam
     # > nic nepriradi

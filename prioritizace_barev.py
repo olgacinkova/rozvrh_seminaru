@@ -345,14 +345,17 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
     nodes = strategy(G, colors)
 
     for u in nodes:
+        print("aktualni vrchol " + str(u))
         if u not in colors:
             if u not in povolene_bloky_seminaru.keys():
                 # pokud neni v tabulce pozadavku ucitelu, dam k nemu, ze muze byt ve vsech blocich
                 povolene_bloky_seminaru[u] = set()
                 povolene_bloky_seminaru[u].update([1, 2, 3, 4, 5, 6, 7])
-                
+
             # Set to keep track of colors of neighbours
             neighbour_colors = {colors[v] for v in G[u] if v in colors}
+            print("barvy sousedu " + str(neighbour_colors))
+            print("povolene barvy " + str(povolene_bloky_seminaru[u]))
             # Find the first unused color.
             # for color in itertools.count(1):
             for color in itertools.cycle(poradi):
@@ -360,5 +363,6 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                     break
             # Assign the new color to the current node.
             colors[u] = color
+            print("vrchol = "+ str(u) + " barva = " + str(color))
     print("obarveno")
     return colors

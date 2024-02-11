@@ -210,6 +210,7 @@ class Rocnik:
         labels = {e: self.obarveny_graf.edges[e]['weight']
                   for e in self.obarveny_graf.edges}
         while chrom > B:
+            print(chrom)
             if len(serazene_hrany) == 0:
                 raise Exception(
                     "moc malinke pozadovane chromaticke cislo :( to nejde obarvit")
