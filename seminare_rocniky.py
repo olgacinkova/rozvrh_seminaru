@@ -5,7 +5,23 @@ from prioritizace_barev import prioritizovane_barveni
 
 
 class Seminar:
-    def __init__(self, id_seminare):
+    """
+    Obsahuje vše o jednotlivých seminářích.
+
+    Atributy:
+    id (int): Identifikační číslo semináře.
+    pro_ktere_rocniky (set): Množina ročníků, pro které seminář je.
+    kteri_zaci_tam_chodi (set): Množina žáků, kteří na seminář chodí (jsou tam přihlášení).
+    kdo_seminar_uci (set): Množina učitelů, kteří seminář učí. (Většinou jen jeden učitel na seminář, ale občas dva.) 
+    """
+
+    def __init__(self, id_seminare: int):
+        """
+        Konstruktor pro Seminar.
+
+        Parametry:
+            id seminare (int): Identifikační číslo semináře.
+        """
         self.__id = id_seminare
         self.pro_ktere_rocniky: set = set()  # muze byt pro vice rocniku
         self.kteri_zaci_tam_chodi: set = set()
@@ -13,22 +29,38 @@ class Seminar:
 
     @property
     def id(self):
+        """
+        Vrací identifikační číslo semináře.
+        """
         return self.__id
 
-    def uloz_pro_ktere_rocniky(self, soubor_seminare):  # nacita soubor seminare.csv
+    def uloz_pro_ktere_rocniky(self, soubor_seminare):
+        """
+        Ukládá, pro které ročníky je seminář určen. 
+
+        Parametry:
+            soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
+        """
+
         df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
-        index = self.__id - 1
+        index = self.__id - 1 # protože indexuji od nuly
         radek = df.loc[index]
         if radek['pro5'] == 1:
-            self.pro_ktere_rocniky.add(5)
+            self.pro_ktere_rocniky.add(5)  # kvinta
         if radek['pro6'] == 1:
-            self.pro_ktere_rocniky.add(6)
+            self.pro_ktere_rocniky.add(6)  # sexta
         if radek['pro7'] == 1:
-            self.pro_ktere_rocniky.add(7)
+            self.pro_ktere_rocniky.add(7)  # septima
         if radek['pro8'] == 1:
-            self.pro_ktere_rocniky.add(8)
+            self.pro_ktere_rocniky.add(8)  # oktáva
 
-    def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani):  # nacita soubor zapsani
+    def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani): 
+        """
+        Ukládá, kteří žáci na seminář chodí. 
+
+        Parametry:
+            soubor_zapsani (.csv): Soubor ve formátu csv, kde jsou informace o zapsaných žácích. Jmenuje se zapsani.csv
+        """
         df = pd.read_csv(soubor_zapsani, delimiter=';')
         for zak, seminar in zip(df.zak, df.seminar):
             if seminar == self.__id:
@@ -36,6 +68,13 @@ class Seminar:
 
     # nacita soubor seminare.csv a promennou id_vsech_ucitelu
     def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu):
+        """
+        Ukládá, kteří učitelé seminář učí.
+
+        Parametry: 
+            soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
+            id_vsech_ucitelu (dict): Dictionary, kde je učitel a k němu jeho ID.
+        """
         df = pd.read_csv(soubor_seminare)
         radek = self.__id - 1
         sloupec = 'ucitel'
@@ -49,6 +88,15 @@ class Seminar:
             self.kdo_seminar_uci.add(id_ucitele)
 
     def uloz_data_pro_seminar(self, soubor_zapsani, soubor_seminare, id_vsech_ucitelu):
+        """
+        Spustí postupně všechny metody třídy Seminar. 
+        Uloží tak, kdo seminář učí, kteří žáci tam chodí a pro které ročníky je seminář určen.
+
+        Parametry:
+            soubor_zapsani (.csv): Soubor ve formátu csv, kde jsou informace o zapsaných žácích. Jmenuje se zapsani.csv
+            soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
+            id_vsech_ucitelu (dict): Dictionary, kde je učitel a k němu jeho ID.
+        """
         self.uloz_kdo_seminar_uci(soubor_seminare, id_vsech_ucitelu)
         self.uloz_kteri_zaci_tam_chodi(soubor_zapsani)
         self.uloz_pro_ktere_rocniky(soubor_seminare)
@@ -200,7 +248,7 @@ class Rocnik:
         # obarvím graf hladovým barvicím algoritmem
         chrom = 0
         graph_coloring = prioritizovane_barveni(
-            self.obarveny_graf, povolene_bloky_seminaru, colors= self.graf_colors)
+            self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors)
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
         node_colors = [graph_color_to_mpl_color[graph_coloring[n]]
@@ -217,7 +265,7 @@ class Rocnik:
             nejmensi = serazene_hrany.pop(0)  # hrana s nejmensi hodnotou
             self.graf.remove_edge(nejmensi[0], nejmensi[1])
             graph_coloring = prioritizovane_barveni(
-                self.obarveny_graf, povolene_bloky_seminaru, colors= self.obarveny_graf_colors)
+                self.obarveny_graf, povolene_bloky_seminaru, colors=self.obarveny_graf_colors)
             unique_colors = set(graph_coloring.values())
             graph_color_to_mpl_color = dict(
                 zip(unique_colors, mpl.TABLEAU_COLORS))
