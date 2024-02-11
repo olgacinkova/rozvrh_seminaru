@@ -15,6 +15,8 @@ def main():
     ucitele_seminaru = nacti_ucitele_seminaru("seminare.csv")
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik("seminare.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
+    rozvrh = Rozvrh()
+    rozvrh.nacti_povolene_bloky_seminaru("seminare_kolize.csv")
 
     vsechny_seminare = [Seminar(id) for id in id_vsech_seminaru]
     for e in vsechny_seminare:
@@ -27,29 +29,28 @@ def main():
     kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                                       seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     kvinta_sexta.zobraz_graf()
-    kvinta_sexta.obarvi_graf_lip(6)
-    kvinta_sexta.zobraz_obarveny_graf(*kvinta_sexta.obarvi_graf_lip(6))
+    #kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
+    kvinta_sexta.zobraz_obarveny_graf(*kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
 
     septima = Rocnik(7)
     septima.uloz_data_pro_rocnik(
         zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     septima.zobraz_graf()
-    septima.obarvi_graf_lip(6)
-    septima.zobraz_obarveny_graf(*septima.obarvi_graf_lip(6))
+    #septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
+    septima.zobraz_obarveny_graf(*septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
 
     # breakpoint()
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                                 seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    # oktava.zobraz_graf()
-    # oktava.obarvi_graf_lip(10)
-    # oktava.zobraz_obarveny_graf(*oktava.obarvi_graf_lip(10))
+    oktava.zobraz_graf()
+    #oktava.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru)
+    oktava.zobraz_obarveny_graf(*oktava.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru))
 
     # pozorovani:
     #   na 10 barev to jeste jde - cokoliv pod hazi errory
 
-    rozvrh = Rozvrh()
-    rozvrh.nacti_povolene_bloky_seminaru("seminare_kolize.csv")
+
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
     vsichni = Rocnik(0)

@@ -360,4 +360,5 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                     break
             # Assign the new color to the current node.
             colors[u] = color
+    print("obarveno")
     return colors
