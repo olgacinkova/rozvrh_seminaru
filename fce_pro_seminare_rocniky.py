@@ -6,34 +6,59 @@ import networkx as nx
 from itertools import combinations
 
 
-def parsuj_tridu(cislo_rocniku: str):  # napr z 4.A udela 5
-    return int(cislo_rocniku.lstrip()[0])
+def parsuj_tridu(trida: str):  # napr z 4.A udela 5
+    """
+    Udělá ze stringu, kde je napsáno, co je to za třídu (např. "5.A"), int, kde je jen, kolikátý je to ročník. 
+    Pozor: k ročníku pak přičte 1, protože se žáci vždy přihlašují na semináře o rok dříve, než tam začnou chodit.
+
+    Parametry: 
+            trida (str): String, kde je napsáno, co je to za třídu (např. "5.A").
+    """
+    return int(trida.lstrip()[0])
 
 
 def nacti_zaky_rocniku(soubor):
+    """
+    Načítá ze souboru zaci.csv dictionary, kde je pro každý ročník množina žáků, která do něj chodí.
+
+    Parametry:
+        soubor (.csv): Soubor ve formátu csv, kde jsou uloženy informace o žácích. Jmenuje se zaci.csv
+
+    Vrací:
+        dict: Dictionary, kde je pro každý ročník (int) množina žáků, která do něj chodí.
+    """
     # načítá soubor zaci
     # do jakých tříd chodí žáci
     # výstup: dictionary ve formátu rocnik : množina jeho žáků
     df = pd.read_csv(soubor, delimiter=';')
-    kam_trida = dict()  # dictionary - kdo kam chodí
-    for zak, trida in zip(df.id, df.trida):  # projdu všechny žáky
-        if trida in kam_trida:  # pokud už je třída v dictionary
-            kam_trida[trida].add(zak)  # přidá do množiny nového žáka
+    kam_rocnik = dict()  # dictionary - kdo kam chodí
+    for zak, rocnik in zip(df.id, df.trida):  # projdu všechny žáky
+        if rocnik in kam_rocnik:  # pokud už je třída v dictionary
+            kam_rocnik[rocnik].add(zak)  # přidá do množiny nového žáka
         else:
             # vytvoří novou prázdnou množinu pro třídu
-            kam_trida[trida] = set()
-            kam_trida[trida].add(zak)  # přidá do množiny rovnou prvního žáka
+            kam_rocnik[rocnik] = set()
+            kam_rocnik[rocnik].add(zak)  # přidá do množiny rovnou prvního žáka
     # do jakeho rocniku chodi (resp. kam budou chodit pristi rok) kteri zaci
     kam_rocnik = {5: set(), 6: set(), 7: set(), 8: set()}
-    for rocnik in kam_trida.keys():
+    for rocnik in kam_rocnik.keys():
         cilovy_rocnik = parsuj_tridu(rocnik) + 1
-        for e in kam_trida[rocnik]:  # presunu zaky dane tridy do daneho rocniku
+        for e in kam_rocnik[rocnik]:  # presunu zaky dane tridy do daneho rocniku
             kam_rocnik[cilovy_rocnik].add(e)
 
     return kam_rocnik
 
 
 def nacti_zaky_seminaru(soubor):
+    """"
+    Načítá ze souboru zapsani.csv dictionary, kde je vždy žák a množina seminářů, kam chodí. 
+
+    Parametry:
+        soubor (.csv): Soubor ve formátu csv, kde jsou uloženy informace o zapsaných. Jmenuje se zapsani.csv
+
+    Vrací:
+        dict: Dictionary, kde je vždy žák a množina seminářů, kam chodí. 
+    """
     # načítá vstupní soubor zapsani.csv
     # výstupem je dict, kde je vždy zak množina seminářů, kam chodí
     df = pd.read_csv(soubor, delimiter=';')  # načtu soubor jako dataframe
@@ -48,6 +73,15 @@ def nacti_zaky_seminaru(soubor):
 
 
 def nacti_id_vsech_seminaru(soubor):
+    """
+    Načítá ze souboru seminare.csv seznam ID všech seminářů.
+
+    Parametry:
+        soubor (.csv): Soubor ve formátu csv, kde jsou uloženy informace o seminářích. Jmenuje se seminare.csv
+
+    Vrací:
+        list: Seznam ID všech seminářů. 
+    """
     # bere na vstupu soubor seminare.csv
     # udela seznam id vsech seminaru
     df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
@@ -56,6 +90,15 @@ def nacti_id_vsech_seminaru(soubor):
 
 
 def nacti_id_vsech_ucitelu(soubor):
+    """
+    Načítá ze souboru seminare.csv ID všech učitelů. 
+
+    Parametry:
+        soubor (.csv): Soubor ve formátu csv, kde jsou uloženy informace o seminářích. Jmenuje se seminare.csv
+
+    Vrací: 
+        dict: Dictionary, kde je vždy jméno učitele a k tomu jeho ID. První učitel ma ID 1.
+    """
     # bere na vstupu soubor seminare.csv
     df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
     j = list(df.ucitel)  # jména učitelů
@@ -72,8 +115,17 @@ def nacti_id_vsech_ucitelu(soubor):
 
 
 def nacti_ucitele_seminaru(soubor):
-    # bere na vstupu seznam seminářů s učiteli
-    # ke každému učiteli vymyslí id číslo
+    """
+    Načítá ze souboru seminare.csv dict, kde je ke každému učiteli množina seminářů, které učí. 
+
+    Parametry: 
+        soubor (.csv): Soubor ve formátu csv, kde jsou uloženy informace o seminářích. Jmenuje se seminare.csv
+
+    Vrací:
+        dict: Dictionary učitelů a množin jejich seminářů.
+        
+    """
+
     # výstup dict, kde je ke každému učiteli množina seminářů, které učí
     # bere na vstupu soubor seminare.csv
     # udela seznam id vsech seminaru
@@ -122,6 +174,15 @@ def nacti_ucitele_seminaru(soubor):
 
 
 def ktery_seminar_pro_ktery_rocnik(soubor):
+    """
+    Načítá ze souboru seminare.csv dictionary, kde je pro každý ročník, množina seminářů pro něj určených. 
+
+    Parametry: 
+        soubor (.csv): Soubor ve formátu csv, kde jsou uloženy informace o seminářích. Jmenuje se seminare.csv
+
+    Vrací: 
+        dict: Dictionary, kde je pro každý ročník, množina seminářů pro něj určených. 
+    """
     # bere seminare.csv
     # udela dict rocnik_seminar, kde bude pro kazdy rocnik, jake seminare jsou pro nej
     rocnik_seminar = {5: set(), 6: set(), 7: set(), 8: set()}
@@ -142,17 +203,31 @@ def ktery_seminar_pro_ktery_rocnik(soubor):
     return rocnik_seminar
 
 
-def udelej_graf(seminare, id_seminaru, kam_seminar):
+def udelej_graf(seminare_ucitelu, id_vsech_seminaru, kam_seminar):
+    ############ tahle funkce nejspíš není potřeba, níže se nachází její modifikace udelej_graf_pro_jeden_rocnik, ktera je misto ni
+    """
+    Vytvoří ohodnocený neorientovaný graf, kde vrcholy jsou semináře (číslo vrcholu = ID semináře). 
+    Semináře které sdílí učitele a/nebo žáky jsou spojeny ohodnocenou hranou. 
+    Za každého sdíleného učitele se hodnota hrany zvyšuje o 100, za každého sdíleného žáka o 1.
+
+    Parametry: 
+        seminare_ucitelu (dict): Dictionary, kde je vždy učitel a množina jeho seminářů.
+        id_seminaru (list): Seznam ID seminářů.
+        kam_seminar (dict): Dictionary, kde je vždy žák a množina jeho seminářů.
+
+    Vrací:
+        networkx graf: ohodnocený neorientovaný graf, kde vrcholy jsou semináře.
+    """
     # tvorba neorientovaného grafu, kde vrcholy jsou semináře
     # semináře budou spojeny hranou, pokud sdílí žáka nebo učitele
     # hrany jsou ohodnocené: žák má hodnotu 1, učitel má hodnotu 100
     P = nx.MultiGraph()  # multigraf = má mezi dvojicí vrcholů víc než dvě hrany
     # každý vrchol je jeden seminář (resp. id semináře)
-    P.add_nodes_from(id_seminaru)
+    P.add_nodes_from(id_vsech_seminaru)
 
     # učitelské hrany
-    for ucitel in seminare.keys():  # pro každého profesora
-        vrcholy = seminare[ucitel]  # množina seminářů profesora
+    for ucitel in seminare_ucitelu.keys():  # pro každého profesora
+        vrcholy = seminare_ucitelu[ucitel]  # množina seminářů profesora
         # všechny možné dvojice seminářů v množině
         kombinace_vrcholu = combinations(vrcholy, 2)
         # pro každou dvojici udělá hranu o hodnotě 100 (úplný graf)
@@ -193,6 +268,19 @@ def udelej_graf(seminare, id_seminaru, kam_seminar):
 
 
 def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_jejich_seminare):
+    """
+    Vytvoří ohodnocený neorientovaný graf, kde vrcholy jsou semináře (číslo vrcholu = ID semináře). 
+    Semináře které sdílí učitele a/nebo žáky jsou spojeny ohodnocenou hranou. 
+    Za každého sdíleného učitele se hodnota hrany zvyšuje o 100, za každého sdíleného žáka o 1.
+
+    Parametry: 
+        ucitele_a_jejich_seminare (dict): Dictionary, kde je vždy učitel a množina jeho seminářů.
+        id_seminaru (list): Seznam ID seminářů.
+        zaci_a_jejich_seminare (dict): Dictionary, kde je vždy žák a množina jeho seminářů.
+
+    Vrací:
+        networkx graf: ohodnocený neorientovaný graf, kde vrcholy jsou semináře.
+    """
     # tvorba neorientovaného grafu, kde vrcholy jsou semináře
     # semináře budou spojeny hranou, pokud sdílí žáka nebo učitele
     # hrany jsou ohodnocené: žák má hodnotu 1, učitel má hodnotu 100
