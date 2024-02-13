@@ -237,10 +237,11 @@ class Rocnik:
         nx.set_node_attributes(self.graf, colors, 'color')
         self.graf_dict = nx.to_dict_of_dicts(self.graf)
 
+    """
     def zobraz_graf(self):
         """
-        Zobrazuje v okně networkx graf pro jeden ročník. Ještě neobarvený.
-        """
+        #Zobrazuje v okně networkx graf pro jeden ročník. Ještě neobarvený.
+    """
         plt.clf()
         pos = nx.spring_layout(self.graf)  # rozmístění vrcholů a hran
         nx.draw_networkx_nodes(self.graf, pos)  # nakreslím vrcholy
@@ -254,13 +255,13 @@ class Rocnik:
         nazev_okna = "graf pro " + str(self.__kolikaty[0])
         plt.get_current_fig_manager().set_window_title(nazev_okna)
         plt.box(False)
-        plt.show()
+        plt.show()"""
 
+    """
     def zobraz_obarveny_graf(self, node_colors, labels):
-        """
+
         Zobrazuje v okně networkx graf pro jeden ročník obarvený prioritizovaným barvením.
         ############################## TUDU: jsou tam opravdu třeba node_colors a labels???
-        """
         plt.clf()
         pos = nx.spring_layout(self.obarveny_graf)
         # nazev_okna = "obarveny graf"
@@ -279,6 +280,44 @@ class Rocnik:
         nx.draw_networkx_edge_labels(
             self.obarveny_graf, pos, edge_labels=labels)
         nazev_okna = "obarvený graf pro " + str(self.__kolikaty[0])
+        plt.get_current_fig_manager().set_window_title(nazev_okna)
+        plt.box(False)
+        plt.show()
+        """
+
+    def zobraz_libovolny_graf(self, node_colors, labels, is_colored: bool):
+        """
+        Zobrazuje obarvený nebo neobarvený graf v networkx okně. 
+
+        Parametry: 
+            node_colors (dict):
+        """
+        if is_colored == True:
+            jaky = "obarvený"
+            graf = self.obarveny_graf
+        else: 
+            jaky = "ještě neobarvený"
+            graf = self.graf 
+
+        plt.clf()
+        pos = nx.spring_layout(graf)
+        # nazev_okna = "obarveny graf"
+        # plt.title(nazev_okna)
+        nx.draw(
+            self.graf,
+            pos,
+            with_labels=True,
+            node_size=500,
+            node_color=node_colors,
+            edge_color="grey",
+            font_size=12,
+            font_color="#333333",
+            width=2
+        )
+        nx.draw_networkx_edge_labels(
+            graf, pos, edge_labels=labels)
+        
+        nazev_okna = jaky + "graf pro" + str(self.__kolikaty[0])
         plt.get_current_fig_manager().set_window_title(nazev_okna)
         plt.box(False)
         plt.show()
@@ -340,4 +379,5 @@ class Rocnik:
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
 
         # plt.show() # zobrazí graf
-        return node_colors, labels
+        # to True vraci jen proto, aby zobrazovaci funkce mohla vedet, ze je obarveny
+        return node_colors, labels, True

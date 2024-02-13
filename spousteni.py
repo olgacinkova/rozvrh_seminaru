@@ -75,15 +75,17 @@ def main():
     # print(kvinta_sexta.obarveny_graf_dict)
     # print(kvinta_sexta.obarveny_graf_colors)
 
-    zmergovany_graf, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
+    zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
                                                               kvinta_sexta.obarveny_graf_dict, kvinta_sexta.obarveny_graf_colors)
 
-    vsichni.obarveny_graf = nx.from_dict_of_dicts(zmergovany_graf)
-    vsichni.obarveny_graf_colors = zmergovane_barvy
-    # print(vsichni.obarveny_graf)
-    # print(vsichni.obarveny_graf_colors)
+    print(zmergovany_graf_dict)
+    print(zmergovane_barvy)
+    vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
+    vsichni.graf_colors = zmergovane_barvy
+    print(vsichni.graf)
+    print(vsichni.graf_colors)
     # for node, data in vsichni.obarveny_graf.nodes(data=True):
-    # > data jsou daty prazdna, takze to nikam
+    # > data prazdna, takze to nikam
     # > nic nepriradi
     # > barvy vracis z obarvi_graf_lip jako node_colors
     # > doufam, ze jsme se neseknul...
@@ -91,7 +93,6 @@ def main():
     #    vsichni.graf.nodes[node]['color'] = data['color']
 
     vsichni.zobraz_graf()
-    vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
     # vsichni.obarvi_graf_lip(7)

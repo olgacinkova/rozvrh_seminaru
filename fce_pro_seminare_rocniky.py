@@ -6,7 +6,7 @@ import networkx as nx
 from itertools import combinations
 
 
-def parsuj_tridu(trida: str):  # napr z 4.A udela 5
+def parsuj_tridu(trida: str | int):  # napr z 4.A udela 5
     """
     Udělá ze stringu, kde je napsáno, co je to za třídu (např. "5.A"), int, kde je jen, kolikátý je to ročník. 
     Pozor: k ročníku pak přičte 1, protože se žáci vždy přihlašují na semináře o rok dříve, než tam začnou chodit.
@@ -14,7 +14,10 @@ def parsuj_tridu(trida: str):  # napr z 4.A udela 5
     Parametry: 
             trida (str): String, kde je napsáno, co je to za třídu (např. "5.A").
     """
-    return int(trida.lstrip()[0])
+    if type(trida) == str:
+        trida = int(trida.lstrip()[0])
+    trida += 1
+    return trida
 
 
 def nacti_zaky_rocniku(soubor):
@@ -42,7 +45,7 @@ def nacti_zaky_rocniku(soubor):
     # do jakeho rocniku chodi (resp. kam budou chodit pristi rok) kteri zaci
     kam_rocnik = {5: set(), 6: set(), 7: set(), 8: set()}
     for rocnik in kam_rocnik.keys():
-        cilovy_rocnik = parsuj_tridu(rocnik) + 1
+        cilovy_rocnik = parsuj_tridu(rocnik)
         for e in kam_rocnik[rocnik]:  # presunu zaky dane tridy do daneho rocniku
             kam_rocnik[cilovy_rocnik].add(e)
 
