@@ -1,3 +1,7 @@
 pandas 
 matplotlib
 networkx
+copy
+collections
+itertools
+networkx.utils
