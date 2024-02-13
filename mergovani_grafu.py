@@ -1,6 +1,20 @@
 import copy
 
-def merge_weighted_graphs(graph1, colors1, graph2, colors2):
+def merge_weighted_graphs(graph1: dict, colors1: dict, graph2: dict, colors2: dict):
+    """
+    Spojí dva obarvené grafy. Duplicitní vrcholy nahradí vrcholy z grafu 2 (včetně barev).
+
+    Parametry: 
+        graph1 (dict): První graf vyjádřený jako dictionary pomocí nx.to_dict_of_dicts().
+        colors1 (dict): Dictionary, kde je pro každý vrchol prvního grafu jeho barva.
+        graph2 (dict): Druhý graf vyjádřený jako dictionary pomocí nx.to_dict_of_dicts().
+        colors2 (dict): Dictionary, kde je pro každý vrchol druhého grafu jeho barva.
+
+    Vrací:
+        dict: Spojený graf ze dvou grafů. 
+        dict: Dictionary, kde je pro každý vrchol spojeného grafu jeho barva.
+    
+    """
     merged_graph = copy.deepcopy(graph1)  # Create a copy of the first graph representation
     merged_colors = colors1.copy()  # Create a copy of the first colors dictionary
 
