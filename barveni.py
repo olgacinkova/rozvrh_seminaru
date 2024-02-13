@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mpl
 import networkx as nx
 
+######### de facto to stejne, co pouzivam za barveni v fce_pro_seminare_rocniky.py
 
 def obarvi_graf(G):
     # obarvím graf hladovým barvicím algoritmem

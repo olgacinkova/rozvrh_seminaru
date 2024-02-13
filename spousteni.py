@@ -1,8 +1,6 @@
 from fce_pro_seminare_rocniky import *
 from barveni import *
 from seminare_rocniky import *
-from matplotlib import pyplot
-from copy import *
 from tvorba_rozvrhu import *
 from mergovani_grafu import *
 
