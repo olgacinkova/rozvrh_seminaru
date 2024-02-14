@@ -80,23 +80,25 @@ def main():
 
     print(zmergovany_graf_dict)
     print(zmergovane_barvy)
-    vsichni.graf_dict = zmergovany_graf_dict
+    """vsichni.graf_dict = zmergovany_graf_dict
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
     print(vsichni.graf)
-    print(vsichni.graf_colors)
-    # for node, data in vsichni.obarveny_graf.nodes(data=True):
-    # > data prazdna, takze to nikam
-    # > nic nepriradi
-    # > barvy vracis z obarvi_graf_lip jako node_colors
-    # > doufam, ze jsme se neseknul...
-    # if 'color' in data:
-    #    vsichni.graf.nodes[node]['color'] = data['color']
+    print(vsichni.graf_colors)"""
+    vsichni.obarveny_graf_dict = zmergovany_graf_dict
+    vsichni.obarveny_graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
+    vsichni.obarveny_graf_colors = zmergovane_barvy
+    print(vsichni.obarveny_graf_dict)
+    print(vsichni.obarveny_graf_colors)
 
-    vsichni.zobraz_graf()
+    ### obarveny graf se bude chovat jako neobarveny
+    vsichni.graf_dict = deepcopy(vsichni.obarveny_graf_dict)
+    vsichni.graf_colors = deepcopy(vsichni.obarveny_graf_colors)
+    vsichni.graf = deepcopy(vsichni.obarveny_graf)
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
 
+    breakpoint()
     # po obarveni pridavam jeste oktavu
 
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(oktava.graf_dict, oktava.graf_colors,
