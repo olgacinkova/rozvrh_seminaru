@@ -2,60 +2,32 @@ id,cislo,nazev,ucitel,hodin,anotace,pro5,pro6,pro7,pro8,aktivni,hnizdo,uzavreny,
 1,CJ1,Starší česká literatura ve filmu a literární toulky,"J. Linka, M. Roháčková",2,,0,0,1,0,1,2,0,18,0
 2,CJ2,Česká a světová literatura ve filmu,M. Roháčková,2,,0,0,0,1,1,7,0,18,0
 3,AJ1,Taboos and Issues,bude upřesněno,2,,1,0,0,0,1,2,0,28,0
-4,AJ2,Current Affairs,H. Šiprová,2,,0,1,0,0,0,4,0,15,0
 5,AJ3,CAE PREP COURSE 1-a (příprava od začátku od B2),J. Váňa ,2,,0,0,1,0,1,1,0,12,0
 6,AJ4,CAE PREP COURSE 1-b (příprava od začátku od B2),J. Váňa ,2,,0,0,1,0,1,2,1,13,0
 7,AJ5,"CAE PREP COURCE 2-a (navazující, od úrovně C1-)",J. Váňa ,2,,0,0,0,1,1,3,0,12,0
 8,AJ6,"CAE PREP COURCE 2-b (navazující, od úrovně C1-)",J. Váňa ,2,,0,0,0,1,1,4,0,12,0
-9,AJ7,Windows on the English speaking world,H. Šiprová,2,,0,0,0,1,0,2,0,15,0
-10,AJ8,Israel - The Promised Land,M. Moravcová,2,,0,0,1,1,0,7,0,15,1
-11,AJ9,Irský seminář,"M. Moravcová, K. Matulová",2,,0,0,1,1,0,6,0,24,1
 12,NJ1,Gramatické a lexikální repetitorium - Nj,J. Ginzelová,2,,1,0,0,0,1,2,0,15,0
-13,NJ2,Německý diplomní seminář (7.A),bude upřesněno,2,,0,0,1,0,1,10,0,20,0
-14,NJ3,Německý diplomní seminář (7.B),bude upřesněno,2,,0,0,1,0,1,10,0,20,0
-15,NJ4,"Německý diplomní seminář (8.A, AJ1)",bude upřesněno,2,,0,0,0,1,1,10,0,20,0
-16,NJ5,"Německý diplomní seminář (8.A, AJ2)",bude upřesněno,2,,0,0,0,1,1,10,0,20,0
-17,NJ6,Německý diplomní seminář (8.B),bude upřesněno,2,,0,0,0,1,1,10,0,20,0
-18,FJ1,Příprava na DELF B1,S. Šmelhausová,2,,1,1,0,0,0,4,0,15,0
-19,FJ2,Príprava na DELF B2,S. Šmelhausová,2,,0,0,1,1,0,3,0,15,0
-20,FJ3,Francouzská kultura a reálie,S. Šmelhausová,2,,0,0,1,1,0,6,0,15,1
-21,SJ1,Příprava na zkouška DELE escolar A2-B1,D. Marchionni,2,,1,0,0,0,0,2,0,15,0
-22,SJ2,Konverzace ŠJ,P. Lukešová,2,,0,1,0,0,0,4,0,20,0
-23,SJ3,Příprava na zkouška DELE escolar B2,D. Marchionni,2,,0,0,1,0,0,1,0,15,0
-24,SJ4,Španělština - příprava na maturitní zkoušky,D. Marchionni,2,,0,0,0,1,0,3,0,15,0
-25,LJ1,Latinský seminář pro septimy,P. Koronthály,2,,0,0,1,0,0,1,0,20,0
 26,LJ2,Maturitní latinský seminář,P. Koronthály,2,,0,0,0,1,1,7,0,20,0
 27,M1,Matematický seminář pro kvinty,P. Kryl,2,,1,0,0,0,1,2,0,20,0
 28,M2,Matematický seminář pro sexty,Z. Vavřín,2,,0,1,0,0,1,4,0,21,0
 29,M3,Matematický seminář pro septimy,L. Bernard,2,,0,0,1,0,1,3,0,21,0
-30,M4A,Matematický seminář ke státní maturitě pro 8.A,Z. Lauschmann,2,,0,0,0,1,1,8,0,25,0
 31,M5,Matematický seminář k profilové maturitě,Z. Vavřín,2,,0,0,0,1,1,3,0,20,0
 32,DG,Deskriptivní geometrie I+II,K. Steinerová,2,,0,0,1,1,1,6,0,13,1
 33,IT1,Seminář nejen z programování,P. Kryl,2,,0,0,1,1,1,1,0,20,0
-34,IT2,Seminář IVT,V. Nulíček,2,,0,0,0,1,0,6,0,20,0
 35,D1,1000 ČI 1500 LET STŘEDOVĚKU? (seminář středověku),O. Faktor,2,,0,1,0,0,1,4,0,22,0
 36,D2,Seminář moderních dějin,O. Faktor,2,,0,0,1,0,1,3,0,22,0
 37,D3,Maturitní seminář z dějepisu,J. Váňa ,2,,0,0,0,1,1,5,0,20,0
 38,D4,Dějiny (ve) filmu,J. Ginzelová,2,,0,0,1,1,1,6,0,15,1
-39,D5,VĚCI KOLEM NÁS JAKO PRAMEN K POZNÁNÍ MINULOSTI (kulturně-umělecko-historický seminář) ,O. Faktor,2,,0,0,1,1,0,6,0,22,1
 40,ZS1,Kvintesence práva,T. Pešek,2,,1,0,0,0,1,2,0,16,0
 41,ZS2,Svět v pohybu,T. Pešek,2,,0,1,0,0,1,4,0,22,0
 42,ZS3,Cesta do hlubin študákovy duše,T. Pešek,2,,0,0,1,0,1,5,0,15,0
 43,ZS4,Seminář ZSV pro oktávy k profilové maturitní zkoušce,T. Pešek,2,,0,0,0,1,1,1,0,25,0
 44,ZS5,Ekonomie a finanční gramotnost (EFG),J. Hajíček,2,,0,0,1,1,1,6,0,30,1
-45,ZNK,Základy znakového jazyka,Z. Kurcová,2,,0,0,1,1,0,6,0,20,1
 46,ZF,Moderní filosofie,"D. Vejvodová, V. Hrouda",2,,0,0,1,1,1,4,0,18,0
 47,PR1,Přírodovědný seminář pro kvinty a sexty,"I. Chlebounová, J. Cvachová",2,,1,1,0,0,1,2,1,16,0
-48,PR2,Přírodovědný seminář pro sexty,"I. Chlebounová, J. Cvachová",2,,0,1,0,0,0,6,0,16,0
 49,FY1,Seminář z fyziky - septima,Jiří Rezek,2,,0,0,1,0,1,5,0,20,0
 50,FY2,Seminář z fyziky - oktáva,Jiří Rezek,2,,0,0,0,1,1,4,0,20,0
-51,CH1,Chemické repetitorium,I. Chlebounová,2,,0,0,1,0,0,5,0,24,0
 52,CH2,Maturitní seminář z chemie,I. Chlebounová,2,,0,0,0,1,1,1,0,28,0
 53,BI1b,Biologický seminář pro oktávy,R. M. Dvořáková,2,,0,0,0,1,1,2,0,20,0
-54,BI2,Ecce homo (somatologie člověka),J. Mrzílková,2,,0,0,0,1,1,9,0,21,0
-55,ZE,Zeměpisný seminář,J. Chloupková,2,,0,0,0,1,0,7,0,15,0
-56,HV1,Filmová hudba a nové technologie v hudbě,M. Christou,2,,0,0,1,1,0,6,0,12,1
-57,HV2,Seminář z hudební výchovy,M. Roháčková,2,,0,0,0,1,0,3,0,10,0
 58,VV,Seminář z výtvarné výchovy,A. Angelová,2,,0,0,1,1,1,3,0,22,0
-59,M4B,Matematický seminář ke státní maturitě pro 8.B,Z. Lauschmann,2,,0,0,0,1,1,8,0,25,0
 60,BI1a,Biologický seminář pro septimy,Z. Lenochová,2,,0,0,1,0,1,2,0,20,0
