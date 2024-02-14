@@ -80,6 +80,7 @@ def main():
 
     print(zmergovany_graf_dict)
     print(zmergovane_barvy)
+    vsichni.graf_dict = zmergovany_graf_dict
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
     print(vsichni.graf)
@@ -95,10 +96,19 @@ def main():
     vsichni.zobraz_graf()
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
-    # vsichni.obarvi_graf_lip(7)
-    # vsichni.zobraz_obarveny_graf()
 
     # po obarveni pridavam jeste oktavu
+
+    zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(oktava.graf_dict, oktava.graf_colors,
+                                                              vsichni.obarveny_graf_dict, vsichni.obarveny_graf_colors)
+
+    print(zmergovany_graf_dict)
+    print(zmergovane_barvy)
+    vsichni.graf_dict = zmergovany_graf_dict
+    vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
+    vsichni.graf_colors = zmergovane_barvy
+    print(vsichni.graf)
+    print(vsichni.graf_colors)
     vsichni.graf = nx.compose(vsichni.graf, oktava.graf)
     for node, data in vsichni.obarveny_graf.nodes(data=True):
         if 'color' in data:
