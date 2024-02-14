@@ -108,6 +108,7 @@ class Rocnik:
 
     Atributy:
         __kolikaty (int/list): Který ročník, to je. (Může být i pro dva ročníky zároveň, kvůli spojení kvinty a sexty.)
+        poradi (list): Pořadí, ve kterém mám přiřazovat barvy vrcholům (bloky seminářům).
         zaci (set): Množina žáků, kteří chodí do daného ročníku.
         ucitele (set): Množina učitelů, kteří učí semináře daného ročníku.
         id_seminaru_rocniku (set): Množina ID všech seminářů ročníku.
@@ -137,6 +138,7 @@ class Rocnik:
         else:
             raise Exception("Spatny argument")
 
+        self.poradi: list = []
         self.zaci: set = set()  # mnozina zaku, kteri chodi do daneho rocniku
         self.ucitele: set = set()  # mnozina ucitelu uci seminare daneho rocniku
         self.id_seminaru_rocniku: set = set()
@@ -150,6 +152,7 @@ class Rocnik:
         self.obarveny_graf_dict: dict = dict()
         # dictionary, kde je vzdy vrchol a jeho barva
         self.obarveny_graf_colors: dict = dict()
+        
 
     def uloz_zaci(self, zaci_rocniku):
         """
@@ -160,6 +163,14 @@ class Rocnik:
         """
         for rocnik in self.__kolikaty:
             self.zaci = self.zaci.union(zaci_rocniku[rocnik])
+
+    def uloz_poradi(self):
+        if self.__kolikaty == [5,6]: # kvinta a sexta
+            self.poradi = [2,4,6,1,3,5,7,8,9,10,11,12] # maji mit dva bloky
+        if self.__kolikaty == 7: # septima
+            self.poradi = [1,3,4,2,4,6,7,8,9,10,11,12] # maji mit 5 bloku
+        else: # oktava
+            self.poradi = [1,3,5,2,4,6,7,8,9,10,11,12] # maji mit 9 bloku
 
     def uloz_ucitele(self, vsechny_seminare: list):
         """
@@ -326,6 +337,7 @@ class Rocnik:
     def uloz_data_pro_rocnik(self, zaci_rocniku, zaci_seminaru,
                              seminare_rocniky, vsechny_seminare, ucitele_seminaru):
         self.uloz_zaci(zaci_rocniku)
+        self.uloz_poradi()
         self.uloz_ucitele(vsechny_seminare)
         self.uloz_id_seminaru_rocniku(seminare_rocniky)
         self.uloz_ucitele_a_jejich_seminare(ucitele_seminaru, vsechny_seminare)
@@ -349,8 +361,9 @@ class Rocnik:
             data=True), key=lambda x: x[2]['weight'])
         # obarvím graf hladovým barvicím algoritmem
         chrom = 0
+
         graph_coloring = prioritizovane_barveni(
-            self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors)
+            self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors, poradi = self.poradi)
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
         node_colors = [graph_color_to_mpl_color[graph_coloring[n]]

@@ -5,6 +5,22 @@ from tvorba_rozvrhu import *
 from mergovani_grafu import *
 
 
+#### zapsat do grafu jako hodnoty hran pozadavky ucitelu 
+# zaspat si to jako atribut vrcholu
+
+###### vyhodit sprachdiplomy
+
+###### ma byt cca 9 bloku
+
+###### pridat do barvici funkce do poradi vic bloku 
+
+###### vyfiltrovat si seminare z druheho kola a pracovat jen s nimi (jsou v kolizich)
+
+####### zacit s vlastni praci
+
+#### instalace v uziv dokumentace: jak stahnu z githubu, co knihovny a pip
+### v uvodu proc vubec barvim
+###### najit si kolik stranek tam mam byt
 def main():
     zaci_seminaru = nacti_zaky_seminaru("zapsani.csv")
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
@@ -88,13 +104,9 @@ def main():
     vsichni.graf_dict = zmergovany_graf_dict
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
-
-    ### obarveny graf se bude chovat jako neobarveny
-    #vsichni.graf_dict = deepcopy(vsichni.obarveny_graf_dict)
-    #vsichni.graf_colors = deepcopy(vsichni.obarveny_graf_colors)
-    #vsichni.graf = deepcopy(vsichni.obarveny_graf)
+    print(vsichni.graf_colors)
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(20, rozvrh.povolene_bloky_seminaru))
 
     # po obarveni pridavam jeste oktavu
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(oktava.graf_dict, oktava.graf_colors,
@@ -105,9 +117,8 @@ def main():
     vsichni.graf_dict = zmergovany_graf_dict
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
-    # vsichni.graf = deepcopy(vsichni.obarveny_graf)
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(20, rozvrh.povolene_bloky_seminaru))
     
     print("posledni obarveni")
     print(vsichni.obarveny_graf_dict)
