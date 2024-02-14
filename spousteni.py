@@ -3,7 +3,7 @@ from barveni import *
 from seminare_rocniky import *
 from tvorba_rozvrhu import *
 from mergovani_grafu import *
-
+from uloz_do_csv import *
 
 #### zapsat do grafu jako hodnoty hran pozadavky ucitelu 
 # zaspat si to jako atribut vrcholu
@@ -124,6 +124,7 @@ def main():
     print(vsichni.obarveny_graf_dict)
     print(vsichni.obarveny_graf_colors)
 
+    uloz_do_csv(vsichni.obarveny_graf_colors, "vystup.csv")
     return
 
 
