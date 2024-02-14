@@ -85,22 +85,18 @@ def main():
     vsichni.graf_colors = zmergovane_barvy
     print(vsichni.graf)
     print(vsichni.graf_colors)"""
-    vsichni.obarveny_graf_dict = zmergovany_graf_dict
-    vsichni.obarveny_graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
-    vsichni.obarveny_graf_colors = zmergovane_barvy
-    print(vsichni.obarveny_graf_dict)
-    print(vsichni.obarveny_graf_colors)
+    vsichni.graf_dict = zmergovany_graf_dict
+    vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
+    vsichni.graf_colors = zmergovane_barvy
 
     ### obarveny graf se bude chovat jako neobarveny
-    vsichni.graf_dict = deepcopy(vsichni.obarveny_graf_dict)
-    vsichni.graf_colors = deepcopy(vsichni.obarveny_graf_colors)
-    vsichni.graf = deepcopy(vsichni.obarveny_graf)
+    #vsichni.graf_dict = deepcopy(vsichni.obarveny_graf_dict)
+    #vsichni.graf_colors = deepcopy(vsichni.obarveny_graf_colors)
+    #vsichni.graf = deepcopy(vsichni.obarveny_graf)
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
 
-    breakpoint()
     # po obarveni pridavam jeste oktavu
-
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(oktava.graf_dict, oktava.graf_colors,
                                                               vsichni.obarveny_graf_dict, vsichni.obarveny_graf_colors)
 
@@ -109,16 +105,13 @@ def main():
     vsichni.graf_dict = zmergovany_graf_dict
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
-    print(vsichni.graf)
-    print(vsichni.graf_colors)
-    vsichni.graf = nx.compose(vsichni.graf, oktava.graf)
-    for node, data in vsichni.obarveny_graf.nodes(data=True):
-        if 'color' in data:
-            vsichni.graf.nodes[node]['color'] = data['color']
-
     # vsichni.graf = deepcopy(vsichni.obarveny_graf)
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru))
+    
+    print("posledni obarveni")
+    print(vsichni.obarveny_graf_dict)
+    print(vsichni.obarveny_graf_colors)
 
     return
 
