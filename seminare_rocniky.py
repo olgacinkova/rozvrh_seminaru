@@ -34,13 +34,12 @@ class Seminar:
         """
         return self.__id
 
-    def uloz_pro_ktere_rocniky(self, soubor_seminare):
-        """
+    """def uloz_pro_ktere_rocniky(self, soubor_seminare):
         Ukládá, pro které ročníky je seminář určen. 
 
         Parametry:
             soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
-        """
+        
 
         df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
         index = self.__id - 1  # protože indexuji od nuly
@@ -53,6 +52,27 @@ class Seminar:
             self.pro_ktere_rocniky.add(7)  # septima
         if radek['pro8'] == 1:
             self.pro_ktere_rocniky.add(8)  # oktáva
+        """
+    def uloz_pro_ktere_rocniky(self, soubor_seminare):
+        """
+        Ukládá, pro které ročníky je seminář určen. 
+
+        Parametry:
+            soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
+        """
+
+        df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
+        
+        for index, row in df.iterrows():
+            if row['pro5'] == 1:
+                self.pro_ktere_rocniky.add(5)  # kvinta
+            if row['pro6'] == 1:
+                self.pro_ktere_rocniky.add(6)  # sexta
+            if row['pro7'] == 1:
+                self.pro_ktere_rocniky.add(7)  # septima
+            if row['pro8'] == 1:
+                self.pro_ktere_rocniky.add(8)  # oktáva
+
 
     def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani):
         """
@@ -67,14 +87,13 @@ class Seminar:
                 self.kteri_zaci_tam_chodi.add(zak)
 
     # nacita soubor seminare.csv a promennou id_vsech_ucitelu
-    def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu):
-        """
+    """def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu):
+        
         Ukládá, kteří učitelé seminář učí.
 
         Parametry: 
             soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
             id_vsech_ucitelu (dict): Dictionary, kde je učitel a k němu jeho ID.
-        """
         df = pd.read_csv(soubor_seminare)
         radek = self.__id - 1
         sloupec = 'ucitel'
@@ -85,7 +104,28 @@ class Seminar:
         jmeno_ucitele = jmeno_ucitele.split(",")
         for j in jmeno_ucitele:
             id_ucitele = id_vsech_ucitelu[j]
-            self.kdo_seminar_uci.add(id_ucitele)
+            self.kdo_seminar_uci.add(id_ucitele)"""
+    def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu):
+        """
+        Ukládá, kteří učitelé seminář učí.
+
+        Parametry: 
+            soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
+            id_vsech_ucitelu (dict): Dictionary, kde je učitel a k němu jeho ID.
+        """
+        df = pd.read_csv(soubor_seminare)
+        sloupec = 'ucitel'
+        
+        for index, row in df.iterrows():
+            jmeno_ucitele = row[sloupec]
+            jmeno_ucitele = str(jmeno_ucitele).replace(" ", "")
+            # Protože může být více učitelů na jednom semináři
+            jmeno_ucitele = jmeno_ucitele.split(",")
+            
+            for j in jmeno_ucitele:
+                id_ucitele = id_vsech_ucitelu[j]
+                self.kdo_seminar_uci.add(id_ucitele)
+    
 
     def uloz_data_pro_seminar(self, soubor_zapsani, soubor_seminare, id_vsech_ucitelu):
         """
