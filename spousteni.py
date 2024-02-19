@@ -36,7 +36,7 @@ def main():
     for e in vsechny_seminare:
         e.uloz_data_pro_seminar(
             "zapsani.csv", "seminare.csv", id_vsech_ucitelu)
-
+    breakpoint()
     # instance: jednotlive rocniky
     # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
     kvinta_sexta = Rocnik([5, 6])

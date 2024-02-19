@@ -238,9 +238,29 @@ class Rocnik:
         Načítá atribut ucitele_a_jejich_seminare, který byl inicializován v konstruktoru. 
 
         Parametry: 
-            ucitele_seminaru (dict): Dictionary, učitelů a množin jejich seminářů. Vrací jej funkce nacti_ucitele_seminaru volaná na soubor seminare.csv
+            ucitele_seminaru (dict): Dictionary učitelů a množin jejich seminářů. Vrací jej funkce nacti_ucitele_seminaru volaná na soubor seminare.csv
             vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
         """
+        for ucitel in self.ucitele:
+            mnozina_seminaru_konkretniho_ucitele = ucitele_seminaru[ucitel]
+            self.ucitele_a_jejich_seminare[ucitel] = mnozina_seminaru_konkretniho_ucitele
+        # projdu kazdemu uciteli rocniku jeho mnozinu seminaru
+        for ucitel, mnozina in self.ucitele_a_jejich_seminare.items():
+            for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
+                print(konkretni_seminar)
+                # pokud je seminar pro dany rocnik
+                if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
+                    mnozina.remove(konkretni_seminar)
+
+                print(mnozina)
+    """ def uloz_ucitele_a_jejich_seminare(self, ucitele_seminaru: dict, vsechny_seminare: list):
+        
+        Načítá atribut ucitele_a_jejich_seminare, který byl inicializován v konstruktoru. 
+
+        Parametry: 
+            ucitele_seminaru (dict): Dictionary, učitelů a množin jejich seminářů. Vrací jej funkce nacti_ucitele_seminaru volaná na soubor seminare.csv
+            vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
+        
         for ucitel in self.ucitele:
             mnozina_seminaru_konkretniho_ucitele = ucitele_seminaru[ucitel]
             self.ucitele_a_jejich_seminare[ucitel] = mnozina_seminaru_konkretniho_ucitele
@@ -250,7 +270,7 @@ class Rocnik:
                 # pokud je seminar pro dany rocnik
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
                     self.ucitele_a_jejich_seminare[mnozina].discard(
-                        konkretni_seminar)
+                        konkretni_seminar)"""
 
     def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
         """
