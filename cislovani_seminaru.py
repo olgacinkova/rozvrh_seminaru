@@ -21,5 +21,5 @@ def modify_id_column(input_file, output_file):
 
 # Example usage:
 input_file = 'seminare.csv'
-output_file = 'seminare_cislovane.csv'
+output_file = 'seminare.csv'
 modify_id_column(input_file, output_file)
