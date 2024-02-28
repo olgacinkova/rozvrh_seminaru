@@ -424,6 +424,9 @@ class Rocnik:
 
         graph_coloring = prioritizovane_barveni(
             self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors, poradi = self.poradi)
+        self.obarveny_graf_colors = graph_coloring
+        print("BARVICKYYY znovu")
+        print(self.obarveny_graf_colors)
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
         node_colors = [graph_color_to_mpl_color[graph_coloring[n]]
@@ -441,6 +444,9 @@ class Rocnik:
             self.graf.remove_edge(nejmensi[0], nejmensi[1])
             graph_coloring = prioritizovane_barveni(
                 self.obarveny_graf, povolene_bloky_seminaru, colors=self.obarveny_graf_colors)
+            self.obarveny_graf_colors = graph_coloring
+            print("BARVICKYYY znovu")
+            print(self.obarveny_graf_colors)
             unique_colors = set(graph_coloring.values())
             graph_color_to_mpl_color = dict(
                 zip(unique_colors, mpl.TABLEAU_COLORS))

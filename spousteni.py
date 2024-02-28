@@ -46,7 +46,7 @@ def main():
     # kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
     kvinta_sexta.zobraz_obarveny_graf(
         *kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
-
+    print(kvinta_sexta.obarveny_graf_colors)
     septima = Rocnik(7)
     septima.uloz_data_pro_rocnik(
         zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)

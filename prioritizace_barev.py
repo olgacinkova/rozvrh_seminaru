@@ -249,7 +249,7 @@ STRATEGIES = {
 }
 
 
-def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first', colors={},
+def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first', colors = {},
                            poradi=[1, 3, 5, 4, 2, 6, 7]):
     
     """
