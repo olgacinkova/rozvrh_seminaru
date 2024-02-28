@@ -1,0 +1,33 @@
+id,cislo,nazev,ucitel,hodin,anotace,pro5,pro6,pro7,pro8,aktivni,hnizdo,uzavreny,kapacita,rozsirujici
+1,CJ1,Starší česká literatura ve filmu a literární toulky,"J. Linka, M. Roháčková",2,,0,0,1,0,1,2,0,18,0
+2,CJ2,Česká a světová literatura ve filmu,M. Roháčková,2,,0,0,0,1,1,7,0,18,0
+3,AJ1,Taboos and Issues,bude upřesněno,2,,1,0,0,0,1,2,0,28,0
+4,AJ3,CAE PREP COURSE 1-a (příprava od začátku od B2),J. Váňa ,2,,0,0,1,0,1,1,0,12,0
+5,AJ4,CAE PREP COURSE 1-b (příprava od začátku od B2),J. Váňa ,2,,0,0,1,0,1,2,1,13,0
+6,AJ5,"CAE PREP COURCE 2-a (navazující, od úrovně C1-)",J. Váňa ,2,,0,0,0,1,1,3,0,12,0
+7,AJ6,"CAE PREP COURCE 2-b (navazující, od úrovně C1-)",J. Váňa ,2,,0,0,0,1,1,4,0,12,0
+8,NJ1,Gramatické a lexikální repetitorium - Nj,J. Ginzelová,2,,1,0,0,0,1,2,0,15,0
+9,LJ2,Maturitní latinský seminář,P. Koronthály,2,,0,0,0,1,1,7,0,20,0
+10,M1,Matematický seminář pro kvinty,P. Kryl,2,,1,0,0,0,1,2,0,20,0
+11,M2,Matematický seminář pro sexty,Z. Vavřín,2,,0,1,0,0,1,4,0,21,0
+12,M3,Matematický seminář pro septimy,L. Bernard,2,,0,0,1,0,1,3,0,21,0
+13,M5,Matematický seminář k profilové maturitě,Z. Vavřín,2,,0,0,0,1,1,3,0,20,0
+14,DG,Deskriptivní geometrie I+II,K. Steinerová,2,,0,0,1,1,1,6,0,13,1
+15,IT1,Seminář nejen z programování,P. Kryl,2,,0,0,1,1,1,1,0,20,0
+16,D1,1000 ČI 1500 LET STŘEDOVĚKU? (seminář středověku),O. Faktor,2,,0,1,0,0,1,4,0,22,0
+17,D2,Seminář moderních dějin,O. Faktor,2,,0,0,1,0,1,3,0,22,0
+18,D3,Maturitní seminář z dějepisu,J. Váňa ,2,,0,0,0,1,1,5,0,20,0
+19,D4,Dějiny (ve) filmu,J. Ginzelová,2,,0,0,1,1,1,6,0,15,1
+20,ZS1,Kvintesence práva,T. Pešek,2,,1,0,0,0,1,2,0,16,0
+21,ZS2,Svět v pohybu,T. Pešek,2,,0,1,0,0,1,4,0,22,0
+22,ZS3,Cesta do hlubin študákovy duše,T. Pešek,2,,0,0,1,0,1,5,0,15,0
+23,ZS4,Seminář ZSV pro oktávy k profilové maturitní zkoušce,T. Pešek,2,,0,0,0,1,1,1,0,25,0
+24,ZS5,Ekonomie a finanční gramotnost (EFG),J. Hajíček,2,,0,0,1,1,1,6,0,30,1
+25,ZF,Moderní filosofie,"D. Vejvodová, V. Hrouda",2,,0,0,1,1,1,4,0,18,0
+26,PR1,Přírodovědný seminář pro kvinty a sexty,"I. Chlebounová, J. Cvachová",2,,1,1,0,0,1,2,1,16,0
+27,FY1,Seminář z fyziky - septima,Jiří Rezek,2,,0,0,1,0,1,5,0,20,0
+28,FY2,Seminář z fyziky - oktáva,Jiří Rezek,2,,0,0,0,1,1,4,0,20,0
+29,CH2,Maturitní seminář z chemie,I. Chlebounová,2,,0,0,0,1,1,1,0,28,0
+30,BI1b,Biologický seminář pro oktávy,R. M. Dvořáková,2,,0,0,0,1,1,2,0,20,0
+31,VV,Seminář z výtvarné výchovy,A. Angelová,2,,0,0,1,1,1,3,0,22,0
+32,BI1a,Biologický seminář pro septimy,Z. Lenochová,2,,0,0,1,0,1,2,0,20,0
