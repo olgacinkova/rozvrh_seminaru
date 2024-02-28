@@ -3,6 +3,7 @@ from barveni import *
 from seminare_rocniky import *
 from tvorba_rozvrhu import *
 from mergovani_grafu import *
+import sys
 
 
 #### zapsat do grafu jako hodnoty hran pozadavky ucitelu 
