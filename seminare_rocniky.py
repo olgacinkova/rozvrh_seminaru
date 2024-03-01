@@ -208,7 +208,7 @@ class Rocnik:
         if self.__kolikaty == [5,6]: # kvinta a sexta
             self.poradi = [2,4,6,1,3,5,7,8,9,10,11,12] # maji mit dva bloky
         if self.__kolikaty == 7: # septima
-            self.poradi = [1,3,4,2,4,6,7,8,9,10,11,12] # maji mit 5 bloku
+            self.poradi = [1,3,5,2,4,6,7,8,9,10,11,12] # maji mit 5 bloku
         else: # oktava
             self.poradi = [1,3,5,2,4,6,7,8,9,10,11,12] # maji mit 9 bloku
 
