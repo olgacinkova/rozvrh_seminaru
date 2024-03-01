@@ -2,7 +2,7 @@ from fce_pro_seminare_rocniky import *
 from barveni import *
 from seminare_rocniky import *
 from tvorba_rozvrhu import *
-from mergovani_grafu import *
+from spojovani_grafu import *
 from uloz_do_csv import *
 
 #### zapsat do grafu jako hodnoty hran pozadavky ucitelu 
