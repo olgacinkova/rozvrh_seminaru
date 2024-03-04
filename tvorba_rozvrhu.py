@@ -18,7 +18,8 @@ class Rozvrh:
             (žádné - bloky jsou pevně dané níže v konstruktoru, podle obvyklého rozvrhu)
         """
         self.bloky_ve_ktery_cas: dict = {"po7": 1, "po9": 2, "ut7": 3, "ut9": 4,
-                                         "st7": 8, "ct7": 5, "ct9": 6, "pa7": 7} # doplnit si tam rezervní bloky 
+                                         "st7": 8, "ct7": 5, "ct9": 6, "pa7": 7, 
+                                         "r1": 8, "r2": 9, "r3": 10, "r4": 11, "r5": 12}
         # key = ktery den od ktere vyucovaci hodiny
         # value = id bloku
         # pro kazdeho ucitele mnozina bloku, kdy nemuze
