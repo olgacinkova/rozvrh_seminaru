@@ -1,0 +1,15 @@
+import pandas as pd
+
+def modify_id_column(input_file, output_file):
+    # Read the input CSV file
+    df = pd.read_csv(input_file, sep=';')
+    
+    # Modify the 'id' column
+    df['id'] = range(1, len(df) + 1)
+    
+    # Write the modified data to a new CSV file
+    df.to_csv(output_file, sep=';', index=False)
+
+input_file = 'seminare_kolize.csv'
+output_file = 'seminare_kolize.csv'
+modify_id_column(input_file, output_file)

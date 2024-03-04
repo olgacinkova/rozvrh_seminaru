@@ -19,6 +19,6 @@ def modify_id_column(input_file, output_file):
         writer.writeheader()
         writer.writerows(data)
 
-input_file = 'seminare_kolize.csv'
-output_file = 'seminare_kolize.csv'
+input_file = 'seminare.csv'
+output_file = 'seminare.csv'
 modify_id_column(input_file, output_file)
