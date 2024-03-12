@@ -11,7 +11,6 @@ Greedy graph coloring using various strategies.
 """
 from collections import defaultdict, deque
 import itertools
-
 import networkx as nx
 from networkx.utils import arbitrary_element
 from networkx.utils import py_random_state
@@ -251,7 +250,6 @@ STRATEGIES = {
 
 def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first', colors = {},
                            poradi=[1, 3, 5, 4, 2, 6, 7]):
-    
     """
     Parametry:
         G (networkx graph): Graf, který chci barvit.

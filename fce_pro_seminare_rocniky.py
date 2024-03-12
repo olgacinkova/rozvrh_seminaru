@@ -74,7 +74,6 @@ def nacti_zaky_seminaru(soubor):
             kam_seminar[zak].add(seminar)  # přidám tam nový seminář
     return kam_seminar
 
-
 def nacti_id_vsech_seminaru(soubor):
     """
     Načítá ze souboru seminare.csv seznam ID všech seminářů.
@@ -253,10 +252,6 @@ def udelej_graf(seminare_ucitelu, id_vsech_seminaru, kam_seminar):
         else:
             # pokud hrana neexistuje, vytvořím ji
             G.add_edge(u, v, weight=data['weight'])
-    # tisknu graf na textový výstup - není nutné
-    # for u, v, data in G.edges(data=True):
-    #    weight = data['weight']
-    #    print(f"hrana: ({u}, {v}), hodnota: {weight}")
 
     # vizualizace grafu
     pos = nx.spring_layout(G)  # rozmístění vrcholů a hran
@@ -318,10 +313,6 @@ def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_
         else:
             # pokud hrana neexistuje, vytvořím ji
             G.add_edge(u, v, weight=data['weight'])
-    # tisknu graf na textový výstup - není nutné
-    # for u, v, data in G.edges(data=True):
-    #    weight = data['weight']
-    #    print(f"hrana: ({u}, {v}), hodnota: {weight}")
 
     # vizualizace grafu
     pos = nx.spring_layout(G)  # rozmístění vrcholů a hran

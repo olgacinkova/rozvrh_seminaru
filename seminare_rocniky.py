@@ -416,6 +416,7 @@ class Rocnik:
         # vytvorim seznam hran podle velikosti - zacina hranou s nejmensi hodnotou
 
         # abych nezmenila puvodni graf
+        pocet_odstranenych_hran = 0
         self.obarveny_graf = deepcopy(self.graf)
         serazene_hrany = sorted(self.obarveny_graf.edges(
             data=True), key=lambda x: x[2]['weight'])
@@ -441,7 +442,9 @@ class Rocnik:
                 raise Exception(
                     "moc malinke pozadovane chromaticke cislo :( to nejde obarvit")
             nejmensi = serazene_hrany.pop(0)  # hrana s nejmensi hodnotou
+            print("ODSTRANĚNÁ HRANA" + str(nejmensi))
             self.graf.remove_edge(nejmensi[0], nejmensi[1])
+            pocet_odstranenych_hran += 1
             graph_coloring = prioritizovane_barveni(
                 self.obarveny_graf, povolene_bloky_seminaru, colors=self.obarveny_graf_colors)
             self.obarveny_graf_colors = graph_coloring
@@ -457,6 +460,6 @@ class Rocnik:
             labels = {e: self.obarveny_graf.edges[e]['weight']
                       for e in self.obarveny_graf.edges}
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
-
+        print("počet hran, které byly odstraněny při barvení grafu pro " + str(self.__kolikaty[0]) + "je" + str(pocet_odstranenych_hran))
         # plt.show() # zobrazí graf
         return node_colors, labels

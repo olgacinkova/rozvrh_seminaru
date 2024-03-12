@@ -5,11 +5,12 @@ import networkx as nx
 class Rozvrh:
     """ 
     Obsahuje informace o časovém rozložení bloků a o časových možnostech učitelů jednotlivých seminářů. 
-    
+
     Atributy: 
         bloky_ve_ktery_cas (dict): Dictionary, kde je uloženo, kde je který blok v rozvrhu.
         povolene_bloku_seminaru (dict): Dictionary, kde je uloženo, který seminář může být ve kterém bloku. 
     """
+
     def __init__(self):
         """"
         Konstruktor třídy Rozvrh. 
@@ -18,7 +19,7 @@ class Rozvrh:
             (žádné - bloky jsou pevně dané níže v konstruktoru, podle obvyklého rozvrhu)
         """
         self.bloky_ve_ktery_cas: dict = {"po7": 1, "po9": 2, "ut7": 3, "ut9": 4,
-                                         "st7": 8, "ct7": 5, "ct9": 6, "pa7": 7, 
+                                         "st7": 8, "ct7": 5, "ct9": 6, "pa7": 7,
                                          "r1": 8, "r2": 9, "r3": 10, "r4": 11, "r5": 12}
         # key = ktery den od ktere vyucovaci hodiny
         # value = id bloku
@@ -45,5 +46,3 @@ class Rozvrh:
 
         for seminar in id:
             self.povolene_bloky_seminaru[seminar] = povolene_bloky.pop(0)
-
-
