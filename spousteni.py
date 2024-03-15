@@ -9,10 +9,10 @@ from uloz_do_csv import *
 def main():
     zaci_seminaru = nacti_zaky_seminaru("zapsani.csv")
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
-    id_vsech_seminaru = nacti_id_vsech_seminaru("seminare.csv")
-    id_vsech_ucitelu = nacti_id_vsech_ucitelu("seminare.csv")
-    ucitele_seminaru = nacti_ucitele_seminaru("seminare.csv")
-    seminare_rocniky = ktery_seminar_pro_ktery_rocnik("seminare.csv")
+    id_vsech_seminaru = nacti_id_vsech_seminaru("seminare_kolize.csv")
+    id_vsech_ucitelu = nacti_id_vsech_ucitelu("seminare_kolize.csv")
+    ucitele_seminaru = nacti_ucitele_seminaru("seminare_kolize.csv")
+    seminare_rocniky = ktery_seminar_pro_ktery_rocnik("seminare_kolize.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
     rozvrh = Rozvrh()
     rozvrh.nacti_povolene_bloky_seminaru("seminare_kolize.csv")

@@ -74,6 +74,7 @@ def nacti_zaky_seminaru(soubor):
             kam_seminar[zak].add(seminar)  # přidám tam nový seminář
     return kam_seminar
 
+
 def nacti_id_vsech_seminaru(soubor):
     """
     Načítá ze souboru seminare.csv seznam ID všech seminářů.
@@ -86,7 +87,8 @@ def nacti_id_vsech_seminaru(soubor):
     """
     # bere na vstupu soubor seminare.csv
     # udela seznam id vsech seminaru
-    df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
+    # načtu seznam seminářů jako dataframe
+    df = pd.read_csv(soubor, delimiter=";")
     id_vsech_seminaru = list(df.id)  # id seminářů
     return id_vsech_seminaru
 
@@ -102,7 +104,8 @@ def nacti_id_vsech_ucitelu(soubor):
         dict: Dictionary, kde je vždy jméno učitele a k tomu jeho ID. První učitel ma ID 1.
     """
     # bere na vstupu soubor seminare.csv
-    df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
+    # načtu seznam seminářů jako dataframe
+    df = pd.read_csv(soubor, delimiter=";")
     j = list(df.ucitel)  # jména učitelů
     jmena = set()  # množina jmen učitelů
     for jm in j:
@@ -125,13 +128,14 @@ def nacti_ucitele_seminaru(soubor):
 
     Vrací:
         dict: Dictionary učitelů a množin jejich seminářů.
-        
+
     """
 
     # výstup dict, kde je ke každému učiteli množina seminářů, které učí
     # bere na vstupu soubor seminare.csv
     # udela seznam id vsech seminaru
-    df = pd.read_csv(soubor)  # načtu seznam seminářů jako dataframe
+    # načtu seznam seminářů jako dataframe
+    df = pd.read_csv(soubor, delimiter=";")
     id_vsech_seminaru = list(df.id)  # id seminářů
     j = list(df.ucitel)  # jména učitelů
     jmena = set()  # množina jmen učitelů
@@ -188,7 +192,7 @@ def ktery_seminar_pro_ktery_rocnik(soubor):
     # bere seminare.csv
     # udela dict rocnik_seminar, kde bude pro kazdy rocnik, jake seminare jsou pro nej
     rocnik_seminar = {5: set(), 6: set(), 7: set(), 8: set()}
-    df = pd.read_csv(soubor)  # načtu soubor jako dataframe
+    df = pd.read_csv(soubor, delimiter=";")  # načtu soubor jako dataframe
     for index, radek in df.iterrows():
         if radek['pro5'] == 1:
             id_seminare = radek['id']
@@ -206,7 +210,7 @@ def ktery_seminar_pro_ktery_rocnik(soubor):
 
 
 def udelej_graf(seminare_ucitelu, id_vsech_seminaru, kam_seminar):
-    ############ tahle funkce nejspíš není potřeba, níže se nachází její modifikace udelej_graf_pro_jeden_rocnik, ktera je misto ni
+    # tahle funkce nejspíš není potřeba, níže se nachází její modifikace udelej_graf_pro_jeden_rocnik, ktera je misto ni
     """
     Vytvoří ohodnocený neorientovaný graf, kde vrcholy jsou semináře (číslo vrcholu = ID semináře). 
     Semináře které sdílí učitele a/nebo žáky jsou spojeny ohodnocenou hranou. 

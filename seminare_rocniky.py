@@ -248,6 +248,9 @@ class Rocnik:
         for ucitel, mnozina in self.ucitele_a_jejich_seminare.items():
             for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
                 print(konkretni_seminar)
+                if konkretni_seminar - 1 > len(vsechny_seminare) - 1:
+                    breakpoint()
+                    
                 # pokud je seminar pro dany rocnik
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
                     mnozina.remove(konkretni_seminar)
