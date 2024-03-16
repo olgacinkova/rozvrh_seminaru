@@ -9,7 +9,7 @@ def modify_id_column(seminare_kolize, zapsani) -> None:
         with open("ocislovane_seminare_kolize", 'w', newline='') as modified_csv:
             reader = csv.DictReader(csv_file, delimiter=";")
             writer = csv.DictWriter(
-                modified_csv, fieldnames=reader.fieldnames, delimiter=";")
+                modified_csv, fieldnames = reader.fieldnames, delimiter=";")
             writer.writeheader()
             for i, row in enumerate(reader, start=1):
                 stare_id = row['id'].strip()

@@ -199,7 +199,8 @@ class Rocnik:
         Načítá atribut zaci, který byl inicializován v konstruktoru. Čerpá data ze souboru ve formátu csv.
 
         Parametry: 
-            zaci_rocniku (.csv): Soubor ve formátu csv, kde jsou uloženy informace o žácích. Jmenuje se zaci.csv
+            zaci_rocniku (dict): Dictionary, kde je ulozeno, ktery zak chodi do ktere tridy. Je to vystup funkce nacti_zaky_rocniku, 
+                kterou v modulu spousteni.py volam na soubor zaci.csv
         """
         for rocnik in self.__kolikaty:
             self.zaci = self.zaci.union(zaci_rocniku[rocnik])

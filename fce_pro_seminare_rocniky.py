@@ -34,19 +34,19 @@ def nacti_zaky_rocniku(soubor):
     # do jakých tříd chodí žáci
     # výstup: dictionary ve formátu rocnik : množina jeho žáků
     df = pd.read_csv(soubor, delimiter=';')
-    kam_rocnik = dict()  # dictionary - kdo kam chodí
-    for zak, rocnik in zip(df.id, df.trida):  # projdu všechny žáky
-        if rocnik in kam_rocnik:  # pokud už je třída v dictionary
-            kam_rocnik[rocnik].add(zak)  # přidá do množiny nového žáka
+    kam_trida = dict()  # dictionary - kdo kam chodí
+    for zak, trida in zip(df.id, df.trida):  # projdu všechny žáky
+        if trida in kam_trida:  # pokud už je třída v dictionary
+            kam_trida[trida].add(zak)  # přidá do množiny nového žáka
         else:
             # vytvoří novou prázdnou množinu pro třídu
-            kam_rocnik[rocnik] = set()
-            kam_rocnik[rocnik].add(zak)  # přidá do množiny rovnou prvního žáka
+            kam_trida[trida] = set()
+            kam_trida[trida].add(zak)  # přidá do množiny rovnou prvního žáka
     # do jakeho rocniku chodi (resp. kam budou chodit pristi rok) kteri zaci
     kam_rocnik = {5: set(), 6: set(), 7: set(), 8: set()}
-    for rocnik in kam_rocnik.keys():
-        cilovy_rocnik = parsuj_tridu(rocnik)
-        for e in kam_rocnik[rocnik]:  # presunu zaky dane tridy do daneho rocniku
+    for trida in kam_trida.keys():
+        cilovy_rocnik = parsuj_tridu(trida)
+        for e in kam_trida[trida]:  # presunu zaky dane tridy do daneho rocniku
             kam_rocnik[cilovy_rocnik].add(e)
 
     return kam_rocnik
