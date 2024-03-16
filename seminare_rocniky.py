@@ -15,20 +15,20 @@ class Seminar:
     kdo_seminar_uci (set): Množina učitelů, kteří seminář učí. (Většinou jen jeden učitel na seminář, ale občas dva.) 
     """
 
-    def __init__(self, id_seminare: int):
+    def __init__(self, id_seminare: int) -> None:
         """
         Konstruktor pro Seminar.
 
         Parametry:
             id seminare (int): Identifikační číslo semináře.
         """
-        self.__id = id_seminare
+        self.__id: int = id_seminare
         self.pro_ktere_rocniky: set = set()  # muze byt pro vice rocniku
         self.kteri_zaci_tam_chodi: set = set()
         self.kdo_seminar_uci: set = set()  # muze ucit i vice ucitelu
 
     @property
-    def id(self):
+    def vrat_id(self) -> int:
         """
         Vrací identifikační číslo semináře.
         """
@@ -53,7 +53,8 @@ class Seminar:
         if radek['pro8'] == 1:
             self.pro_ktere_rocniky.add(8)  # oktáva
         """
-    def uloz_pro_ktere_rocniky(self, soubor_seminare):
+
+    def uloz_pro_ktere_rocniky(self, soubor_seminare: str) -> None:
         """
         Ukládá, pro které ročníky je seminář určen. 
 
@@ -61,17 +62,23 @@ class Seminar:
             soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
         """
 
-        df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
-        
-        for index, row in df.iterrows():
-            if row['pro5'] == 1:
-                self.pro_ktere_rocniky.add(5)  # kvinta
-            if row['pro6'] == 1:
-                self.pro_ktere_rocniky.add(6)  # sexta
-            if row['pro7'] == 1:
-                self.pro_ktere_rocniky.add(7)  # septima
-            if row['pro8'] == 1:
-                self.pro_ktere_rocniky.add(8)  # oktáva
+        # načtu soubor jako dataframe
+        df = pd.read_csv(soubor_seminare, delimiter=";")
+        id_seminare: int = self.vrat_id
+        row = df[df['id'] == id_seminare]
+        if row['pro5'].iloc[0] == 1:
+            self.pro_ktere_rocniky.add(5)  # kvinta
+            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+        if row['pro6'].iloc[0] == 1:
+            self.pro_ktere_rocniky.add(6)  # sexta
+            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+        if row['pro7'].iloc[0] == 1:
+            self.pro_ktere_rocniky.add(7)  # septima
+            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+        if row['pro8'].iloc[0] == 1:
+            self.pro_ktere_rocniky.add(8)  # oktáva
+            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+    
 
 
     def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani):
@@ -105,6 +112,7 @@ class Seminar:
         for j in jmeno_ucitele:
             id_ucitele = id_vsech_ucitelu[j]
             self.kdo_seminar_uci.add(id_ucitele)"""
+
     def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu):
         """
         Ukládá, kteří učitelé seminář učí.
@@ -113,19 +121,18 @@ class Seminar:
             soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
             id_vsech_ucitelu (dict): Dictionary, kde je učitel a k němu jeho ID.
         """
-        df = pd.read_csv(soubor_seminare)
+        df = pd.read_csv(soubor_seminare, delimiter=";")
         sloupec = 'ucitel'
-        
+
         for index, row in df.iterrows():
             jmeno_ucitele = row[sloupec]
             jmeno_ucitele = str(jmeno_ucitele).replace(" ", "")
             # Protože může být více učitelů na jednom semináři
             jmeno_ucitele = jmeno_ucitele.split(",")
-            
+
             for j in jmeno_ucitele:
                 id_ucitele = id_vsech_ucitelu[j]
                 self.kdo_seminar_uci.add(id_ucitele)
-    
 
     def uloz_data_pro_seminar(self, soubor_zapsani, soubor_seminare, id_vsech_ucitelu):
         """
@@ -192,7 +199,6 @@ class Rocnik:
         self.obarveny_graf_dict: dict = dict()
         # dictionary, kde je vzdy vrchol a jeho barva
         self.obarveny_graf_colors: dict = dict()
-        
 
     def uloz_zaci(self, zaci_rocniku):
         """
@@ -206,12 +212,15 @@ class Rocnik:
             self.zaci = self.zaci.union(zaci_rocniku[rocnik])
 
     def uloz_poradi(self):
-        if self.__kolikaty == [5,6]: # kvinta a sexta
-            self.poradi = [2,4,6,1,3,5,7,8,9,10,11,12] # maji mit dva bloky
-        if self.__kolikaty == 7: # septima
-            self.poradi = [1,3,5,2,4,6,7,8,9,10,11,12] # maji mit 5 bloku
-        else: # oktava
-            self.poradi = [1,3,5,2,4,6,7,8,9,10,11,12] # maji mit 9 bloku
+        if self.__kolikaty == [5, 6]:  # kvinta a sexta
+            self.poradi = [2, 4, 6, 1, 3, 5, 7, 8,
+                           9, 10, 11, 12]  # maji mit dva bloky
+        if self.__kolikaty == 7:  # septima
+            self.poradi = [1, 3, 5, 2, 4, 6, 7, 8,
+                           9, 10, 11, 12]  # maji mit 5 bloku
+        else:  # oktava
+            self.poradi = [1, 3, 5, 2, 4, 6, 7, 8,
+                           9, 10, 11, 12]  # maji mit 9 bloku
 
     def uloz_ucitele(self, vsechny_seminare: list):
         """
@@ -251,7 +260,7 @@ class Rocnik:
                 print(konkretni_seminar)
                 if konkretni_seminar - 1 > len(vsechny_seminare) - 1:
                     breakpoint()
-                    
+
                 # pokud je seminar pro dany rocnik
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
                     mnozina.remove(konkretni_seminar)
@@ -284,7 +293,7 @@ class Rocnik:
             zaci_seminaru (dict): Dictionary, kde je vždy žák a množina seminářů, kam chodí. Je to výstup funkce nacti_zaky_seminaru volané na soubor zapsani.csv
             vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
         """
-        
+
         for zak in self.zaci:
             if zak in zaci_seminaru.keys():  # protoze zak cislo 35 tam neni
                 mnozina_seminaru_konkretniho_zaka = zaci_seminaru[zak]
@@ -312,7 +321,6 @@ class Rocnik:
         nx.set_node_attributes(self.graf, colors, 'color')
         self.graf_dict = nx.to_dict_of_dicts(self.graf)
 
-    
     def zobraz_graf(self):
         """
         Zobrazuje v okně networkx graf pro jeden ročník. Ještě neobarvený.
@@ -358,12 +366,11 @@ class Rocnik:
         plt.get_current_fig_manager().set_window_title(nazev_okna)
         plt.box(False)
         plt.show()
-        
 
     def zobraz_libovolny_graf(self, node_colors, labels, is_colored: bool):
         """
         Zobrazuje obarvený nebo neobarvený graf v networkx okně. 
-        
+
         Parametry: 
             node_colors (dict):
         """
@@ -371,9 +378,9 @@ class Rocnik:
         if is_colored == True:
             jaky = "obarvený"
             graf = self.obarveny_graf
-        else: 
+        else:
             jaky = "ještě neobarvený"
-            graf = self.graf 
+            graf = self.graf
 
         plt.clf()
         pos = nx.spring_layout(graf)
@@ -392,7 +399,7 @@ class Rocnik:
         )
         nx.draw_networkx_edge_labels(
             graf, pos, edge_labels=labels)
-        
+
         nazev_okna = jaky + "graf pro" + str(self.__kolikaty[0])
         plt.get_current_fig_manager().set_window_title(nazev_okna)
         plt.box(False)
@@ -428,7 +435,7 @@ class Rocnik:
         chrom = 0
 
         graph_coloring = prioritizovane_barveni(
-            self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors, poradi = self.poradi)
+            self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors, poradi=self.poradi)
         self.obarveny_graf_colors = graph_coloring
         print("BARVICKYYY znovu")
         print(self.obarveny_graf_colors)
@@ -464,6 +471,7 @@ class Rocnik:
             labels = {e: self.obarveny_graf.edges[e]['weight']
                       for e in self.obarveny_graf.edges}
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
-        print("počet hran, které byly odstraněny při barvení grafu pro " + str(self.__kolikaty[0]) + "je" + str(pocet_odstranenych_hran))
+        print("počet hran, které byly odstraněny při barvení grafu pro " +
+              str(self.__kolikaty[0]) + "je" + str(pocet_odstranenych_hran))
         # plt.show() # zobrazí graf
         return node_colors, labels
