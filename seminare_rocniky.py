@@ -237,11 +237,10 @@ class Rocnik:
         for ucitel, mnozina in self.ucitele_a_jejich_seminare.items():
             for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
                 # pokud je seminar pro dany rocnik
-                breakpoint()
+                #breakpoint()
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
                     mnozina.remove(konkretni_seminar)
-
-                print(mnozina)
+                    
     """ def uloz_ucitele_a_jejich_seminare(self, ucitele_seminaru: dict, vsechny_seminare: list):
         
         Načítá atribut ucitele_a_jejich_seminare, který byl inicializován v konstruktoru. 

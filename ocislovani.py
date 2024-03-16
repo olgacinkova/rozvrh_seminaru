@@ -6,7 +6,7 @@ def modify_id_column(seminare_kolize, zapsani) -> None:
     id_table = dict()
     # pro soubor seminare_kolize
     with open(seminare_kolize, 'r') as csv_file:
-        with open("ocislovane_seminare_kolize", 'w', newline='') as modified_csv:
+        with open("ocislovane_seminare_kolize.csv", 'w', newline='') as modified_csv:
             reader = csv.DictReader(csv_file, delimiter=";")
             writer = csv.DictWriter(
                 modified_csv, fieldnames = reader.fieldnames, delimiter=";")
