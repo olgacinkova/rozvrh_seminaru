@@ -34,26 +34,6 @@ class Seminar:
         """
         return self.__id
 
-    """def uloz_pro_ktere_rocniky(self, soubor_seminare):
-        Ukládá, pro které ročníky je seminář určen. 
-
-        Parametry:
-            soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
-        
-
-        df = pd.read_csv(soubor_seminare)  # načtu soubor jako dataframe
-        index = self.__id - 1  # protože indexuji od nuly
-        radek = df.loc[index]
-        if radek['pro5'] == 1:
-            self.pro_ktere_rocniky.add(5)  # kvinta
-        if radek['pro6'] == 1:
-            self.pro_ktere_rocniky.add(6)  # sexta
-        if radek['pro7'] == 1:
-            self.pro_ktere_rocniky.add(7)  # septima
-        if radek['pro8'] == 1:
-            self.pro_ktere_rocniky.add(8)  # oktáva
-        """
-
     def uloz_pro_ktere_rocniky(self, soubor_seminare: str) -> None:
         """
         Ukládá, pro které ročníky je seminář určen. 
@@ -122,15 +102,14 @@ class Seminar:
             id_vsech_ucitelu (dict): Dictionary, kde je učitel a k němu jeho ID.
         """
         df = pd.read_csv(soubor_seminare, delimiter=";")
-        sloupec = 'ucitel'
+        id_seminare: int = self.vrat_id
+        row = df[df['id'] == id_seminare] # pro ten dany seminar
+        jmeno_ucitele = row['ucitel'].iloc[0]
+        jmeno_ucitele = str(jmeno_ucitele).replace(" ", "")
+        # Protože může být více učitelů na jednom semináři
+        jmeno_ucitele = jmeno_ucitele.split(",")
 
-        for index, row in df.iterrows():
-            jmeno_ucitele = row[sloupec]
-            jmeno_ucitele = str(jmeno_ucitele).replace(" ", "")
-            # Protože může být více učitelů na jednom semináři
-            jmeno_ucitele = jmeno_ucitele.split(",")
-
-            for j in jmeno_ucitele:
+        for j in jmeno_ucitele:
                 id_ucitele = id_vsech_ucitelu[j]
                 self.kdo_seminar_uci.add(id_ucitele)
 
@@ -257,10 +236,6 @@ class Rocnik:
         # projdu kazdemu uciteli rocniku jeho mnozinu seminaru
         for ucitel, mnozina in self.ucitele_a_jejich_seminare.items():
             for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
-                print(konkretni_seminar)
-                if konkretni_seminar - 1 > len(vsechny_seminare) - 1:
-                    breakpoint()
-
                 # pokud je seminar pro dany rocnik
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
                     mnozina.remove(konkretni_seminar)

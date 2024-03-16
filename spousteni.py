@@ -37,7 +37,7 @@ def main():
     septima.zobraz_obarveny_graf(
         *septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
 
-    # breakpoint()
+
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                                 seminare_rocniky, vsechny_seminare, ucitele_seminaru)
