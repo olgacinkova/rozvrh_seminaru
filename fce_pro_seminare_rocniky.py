@@ -14,6 +14,7 @@ def parsuj_tridu(trida: str | int):  # napr z 4.A udela 5
     Parametry: 
             trida (str): String, kde je napsáno, co je to za třídu (např. "5.A").
     """
+
     if type(trida) == str:
         trida = int(trida.lstrip()[0])
     trida += 1

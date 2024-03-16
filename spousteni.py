@@ -4,7 +4,7 @@ from seminare_rocniky import *
 from tvorba_rozvrhu import *
 from spojovani_grafu import *
 from uloz_do_csv import *
-
+# uaaaaaaa
 
 def main():
     zaci_seminaru = nacti_zaky_seminaru("zapsani.csv")
