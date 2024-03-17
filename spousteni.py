@@ -35,8 +35,8 @@ def main():
     septima.zobraz_graf()
     # septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
     septima.zobraz_obarveny_graf(
-        *septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru))
-
+        *septima.obarvi_graf_lip(5, rozvrh.povolene_bloky_seminaru))
+    breakpoint()
 
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
@@ -44,13 +44,13 @@ def main():
     oktava.zobraz_graf()
     # oktava.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru)
     oktava.zobraz_obarveny_graf(
-        *oktava.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru))
+        *oktava.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
+
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
     vsichni = Rocnik(0)
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
                                                                    kvinta_sexta.obarveny_graf_dict, kvinta_sexta.obarveny_graf_colors)
-
     vsichni.graf_dict = zmergovany_graf_dict
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy

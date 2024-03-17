@@ -58,8 +58,6 @@ class Seminar:
         if row['pro8'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(8)  # oktáva
             print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
-    
-
 
     def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani):
         """
@@ -103,15 +101,15 @@ class Seminar:
         """
         df = pd.read_csv(soubor_seminare, delimiter=";")
         id_seminare: int = self.vrat_id
-        row = df[df['id'] == id_seminare] # pro ten dany seminar
+        row = df[df['id'] == id_seminare]  # pro ten dany seminar
         jmeno_ucitele = row['ucitel'].iloc[0]
         jmeno_ucitele = str(jmeno_ucitele).replace(" ", "")
         # Protože může být více učitelů na jednom semináři
         jmeno_ucitele = jmeno_ucitele.split(",")
 
         for j in jmeno_ucitele:
-                id_ucitele = id_vsech_ucitelu[j]
-                self.kdo_seminar_uci.add(id_ucitele)
+            id_ucitele = id_vsech_ucitelu[j]
+            self.kdo_seminar_uci.add(id_ucitele)
 
     def uloz_data_pro_seminar(self, soubor_zapsani, soubor_seminare, id_vsech_ucitelu):
         """
@@ -193,7 +191,7 @@ class Rocnik:
     def uloz_poradi(self):
         if self.__kolikaty == [5, 6]:  # kvinta a sexta
             self.poradi = [2, 4, 6, 1, 3, 5, 7, 8,
-                           9, 10, 11, 12]  # maji mit dva bloky
+                            9, 10, 11, 12]  # maji mit dva bloky
         if self.__kolikaty == 7:  # septima
             self.poradi = [1, 3, 5, 2, 4, 6, 7, 8,
                            9, 10, 11, 12]  # maji mit 5 bloku
@@ -237,28 +235,9 @@ class Rocnik:
         for ucitel, mnozina in self.ucitele_a_jejich_seminare.items():
             for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
                 # pokud je seminar pro dany rocnik
-                #breakpoint()
+                # breakpoint()
                 if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
                     mnozina.remove(konkretni_seminar)
-                    
-    """ def uloz_ucitele_a_jejich_seminare(self, ucitele_seminaru: dict, vsechny_seminare: list):
-        
-        Načítá atribut ucitele_a_jejich_seminare, který byl inicializován v konstruktoru. 
-
-        Parametry: 
-            ucitele_seminaru (dict): Dictionary, učitelů a množin jejich seminářů. Vrací jej funkce nacti_ucitele_seminaru volaná na soubor seminare.csv
-            vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
-        
-        for ucitel in self.ucitele:
-            mnozina_seminaru_konkretniho_ucitele = ucitele_seminaru[ucitel]
-            self.ucitele_a_jejich_seminare[ucitel] = mnozina_seminaru_konkretniho_ucitele
-        # projdu kazdemu uciteli rocniku jeho mnozinu seminaru
-        for mnozina in self.ucitele_a_jejich_seminare.values():
-            for konkretni_seminar in mnozina:  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
-                # pokud je seminar pro dany rocnik
-                if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
-                    self.ucitele_a_jejich_seminare[mnozina].discard(
-                        konkretni_seminar)"""
 
     def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
         """
@@ -390,10 +369,11 @@ class Rocnik:
         self.uloz_zaky_a_jejich_seminare(zaci_seminaru, vsechny_seminare)
         self.uloz_graf()
 
-    # B = pozadovane chrom. c.
+
     def obarvi_graf_lip(self, B, povolene_bloky_seminaru):
+        # B = pozadovany pocet barev
         # obarvím graf
-        # jaké je chromatické číslo (barevnost grafu)?
+        # jaky je pocet barev (barevnost grafu)?
         # pokud je menší nebo stejné jako B: vratim obarveny graf a jeho chrom cislo
         # pokud je větší než B:
         # odeberu z grafu hranu s nejmenší hodnotou a opakuju predchozi kroky
@@ -401,18 +381,21 @@ class Rocnik:
 
         # vytvorim seznam hran podle velikosti - zacina hranou s nejmensi hodnotou
 
-        # abych nezmenila puvodni graf
+
         pocet_odstranenych_hran = 0
+        celkova_hodnota_odstanenych_hran = 0
+        # abych nezmenila puvodni graf
         self.obarveny_graf = deepcopy(self.graf)
         serazene_hrany = sorted(self.obarveny_graf.edges(
             data=True), key=lambda x: x[2]['weight'])
+        breakpoint()
         # obarvím graf hladovým barvicím algoritmem
         chrom = 0
 
         graph_coloring = prioritizovane_barveni(
             self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors, poradi=self.poradi)
         self.obarveny_graf_colors = graph_coloring
-        print("BARVICKYYY znovu")
+        print("obarveno takto:")
         print(self.obarveny_graf_colors)
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
@@ -424,17 +407,21 @@ class Rocnik:
                   for e in self.obarveny_graf.edges}
         while chrom > B:
             print(chrom)
-            if len(serazene_hrany) == 0:
-                raise Exception(
-                    "moc malinke pozadovane chromaticke cislo :( to nejde obarvit")
+            #if len(serazene_hrany) == 0:
+            #    raise Exception(
+            #        "moc malinke pozadovane chromaticke cislo :( to nejde obarvit")
             nejmensi = serazene_hrany.pop(0)  # hrana s nejmensi hodnotou
-            print("ODSTRANĚNÁ HRANA" + str(nejmensi))
-            self.graf.remove_edge(nejmensi[0], nejmensi[1])
             pocet_odstranenych_hran += 1
+            celkova_hodnota_odstanenych_hran += nejmensi[2]['weight']
+            print("aktualne nejmene hodnotna hrana: " + str(nejmensi))
+            if nejmensi[2]['weight'] == 100:
+                print("tady, uz bychom odstranovali profesory - koncim barveni")
+                break
+            self.graf.remove_edge(nejmensi[0], nejmensi[1])
             graph_coloring = prioritizovane_barveni(
                 self.obarveny_graf, povolene_bloky_seminaru, colors=self.obarveny_graf_colors)
             self.obarveny_graf_colors = graph_coloring
-            print("BARVICKYYY znovu")
+            print("barvim znovu")
             print(self.obarveny_graf_colors)
             unique_colors = set(graph_coloring.values())
             graph_color_to_mpl_color = dict(
@@ -446,7 +433,7 @@ class Rocnik:
             labels = {e: self.obarveny_graf.edges[e]['weight']
                       for e in self.obarveny_graf.edges}
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
-        print("počet hran, které byly odstraněny při barvení grafu pro " +
-              str(self.__kolikaty[0]) + "je" + str(pocet_odstranenych_hran))
-        # plt.show() # zobrazí graf
+        print(f"pouzili jsme {chrom} barev")
+        print(f"při barvení grafu pro {self.__kolikaty[0]} bylo odstraneno {pocet_odstranenych_hran} hran")
+        print(f"celkova hodnota odstanenych hran: {celkova_hodnota_odstanenych_hran}")
         return node_colors, labels
