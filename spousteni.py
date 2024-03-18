@@ -13,7 +13,7 @@ def main():
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik("ocislovane_seminare_kolize.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
     rozvrh = Rozvrh()
-    rozvrh.nacti_povolene_bloky_seminaru("seminare_kolize.csv")
+    rozvrh.nacti_povolene_bloky_seminaru("ocislovane_seminare_kolize.csv")
 
     vsechny_seminare = [Seminar(id) for id in id_vsech_seminaru]
     for e in vsechny_seminare:

@@ -388,7 +388,6 @@ class Rocnik:
         self.obarveny_graf = deepcopy(self.graf)
         serazene_hrany = sorted(self.obarveny_graf.edges(
             data=True), key=lambda x: x[2]['weight'])
-        breakpoint()
         # obarvím graf hladovým barvicím algoritmem
         chrom = 0
 
