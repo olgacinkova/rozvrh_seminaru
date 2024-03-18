@@ -9,6 +9,7 @@ def main():
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
     id_vsech_seminaru = nacti_id_vsech_seminaru("ocislovane_seminare_kolize.csv")
     id_vsech_ucitelu = nacti_id_vsech_ucitelu("ocislovane_seminare_kolize.csv")
+    print(f"id_vsech_ucitelu: {id_vsech_ucitelu}")
     ucitele_seminaru = nacti_ucitele_seminaru("ocislovane_seminare_kolize.csv")
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik("ocislovane_seminare_kolize.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare

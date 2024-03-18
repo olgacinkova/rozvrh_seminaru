@@ -207,7 +207,10 @@ class Rocnik:
             vsechny_seminare (list): Seznamu objektů jednotlivých seminářů.
         """
         for e in vsechny_seminare:
-            self.ucitele = self.ucitele.union(e.kdo_seminar_uci)
+            for x in self.__kolikaty:
+                if x in e.pro_ktere_rocniky:
+                    self.ucitele = self.ucitele.union(e.kdo_seminar_uci)
+        print(f"rocnik {self.__kolikaty} ma tyto ucitele {self.ucitele}")
 
     def uloz_id_seminaru_rocniku(self, seminare_rocniky: dict):
         """

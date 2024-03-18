@@ -1,0 +1,14 @@
+rocnik [5, 6] ma tyto ucitele {5, 7, 8, 9, 11, 12, 14, 18}
+
+'budeupřesněno': 5 = 3	AJ1 pro kvintu
+'P.Kryl': 7 = 
+'T.Pešek': 8
+'J.Ginzelová': 9
+'J.Cvachová': 11
+'Z.Vavřín': 12
+'O.Faktor': 14
+'I.Chlebounová': 18
+
+
+
+id_vsech_ucitelu: {'R.M.Dvořáková': 1, 'K.Steinerová': 2, 'M.Roháčková': 3, 'JiříRezek': 4, 'budeupřesněno': 5, 'A.Angelová': 6, 'P.Kryl': 7, 'T.Pešek': 8, 'J.Ginzelová': 9, 'Z.Lenochová': 10, 'J.Cvachová': 11, 'Z.Vavřín': 12, 'P.Koronthály': 13, 'O.Faktor': 14, 'J.Hajíček': 15, 'V.Hrouda': 16, 'D.Vejvodová': 17, 'I.Chlebounová': 18, 'J.Linka': 19, 'L.Bernard': 20, 'J.Váňa': 21, 'příp.M.Roháčková(podleúvazku)': 22}
