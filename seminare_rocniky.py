@@ -269,7 +269,7 @@ class Rocnik:
         self.graf = udelej_graf_pro_jeden_rocnik(
             self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci_a_jejich_seminare)
 
-        color_for_all_nodes = 8  # 8 neni zadny blok - tahle barva = jeste neobarveno
+        color_for_all_nodes = 0  # 0 neni zadny blok - tahle barva = jeste neobarveno
         # dictionary, kde je vzdy vrchol a jeho barva - tady vsechny vrcholy stejne barevne
         colors = {node: color_for_all_nodes for node in self.graf.nodes()}
         nx.set_node_attributes(self.graf, colors, 'color')
@@ -297,7 +297,6 @@ class Rocnik:
     def zobraz_obarveny_graf(self, node_colors, labels):
         """
         Zobrazuje v okně networkx graf pro jeden ročník obarvený prioritizovaným barvením.
-        ############################## TUDU: jsou tam opravdu třeba node_colors a labels???
         """
         plt.clf()
         pos = nx.spring_layout(self.obarveny_graf)
