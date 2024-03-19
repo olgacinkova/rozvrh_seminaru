@@ -20,6 +20,7 @@ def main():
     for e in vsechny_seminare:
         e.uloz_data_pro_seminar(
             "ocislovane_zapsani.csv", "ocislovane_seminare_kolize.csv", id_vsech_ucitelu)
+    print(vsechny_seminare[0].vrat_id)
 
     # instance: jednotlive rocniky
     # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven

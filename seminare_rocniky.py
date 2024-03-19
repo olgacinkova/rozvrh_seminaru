@@ -235,12 +235,26 @@ class Rocnik:
             mnozina_seminaru_konkretniho_ucitele = ucitele_seminaru[ucitel]
             self.ucitele_a_jejich_seminare[ucitel] = mnozina_seminaru_konkretniho_ucitele
         # projdu kazdemu uciteli rocniku jeho mnozinu seminaru
+
         for ucitel, mnozina in self.ucitele_a_jejich_seminare.items():
+            # atribut __kolikaty, ale jako mnozina (set) 
+            kolikaty_set = set()
+            for x in self.__kolikaty:
+                kolikaty_set.add(x)
             for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
-                # pokud je seminar pro dany rocnik
-                # breakpoint()
-                if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
+                # pokud neni seminar pro dany rocnik/dane rocniky
+                #breakpoint()
+                # pokud sdili alespon jeden z danych rocniku
+                print(f"kolikaty rocnik {kolikaty_set}")
+                print(f"seminar {konkretni_seminar}")
+                prunik = kolikaty_set.intersection(vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
+                print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
+                if not prunik:
+                    #breakpoint()
                     mnozina.remove(konkretni_seminar)
+                    #breakpoint()
+                print(f"konecna mnozina seminaru {mnozina}")
+        print(self.ucitele_a_jejich_seminare)
 
     def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
         """

@@ -1,0 +1,10 @@
+id_vsech_ucitelu: {'O.Faktor': 1, 'M.Roháčková': 2, 'budeupřesněno': 3, 'J.Linka': 4, 'T.Pešek': 5, 'P.Kryl': 6, 'I.Chlebounová': 7, 'A.Angelová': 8, 'J.Ginzelová': 9, 'D.Vejvodová': 10, 'V.Hrouda': 11, 'P.Koronthály': 12, 'J.Cvachová': 13, 'Z.Vavřín': 14, 'Z.Lenochová': 15, 'příp.M.Roháčková(podleúvazku)': 16, 'J.Hajíček': 17, 'J.Váňa': 18, 'K.Steinerová': 19, 'JiříRezek': 20, 'R.M.Dvořáková': 21, 'L.Bernard': 22}
+
+{1 = Faktor : {16}, ok
+3 = bude upresneno: {3}, ok
+5 = Pesek: {20, 21}, ok ok
+6 = Kryl: {10}, ok
+7 = Chlebounova: {26}, ok
+9 = Ginzelova : {8}, ok
+13 = Cvachova: {26}, ok
+14 = Vavrin: {11}} ok
