@@ -32,6 +32,7 @@ def main():
     kvinta_sexta.zobraz_obarveny_graf(
         *kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)) # meli by se vejit do dvou bloku
     septima = Rocnik(7)
+
     septima.uloz_data_pro_rocnik(
         zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     septima.zobraz_graf()

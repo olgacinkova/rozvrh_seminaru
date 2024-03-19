@@ -245,16 +245,16 @@ class Rocnik:
                 # pokud neni seminar pro dany rocnik/dane rocniky
                 #breakpoint()
                 # pokud sdili alespon jeden z danych rocniku
-                print(f"kolikaty rocnik {kolikaty_set}")
-                print(f"seminar {konkretni_seminar}")
+                #print(f"kolikaty rocnik {kolikaty_set}")
+                #print(f"seminar {konkretni_seminar}")
                 prunik = kolikaty_set.intersection(vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
-                print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
+                #print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
                 if not prunik:
                     #breakpoint()
                     mnozina.remove(konkretni_seminar)
                     #breakpoint()
-                print(f"konecna mnozina seminaru {mnozina}")
-        print(self.ucitele_a_jejich_seminare)
+                #print(f"konecna mnozina seminaru {mnozina}")
+        #print(self.ucitele_a_jejich_seminare)
 
     def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
         """
@@ -271,12 +271,19 @@ class Rocnik:
                 self.zaci_a_jejich_seminare[zak] = mnozina_seminaru_konkretniho_zaka
 
         # projdu kazdemu zakovi rocniku jeho mnozinu seminaru
-        for mnozina in self.zaci_a_jejich_seminare.values():
-            for konkretni_seminar in mnozina:  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
-                # pokud je seminar pro dany rocnik
-                if vsechny_seminare[konkretni_seminar - 1].pro_ktere_rocniky == self.__kolikaty:
-                    self.zaci_a_jejich_seminare[mnozina].discard(
-                        konkretni_seminar)
+        for zak, mnozina in self.zaci_a_jejich_seminare.items():
+                kolikaty_set = set()
+                for x in self.__kolikaty:
+                    kolikaty_set.add(x)
+                for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
+                    # pokud je seminar pro dany rocnik
+                    breakpoint()
+                    prunik = kolikaty_set.intersection(vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
+                    breakpoint()
+                    if not prunik:
+                        mnozina.remove(konkretni_seminar)
+            #breakpoint()
+
 
     def uloz_graf(self):
         """
