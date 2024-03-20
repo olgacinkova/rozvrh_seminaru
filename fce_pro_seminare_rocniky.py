@@ -312,6 +312,7 @@ def udelej_graf_pro_jeden_rocnik(ucitele_a_jejich_seminare, id_seminaru, zaci_a_
     # graf se součtem hodnot hran z P
     # udělá s multigrafu P normální ohodnocený graf
     G = nx.Graph()
+    G.add_nodes_from(P.nodes)
     for u, v, data in P.edges(data=True):  # pro všechny vrcholy
         if G.has_edge(u, v):  # pokud hrana existuje
             G[u][v]['weight'] += data['weight']  # přidám k váze hrany
