@@ -71,26 +71,6 @@ class Seminar:
             if seminar == self.__id:
                 self.kteri_zaci_tam_chodi.add(zak)
 
-    # nacita soubor seminare.csv a promennou id_vsech_ucitelu
-    """def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu):
-        
-        Ukládá, kteří učitelé seminář učí.
-
-        Parametry: 
-            soubor_seminare (.csv): Soubor ve formátu csv, kde jsou informace o každém semináři. Jmenuje se seminare.csv
-            id_vsech_ucitelu (dict): Dictionary, kde je učitel a k němu jeho ID.
-        df = pd.read_csv(soubor_seminare)
-        radek = self.__id - 1
-        sloupec = 'ucitel'
-        jmeno_ucitele = df.at[radek, sloupec]
-        jmeno_ucitele = str(jmeno_ucitele)
-        jmeno_ucitele = jmeno_ucitele.replace(" ", "")
-        # protoze muze byt vic ucitelu na jednom seminari
-        jmeno_ucitele = jmeno_ucitele.split(",")
-        for j in jmeno_ucitele:
-            id_ucitele = id_vsech_ucitelu[j]
-            self.kdo_seminar_uci.add(id_ucitele)"""
-
     def uloz_kdo_seminar_uci(self, soubor_seminare, id_vsech_ucitelu):
         """
         Ukládá, kteří učitelé seminář učí.
@@ -277,11 +257,20 @@ class Rocnik:
                     kolikaty_set.add(x)
                 for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
                     # pokud je seminar pro dany rocnik
-                    breakpoint()
+                                    #breakpoint()
+                    # pokud sdili alespon jeden z danych rocniku
+                    print(f"kolikaty rocnik {kolikaty_set}")
+                    print(f"seminar {konkretni_seminar}")
+                    #breakpoint()
                     prunik = kolikaty_set.intersection(vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
-                    breakpoint()
+                    print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
+                    #breakpoint()
                     if not prunik:
                         mnozina.remove(konkretni_seminar)
+                    print(f"konecna mnozina seminaru {mnozina}")
+        print(self.zaci_a_jejich_seminare)
+                    
+
             #breakpoint()
 
 
@@ -292,7 +281,6 @@ class Rocnik:
 
         self.graf = udelej_graf_pro_jeden_rocnik(
             self.ucitele_a_jejich_seminare, self.id_seminaru_rocniku, self.zaci_a_jejich_seminare)
-
         color_for_all_nodes = 0  # 0 neni zadny blok - tahle barva = jeste neobarveno
         # dictionary, kde je vzdy vrchol a jeho barva - tady vsechny vrcholy stejne barevne
         colors = {node: color_for_all_nodes for node in self.graf.nodes()}
