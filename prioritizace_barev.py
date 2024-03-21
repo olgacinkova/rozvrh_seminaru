@@ -279,30 +279,59 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
             if u not in povolene_bloky_seminaru.keys():
                 # pokud neni v tabulce pozadavku ucitelu, dam k nemu, ze muze byt ve vsech blocich
                 povolene_bloky_seminaru[u] = set()
-                povolene_bloky_seminaru[u].update([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+                povolene_bloky_seminaru[u].update(
+                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
             # Set to keep track of colors of neighbours
-                
+
             neighbour_colors = {colors[v] for v in G[u] if v in colors}
             # dictionaty na barvy sousedu aktualniho vrcholu U (vzdy par vrchol:jeho_barva
             neighbour_colors_dict = {node: color for node, color in zip(G[u],
-                                                                         neighbour_colors) if node in colors}
-            
-            print("barvy sousedu (vzdy par vrchol:jeho_barva)" + str(neighbour_colors_dict))
+                                                                        neighbour_colors) if node in colors}
+
+            print("barvy sousedu (vzdy par vrchol:jeho_barva) " +
+                  str(neighbour_colors_dict))
             print("povolene barvy " + str(povolene_bloky_seminaru[u]))
-            v_povolenych_ne_v_sousedech = povolene_bloky_seminaru[u] - neighbour_colors
-            if len(v_povolenych_ne_v_sousedech):
-                break
-            else:
+            v_povolenych_ne_v_sousedech = povolene_bloky_seminaru[u] - \
+                neighbour_colors
+            # vahy sousednich hran: dict, kde je vzdy hrana z vrcholu U do jeho souseda a jeji vaha
+            vahy_sousednich_hran = dict()
+
+            for v in neighbour_colors_dict.keys():  # pro vrchol v sousedech
+                hrana = (u, v)
+                # data o barve i ohodnoceni hrany mezi u a v
+                data_hrany = G.get_edge_data(u, v)
+                hodnota = data_hrany['weight']
+                vahy_sousednich_hran[(u, v)] = hodnota
+            # seradim sousedni hrany od nejmensi po nejvetsi
+            # abych pak odebirala ty s mensimi hodnotami
+            serazene_vahy_sousednich_hran = dict(
+                sorted(vahy_sousednich_hran.items(), key=lambda item: item[1]))
+
+            if (len(v_povolenych_ne_v_sousedech)) == 0:
+                # pokud vsechny povolene barvy nevyplacali sousedi
                 # najdi v sousedech vrchol V ktery ma nejakou z povolenych barev U
                 # pokud je takovy vrchol V jen jeden, smazu mezi V a U hranu
-                # pokud je vrcholu V vic, musim najit ten s nejlehci hranou. 
-
+                # pokud je vrcholu V vic, musim najit ten s nejlehci hranou.
+                hrana_k_odstraneni = None
+                hodnota_hrany = None
+                for hrana in serazene_vahy_sousednich_hran.keys():
+                    v = hrana[1]  # sousedni vrchol
+                    # pokud je barva sousedniho vrcholu stejna jako nejaka z povolenych barev u
+                    if neighbour_colors_dict[v] in povolene_bloky_seminaru[u]:
+                        hrana_k_odstraneni = (u,v)
+                        hodnota_hrany = serazene_vahy_sousednich_hran[(u,v)]
+                        break
+                # odstranim hranu mezi u a v
+                G.remove_edge(hrana_k_odstraneni[0], hrana_k_odstraneni[1])
+                neighbour_colors.remove(neighbour_colors_dict[hrana_k_odstraneni[1]])
+                del neighbour_colors_dict[hrana_k_odstraneni[1]]
+                print(
+                    f"odstranena hrana mezi {hrana_k_odstraneni[0]} a {hrana_k_odstraneni[1]} s hodnotou {hodnota_hrany}")
             # Find the first unused color.
             # for color in itertools.count(1)
             for color in itertools.cycle(poradi):
                 if (color not in neighbour_colors) and (color in povolene_bloky_seminaru[u]):
                     break
-
             # Assign the new color to the current node.
             colors[u] = color
             print("vrchol = " + str(u) + " barva = " + str(color))
