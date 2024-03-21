@@ -281,9 +281,22 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                 povolene_bloky_seminaru[u] = set()
                 povolene_bloky_seminaru[u].update([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
             # Set to keep track of colors of neighbours
+                
             neighbour_colors = {colors[v] for v in G[u] if v in colors}
-            print("barvy sousedu " + str(neighbour_colors))
+            # dictionaty na barvy sousedu aktualniho vrcholu U (vzdy par vrchol:jeho_barva
+            neighbour_colors_dict = {node: color for node, color in zip(G[u],
+                                                                         neighbour_colors) if node in colors}
+            
+            print("barvy sousedu (vzdy par vrchol:jeho_barva)" + str(neighbour_colors_dict))
             print("povolene barvy " + str(povolene_bloky_seminaru[u]))
+            v_povolenych_ne_v_sousedech = povolene_bloky_seminaru[u] - neighbour_colors
+            if len(v_povolenych_ne_v_sousedech):
+                break
+            else:
+                # najdi v sousedech vrchol V ktery ma nejakou z povolenych barev U
+                # pokud je takovy vrchol V jen jeden, smazu mezi V a U hranu
+                # pokud je vrcholu V vic, musim najit ten s nejlehci hranou. 
+
             # Find the first unused color.
             # for color in itertools.count(1)
             for color in itertools.cycle(poradi):
