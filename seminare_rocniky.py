@@ -190,7 +190,7 @@ class Rocnik:
             for x in self.__kolikaty:
                 if x in e.pro_ktere_rocniky:
                     self.ucitele = self.ucitele.union(e.kdo_seminar_uci)
-        print(f"rocnik {self.__kolikaty} ma tyto ucitele {self.ucitele}")
+        #print(f"rocnik {self.__kolikaty} ma tyto ucitele {self.ucitele}")
 
     def uloz_id_seminaru_rocniku(self, seminare_rocniky: dict):
         """
@@ -259,16 +259,16 @@ class Rocnik:
                     # pokud je seminar pro dany rocnik
                                     #breakpoint()
                     # pokud sdili alespon jeden z danych rocniku
-                    print(f"kolikaty rocnik {kolikaty_set}")
-                    print(f"seminar {konkretni_seminar}")
+                    #print(f"kolikaty rocnik {kolikaty_set}")
+                    #print(f"seminar {konkretni_seminar}")
                     #breakpoint()
                     prunik = kolikaty_set.intersection(vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
-                    print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
+                    #print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
                     #breakpoint()
                     if not prunik:
                         mnozina.remove(konkretni_seminar)
-                    print(f"konecna mnozina seminaru {mnozina}")
-        print(self.zaci_a_jejich_seminare)
+                    #print(f"konecna mnozina seminaru {mnozina}")
+        #print(self.zaci_a_jejich_seminare)
                     
 
             #breakpoint()

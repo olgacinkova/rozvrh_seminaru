@@ -4,6 +4,8 @@ from seminare_rocniky import *
 from tvorba_rozvrhu import *
 from spojovani_grafu import *
 from uloz_do_csv import *
+from networkx import greedy_color
+
 def main():
     zaci_seminaru = nacti_zaky_seminaru("ocislovane_zapsani.csv")
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
@@ -24,18 +26,25 @@ def main():
 
     # instance: jednotlive rocniky
     # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
-    kvinta_sexta = Rocnik([5, 6])
-    kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
-                                      seminare_rocniky, vsechny_seminare, ucitele_seminaru)
-    kvinta_sexta.zobraz_graf()
+    #kvinta_sexta = Rocnik([5, 6])
+    #kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
+                                      #seminare_rocniky, vsechny_seminare, ucitele_seminaru)
+    #kvinta_sexta.zobraz_graf()
     # kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
-    kvinta_sexta.zobraz_obarveny_graf(
-        *kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)) # meli by se vejit do dvou bloku
+    #kvinta_sexta.zobraz_obarveny_graf(
+    #    *kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)) # meli by se vejit do dvou bloku
     septima = Rocnik(7)
 
     septima.uloz_data_pro_rocnik(
         zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     septima.zobraz_graf()
+    cvicny_graf = septima.graf
+    greedy_color(cvicny_graf, strategy="largest_first")
+    node_colors = [cvicny_graf.nodes[n]['color'] for n in cvicny_graf.nodes]
+    # Draw the graph with node colors
+    nx.draw(cvicny_graf, with_labels=True, node_color=node_colors)
+    plt.show()
+    breakpoint()
     # septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
     septima.zobraz_obarveny_graf(
         *septima.obarvi_graf_lip(5, rozvrh.povolene_bloky_seminaru))

@@ -249,7 +249,7 @@ STRATEGIES = {
 
 
 def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first', colors={},
-                           poradi=[1, 3, 5, 4, 2, 6, 7]):
+                           poradi=[1, 3, 5, 4, 2, 6, 7, 8, 9, 10, 11, 12]):
     """
     Parametry:
         G (networkx graph): Graf, který chci barvit.
@@ -279,7 +279,7 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
             if u not in povolene_bloky_seminaru.keys():
                 # pokud neni v tabulce pozadavku ucitelu, dam k nemu, ze muze byt ve vsech blocich
                 povolene_bloky_seminaru[u] = set()
-                povolene_bloky_seminaru[u].update([1, 2, 3, 4, 5, 6, 7])
+                povolene_bloky_seminaru[u].update([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
             # Set to keep track of colors of neighbours
             neighbour_colors = {colors[v] for v in G[u] if v in colors}
             print("barvy sousedu " + str(neighbour_colors))
