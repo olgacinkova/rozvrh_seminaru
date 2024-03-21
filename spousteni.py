@@ -38,12 +38,13 @@ def main():
     septima.uloz_data_pro_rocnik(
         zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     septima.zobraz_graf()
-    cvicny_graf = septima.graf
-    greedy_color(cvicny_graf, strategy="largest_first")
-    node_colors = [cvicny_graf.nodes[n]['color'] for n in cvicny_graf.nodes]
+    G = septima.graf
+    colors = greedy_color(G, strategy="largest_first")
     # Draw the graph with node colors
-    nx.draw(cvicny_graf, with_labels=True, node_color=node_colors)
+    nx.draw(G, with_labels=True, node_color=list(colors.values()))
     plt.show()
+
+
     breakpoint()
     # septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
     septima.zobraz_obarveny_graf(
