@@ -274,7 +274,7 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
 
     nodes = strategy(G, colors)
     for u in nodes:
-        print("aktualni vrchol " + str(u))
+        #print("aktualni vrchol " + str(u))
         if u not in colors:
             if u not in povolene_bloky_seminaru.keys():
                 # pokud neni v tabulce pozadavku ucitelu, dam k nemu, ze muze byt ve vsech blocich
@@ -332,6 +332,6 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                     break
             # Assign the new color to the current node.
             colors[u] = color
-            print("vrchol = " + str(u) + " barva = " + str(color))
+            #print("vrchol = " + str(u) + " barva = " + str(color))
     print("obarveno")
     return colors

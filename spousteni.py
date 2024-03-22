@@ -41,20 +41,20 @@ def main():
         zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     septima.zobraz_graf()
     # septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
-    septima.zobraz_obarveny_graf(
-        *septima.obarvi_graf_lip(5, rozvrh.povolene_bloky_seminaru))
+    #septima.zobraz_obarveny_graf(
+    #    *septima.obarvi_graf_lip(5, rozvrh.povolene_bloky_seminaru))
     
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                                 seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     oktava.zobraz_graf()
     # oktava.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru)
-    oktava.zobraz_obarveny_graf(
-        *oktava.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
-
+    #oktava.zobraz_obarveny_graf(
+    #    *oktava.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
     vsichni = Rocnik(0)
+    vsichni.poradi = septima.poradi
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
                                                                    kvinta_sexta.obarveny_graf_dict, kvinta_sexta.obarveny_graf_colors)
     vsichni.graf_dict = zmergovany_graf_dict
@@ -63,6 +63,8 @@ def main():
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(20, rozvrh.povolene_bloky_seminaru))
 
+
+    vsichni.poradi = oktava.poradi
     # po obarveni pridavam jeste oktavu
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(oktava.graf_dict, oktava.graf_colors,
                                                                    vsichni.obarveny_graf_dict, vsichni.obarveny_graf_colors)

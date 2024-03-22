@@ -1,7 +1,7 @@
 import copy
 
 
-def merge_weighted_graphs(graph1: dict, colors1: dict, graph2: dict, colors2: dict):
+def merge_weighted_graphs(graph2: dict, colors2: dict, graph1: dict, colors1: dict):
     """
     Spojí dva obarvené grafy. Duplicitní vrcholy nahradí vrcholy z grafu 2 (včetně barev).
 
@@ -16,12 +16,14 @@ def merge_weighted_graphs(graph1: dict, colors1: dict, graph2: dict, colors2: di
         dict: Dictionary, kde je pro každý vrchol spojeného grafu jeho barva.
 
     """
+    # graph 1 = graf ktery pridavam do spojeneho - jeste neobarveny
+    # graph 2 = spojeny graf
     merged_graph = copy.deepcopy(graph1)
-    merged_colors = colors1.copy()
+    merged_colors = colors1.copy() #
 
     for node, neighbors in graph2.items():
         if node in merged_graph:
-            if merged_colors[node] == 8 and node in colors2 and colors2[node] in range(1, 8):
+            if merged_colors[node] == 0 and node in colors2 and colors2[node] in range(1, 8):
                 merged_graph[node] = graph2[node]
                 merged_colors[node] = colors2[node]
         else:
@@ -39,5 +41,5 @@ def merge_weighted_graphs(graph1: dict, colors1: dict, graph2: dict, colors2: di
             else:
 
                 merged_graph[node][neighbor]['weight'] = attributes['weight']
-
+    
     return merged_graph, merged_colors
