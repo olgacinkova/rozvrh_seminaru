@@ -1,38 +1,44 @@
 import copy
 
 
-def merge_weighted_graphs(graph2: dict, colors2: dict, graph1: dict, colors1: dict):
+def merge_weighted_graphs(pridavek_graf: dict, pridavek_colors: dict, zaklad_graf: dict, zaklad_colors: dict):
     """
     Spojí dva obarvené grafy. Duplicitní vrcholy nahradí vrcholy z grafu 2 (včetně barev).
 
     Parametry: 
-        graph1 (dict): První graf vyjádřený jako dictionary pomocí nx.to_dict_of_dicts().
-        colors1 (dict): Dictionary, kde je pro každý vrchol prvního grafu jeho barva.
-        graph2 (dict): Druhý graf vyjádřený jako dictionary pomocí nx.to_dict_of_dicts().
-        colors2 (dict): Dictionary, kde je pro každý vrchol druhého grafu jeho barva.
+        pridavek_graf (dict): Pridavny graf vyjádřený jako dictionary pomocí nx.to_dict_of_dicts().
+        pridavek_colors (dict): Dictionary, kde je pro každý vrchol pridavneho grafu jeho barva.
+        zaklad_graf (dict): Zakladni graf vyjádřený jako dictionary pomocí nx.to_dict_of_dicts().
+        zaklad_colors (dict): Dictionary, kde je pro každý vrchol zakladniho grafu jeho barva.
 
     Vrací:
-        dict: Spojený graf ze dvou grafů. 
+        dict: Spojený graf ze dvou grafů - z pridavneho a zakladniho. 
         dict: Dictionary, kde je pro každý vrchol spojeného grafu jeho barva.
 
     """
+
     # graph 1 = graf ktery pridavam do spojeneho - jeste neobarveny
     # graph 2 = spojeny graf
-    merged_graph = copy.deepcopy(graph1)
-    merged_colors = colors1.copy() #
+    """
+    merged_graph = copy.deepcopy(zaklad_graf)
+    merged_colors = zaklad_colors.copy()
 
-    for node, neighbors in graph2.items():
+    for node in pridavek_graf.keys():
+        # pokud je vrchol zaroven v pridavnem i zakladnim grafu
         if node in merged_graph:
-            if merged_colors[node] == 0 and node in colors2 and colors2[node] in range(1, 8):
-                merged_graph[node] = graph2[node]
-                merged_colors[node] = colors2[node]
+            # pokud v zakladnim grafu je vrchol obarveny a pridavnem neni
+            if merged_colors[node] != 0:
+                # obarvim vrchol barvou z zakladniho
+                nova_barva = merged_colors[node]
+                pridavek_graf[node] = nova_barva
+                pridavek_colors[node] = nova_barva
+
+        # pokud vrchol je v pridavnem ale neni v zakladnim
         else:
+            merged_graph[node] = pridavek_graf[node]
+            merged_colors[node] = pridavek_colors[node]
 
-            if node in colors2 and colors2[node] in range(1, 8):
-                merged_graph[node] = graph2[node]
-                merged_colors[node] = colors2[node]
-
-    for node, neighbors in graph2.items():
+    for node, neighbors in pridavek_graf.items():
         if node not in merged_graph:
             continue
         for neighbor, attributes in neighbors.items():
@@ -40,6 +46,33 @@ def merge_weighted_graphs(graph2: dict, colors2: dict, graph1: dict, colors1: di
                 merged_graph[node][neighbor] = attributes
             else:
 
+                merged_graph[node][neighbor]['weight'] = attributes['weight']
+    
+    return merged_graph, merged_colors
+    """
+    # Make a deep copy of the base graph and its colors
+    merged_graph = copy.deepcopy(zaklad_graf)
+    merged_colors = zaklad_colors.copy()
+
+    # Merge nodes and their colors from the additional graph
+    for node, color in pridavek_colors.items():
+        # If the node is already in the merged graph, update its color if it's not zero
+        if node in merged_graph:
+            if color != 0:
+                merged_colors[node] = color
+        # If the node is not in the merged graph, add it along with its color
+        else:
+            merged_graph[node] = pridavek_graf.get(node, {})
+            merged_colors[node] = color
+
+    # Merge edges and their weights from the additional graph
+    for node, neighbors in pridavek_graf.items():
+        for neighbor, attributes in neighbors.items():
+            # If the edge doesn't exist in the merged graph, add it
+            if neighbor not in merged_graph[node]:
+                merged_graph[node][neighbor] = attributes
+            # If the edge exists, update its weight
+            else:
                 merged_graph[node][neighbor]['weight'] = attributes['weight']
     
     return merged_graph, merged_colors
