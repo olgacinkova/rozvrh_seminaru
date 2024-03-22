@@ -285,9 +285,8 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
 
             neighbour_colors = {colors[v] for v in G[u] if v in colors}
             # dictionaty na barvy sousedu aktualniho vrcholu U (vzdy par vrchol:jeho_barva
-            neighbour_colors_dict = {node: color for node, color in zip(G[u],
-                                                                        neighbour_colors) if node in colors}
-
+            #neighbour_colors_dict = {node: color for node, color in zip(G[u], neighbour_colors) if node in colors}
+            neighbour_colors_dict = {v: colors[v] for v in G[u] if v in colors}
             # print("barvy sousedu (vzdy par vrchol:jeho_barva) " + str(neighbour_colors_dict))
             # print("povolene barvy " + str(povolene_bloky_seminaru[u]))
             v_povolenych_ne_v_sousedech = povolene_bloky_seminaru[u] - neighbour_colors

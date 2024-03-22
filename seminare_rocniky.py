@@ -48,16 +48,16 @@ class Seminar:
         row = df[df['id'] == id_seminare]
         if row['pro5'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(5)  # kvinta
-            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
         if row['pro6'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(6)  # sexta
-            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
         if row['pro7'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(7)  # septima
-            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
         if row['pro8'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(8)  # oktáva
-            print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
 
     def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani):
         """
@@ -405,8 +405,8 @@ class Rocnik:
         graph_coloring = prioritizovane_barveni(
             self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors, poradi=self.poradi)
         self.obarveny_graf_colors = graph_coloring
-        print("obarveno takto:")
-        print(self.obarveny_graf_colors)
+        #print("obarveno takto:")
+        #print(self.obarveny_graf_colors)
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
         node_colors = [graph_color_to_mpl_color[graph_coloring[n]]
@@ -423,7 +423,7 @@ class Rocnik:
             nejmensi = serazene_hrany.pop(0)  # hrana s nejmensi hodnotou
             pocet_odstranenych_hran += 1
             celkova_hodnota_odstanenych_hran += nejmensi[2]['weight']
-            print("aktualne nejmene hodnotna hrana: " + str(nejmensi))
+            #print("aktualne nejmene hodnotna hrana: " + str(nejmensi))
             if nejmensi[2]['weight'] == 100:
                 print("tady, uz bychom odstranovali profesory - koncim barveni")
                 break
@@ -431,8 +431,8 @@ class Rocnik:
             graph_coloring = prioritizovane_barveni(
                 self.obarveny_graf, povolene_bloky_seminaru, colors=self.obarveny_graf_colors)
             self.obarveny_graf_colors = graph_coloring
-            print("barvim znovu")
-            print(self.obarveny_graf_colors)
+            #print("barvim znovu")
+            #print(self.obarveny_graf_colors)
             unique_colors = set(graph_coloring.values())
             graph_color_to_mpl_color = dict(
                 zip(unique_colors, mpl.TABLEAU_COLORS))
@@ -443,7 +443,7 @@ class Rocnik:
             labels = {e: self.obarveny_graf.edges[e]['weight']
                       for e in self.obarveny_graf.edges}
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
-        print(f"pouzili jsme {chrom} barev")
-        print(f"při barvení grafu pro {self.__kolikaty[0]} bylo odstraneno {pocet_odstranenych_hran} hran")
-        print(f"celkova hodnota odstanenych hran: {celkova_hodnota_odstanenych_hran}")
+        #print(f"pouzili jsme {chrom} barev")
+        #print(f"při barvení grafu pro {self.__kolikaty[0]} bylo odstraneno {pocet_odstranenych_hran} hran")
+        #print(f"celkova hodnota odstanenych hran: {celkova_hodnota_odstanenych_hran}")
         return node_colors, labels

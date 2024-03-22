@@ -11,7 +11,7 @@ def main():
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
     id_vsech_seminaru = nacti_id_vsech_seminaru("ocislovane_seminare_kolize.csv")
     id_vsech_ucitelu = nacti_id_vsech_ucitelu("ocislovane_seminare_kolize.csv")
-    print(f"id_vsech_ucitelu: {id_vsech_ucitelu}")
+    #print(f"id_vsech_ucitelu: {id_vsech_ucitelu}")
     ucitele_seminaru = nacti_ucitele_seminaru("ocislovane_seminare_kolize.csv")
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik("ocislovane_seminare_kolize.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
@@ -22,7 +22,7 @@ def main():
     for e in vsechny_seminare:
         e.uloz_data_pro_seminar(
             "ocislovane_zapsani.csv", "ocislovane_seminare_kolize.csv", id_vsech_ucitelu)
-    print(vsechny_seminare[0].vrat_id)
+    #print(vsechny_seminare[0].vrat_id)
 
     # instance: jednotlive rocniky
     #kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
@@ -31,8 +31,8 @@ def main():
                                       seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     kvinta_sexta.zobraz_graf()
     kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
-    #kvinta_sexta.zobraz_obarveny_graf(
-    #    *kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)) # meli by se vejit do dvou bloku
+    kvinta_sexta.zobraz_obarveny_graf(
+        *kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)) # meli by se vejit do dvou bloku
     septima = Rocnik(7)
 
     septima.uloz_data_pro_rocnik(
@@ -74,7 +74,11 @@ def main():
     print("posledni obarveni")
     print(vsichni.obarveny_graf_dict)
     print(vsichni.obarveny_graf_colors)
+    colors_set = set(vsichni.obarveny_graf_colors.values())
 
+    # Calculate the length of the set
+    pocet_barev = len(colors_set)
+    print(f"pocet bloku je {pocet_barev}")
     uloz_do_csv(vsichni.obarveny_graf_colors, "vystup.csv")
     return
 
