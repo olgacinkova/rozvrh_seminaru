@@ -5,6 +5,8 @@ from tvorba_rozvrhu import *
 from spojovani_grafu import *
 from uloz_do_csv import *
 from networkx import greedy_color
+# to importuju kvuli konci kodu
+from collections import defaultdict
 
 def main():
     zaci_seminaru = nacti_zaky_seminaru("ocislovane_zapsani.csv")
@@ -73,13 +75,21 @@ def main():
 
     print("posledni obarveni")
     print(vsichni.obarveny_graf_dict)
-    print(vsichni.obarveny_graf_colors)
-    colors_set = set(vsichni.obarveny_graf_colors.values())
+    print(f"pary seminar:blok {vsichni.obarveny_graf_colors}")
 
-    # Calculate the length of the set
+    # kolik jsme pouzili barev - resp. na kolik je to bloku
+    colors_set = set(vsichni.obarveny_graf_colors.values())
     pocet_barev = len(colors_set)
     print(f"pocet bloku je {pocet_barev}")
     uloz_do_csv(vsichni.obarveny_graf_colors, "vystup.csv")
+
+    # nasledujici kod jen tiskne na terminal pro lepsi pochopeni
+    # tiskne dictionary rozvrh_dict, kde je jako key vzdy blok a jako value mnozina seminare, ktere v danem bloku jsou
+    color_dict = defaultdict(set)
+    for id, color in vsichni.obarveny_graf_colors.items():
+        color_dict[color].add(id)
+    print(f"zde dictionary, kde je vzdy blok a mnozina jeho seminaru: {color_dict}")
+
     return
 
 
