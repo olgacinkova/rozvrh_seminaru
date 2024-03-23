@@ -8,6 +8,16 @@ from networkx import greedy_color
 # to importuju kvuli konci kodu
 from collections import defaultdict
 
+
+def pocty(barvy):
+    pocitadlo = {} 
+    for barva in barvy:
+        if barva in pocitadlo:
+            pocitadlo[barva]+=1
+        else:
+            pocitadlo[barva] = 1
+    print(pocitadlo)
+
 def main():
     zaci_seminaru = nacti_zaky_seminaru("ocislovane_zapsani.csv")
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
@@ -53,6 +63,7 @@ def main():
     #    *oktava.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
+    pozadovany_pocet_bloku = 8
     vsichni = Rocnik(0)
     vsichni.poradi = septima.poradi
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
@@ -61,7 +72,7 @@ def main():
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(8, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(pozadovany_pocet_bloku, rozvrh.povolene_bloky_seminaru))
 
 
     vsichni.poradi = oktava.poradi
@@ -73,7 +84,7 @@ def main():
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(8, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(pozadovany_pocet_bloku, rozvrh.povolene_bloky_seminaru))
 
     print("posledni obarveni")
     #print(vsichni.obarveny_graf_dict)
@@ -81,6 +92,7 @@ def main():
 
     # kolik jsme pouzili barev - resp. na kolik je to bloku
     colors_set = set(vsichni.obarveny_graf_colors.values())
+    pocty(vsichni.obarveny_graf_colors.values())
     pocet_barev = len(colors_set)
     print(f"pocet bloku je {pocet_barev}")
     uloz_do_csv(vsichni.obarveny_graf_colors, "vystup.csv")
