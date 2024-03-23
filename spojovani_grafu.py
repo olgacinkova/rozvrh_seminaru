@@ -28,6 +28,7 @@ def merge_weighted_graphs(pridavek_graf: dict, pridavek_colors: dict, zaklad_gra
             merged_graph[node] = pridavek_graf[node]
             #merged_colors[node] = 0
 
+    print(f"kolik jsem pridala vrcholu: {len(merged_graph.keys())-len(zaklad_graf.keys())}")
     return merged_graph, merged_colors
 
 
