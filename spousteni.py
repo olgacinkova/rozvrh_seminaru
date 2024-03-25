@@ -75,7 +75,7 @@ def main():
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(7, rozvrh.povolene_bloky_seminaru))
 
 
     vsichni.poradi = oktava.poradi
@@ -87,7 +87,7 @@ def main():
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(7, rozvrh.povolene_bloky_seminaru))
 
     print("posledni obarveni")
     #print(vsichni.obarveny_graf_dict)

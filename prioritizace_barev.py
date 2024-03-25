@@ -344,9 +344,9 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                         neighbour_colors.remove(neighbour_colors_dict[hrana[1]])
                         del neighbour_colors_dict[hrana[1]]
                         barva_smazana = True
-                    breakpoint()
+                    #breakpoint()
                 
-                breakpoint()
+                #breakpoint()
                 print("uaaa")
 
 
