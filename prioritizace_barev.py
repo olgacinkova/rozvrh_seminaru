@@ -312,7 +312,8 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                 barva_hrany = neighbour_colors_dict[vrchol_kam_hrana_vede]
                 barvy_vahy_celkem[barva_hrany] += vahy_sousednich_hran[hrana]
             barvy_vahy_celkem_serazene_barvy = sorted(barvy_vahy_celkem, key=lambda x: barvy_vahy_celkem[x])# barvy serazene od nejmene hodnotne podle hodnot jejich hran
-
+            print(f"barvy_vahy_celkem_serazene_barvy {barvy_vahy_celkem_serazene_barvy}")
+            print(f"barvy_vahy_celkem {barvy_vahy_celkem}")
 
             if (len(v_povolenych_ne_v_sousedech)) == 0:
                 # pokud vsechny povolene barvy nevyplacali sousedi
@@ -320,7 +321,7 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                 # pokud je takovy vrchol V jen jeden, smazu mezi V a U hranu
                 # pokud je vrcholu V vic, musim najit ten s nejlehci hranou.
                 
-                breakpoint()
+                #breakpoint()
                 nejmene_hodnotna_barva = barvy_vahy_celkem_serazene_barvy.pop(0)
                 vrcholy_kam_vedou_hrany_nejmene_hodnotne_barvy = []
                 for vrchol in neighbour_colors_dict.keys():
@@ -329,18 +330,24 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                 hrany_na_odstraneni = [] # hrany nejmene hodnotne barvy - odstranime je
                 for vrchol in vrcholy_kam_vedou_hrany_nejmene_hodnotne_barvy:
                     hrany_na_odstraneni.append((u, vrchol))
+                print(f"hrany_na_odstraneni {hrany_na_odstraneni}")
 
                 # ted ty hrany konecne odstranim
+                barva_smazana = False
                 for hrana in hrany_na_odstraneni:
                     G.remove_edge(hrana[0], hrana[1])
                     print(
                         f"ODSTRANENA HRANA {hrana} s hodnotou {vahy_sousednich_hran[hrana]}")
-                    if (hrana[1] in neighbour_colors_dict) and (hrana[1] in neighbour_colors):
+                    # nasledujici je nutne udelat jen jednou
+                    if barva_smazana == False:
+                        print("mazu barvu z evidence")
                         neighbour_colors.remove(neighbour_colors_dict[hrana[1]])
                         del neighbour_colors_dict[hrana[1]]
+                        barva_smazana = True
                     breakpoint()
+                
                 breakpoint()
-
+                print("uaaa")
 
 
 
@@ -369,7 +376,9 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
 
             # Find the first unused color.
             # for color in itertools.count(1)
+
             for color in itertools.cycle(poradi):
+                print("barvim")
                 if (color not in neighbour_colors_dict.values()) and (color in povolene_bloky_seminaru[u]):
                     break
             # Assign the new color to the current node.
