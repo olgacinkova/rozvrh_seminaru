@@ -314,14 +314,37 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
             barvy_vahy_celkem_serazene_barvy = sorted(barvy_vahy_celkem, key=lambda x: barvy_vahy_celkem[x])# barvy serazene od nejmene hodnotne podle hodnot jejich hran
 
 
-            while (len(v_povolenych_ne_v_sousedech)) == 0:
+            if (len(v_povolenych_ne_v_sousedech)) == 0:
                 # pokud vsechny povolene barvy nevyplacali sousedi
                 # najdi v sousedech vrchol V ktery ma nejakou z povolenych barev U
                 # pokud je takovy vrchol V jen jeden, smazu mezi V a U hranu
                 # pokud je vrcholu V vic, musim najit ten s nejlehci hranou.
                 
                 breakpoint()
+                nejmene_hodnotna_barva = barvy_vahy_celkem_serazene_barvy.pop(0)
+                vrcholy_kam_vedou_hrany_nejmene_hodnotne_barvy = []
+                for vrchol in neighbour_colors_dict.keys():
+                    if neighbour_colors_dict[vrchol] == nejmene_hodnotna_barva:
+                        vrcholy_kam_vedou_hrany_nejmene_hodnotne_barvy.append(vrchol)
+                hrany_na_odstraneni = [] # hrany nejmene hodnotne barvy - odstranime je
+                for vrchol in vrcholy_kam_vedou_hrany_nejmene_hodnotne_barvy:
+                    hrany_na_odstraneni.append((u, vrchol))
 
+                # ted ty hrany konecne odstranim
+                for hrana in hrany_na_odstraneni:
+                    G.remove_edge(hrana[0], hrana[1])
+                    print(
+                        f"ODSTRANENA HRANA {hrana} s hodnotou {vahy_sousednich_hran[hrana]}")
+                    if (hrana[1] in neighbour_colors_dict) and (hrana[1] in neighbour_colors):
+                        neighbour_colors.remove(neighbour_colors_dict[hrana[1]])
+                        del neighbour_colors_dict[hrana[1]]
+                    breakpoint()
+                breakpoint()
+
+
+
+
+                """
                 hrana_k_odstraneni = None
                 hodnota_hrany = None
                 #breakpoint()
@@ -341,6 +364,7 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                 del neighbour_colors_dict[hrana_k_odstraneni[1]]
                 v_povolenych_ne_v_sousedech = povolene_bloky_seminaru[u] - neighbour_colors
                 #breakpoint()
+                """
                 
 
             # Find the first unused color.
