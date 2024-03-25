@@ -444,6 +444,6 @@ class Rocnik:
                       for e in self.obarveny_graf.edges}
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
         #print(f"pouzili jsme {chrom} barev")
-        #print(f"při barvení grafu pro {self.__kolikaty[0]} bylo odstraneno {pocet_odstranenych_hran} hran")
-        #print(f"celkova hodnota odstanenych hran: {celkova_hodnota_odstanenych_hran}")
+        print(f"při barvení grafu pro {self.__kolikaty[0]} bylo odstraneno {pocet_odstranenych_hran} hran")
+        print(f"celkova hodnota odstanenych hran: {celkova_hodnota_odstanenych_hran}")
         return node_colors, labels
