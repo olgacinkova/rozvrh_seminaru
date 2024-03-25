@@ -7,6 +7,7 @@ from uloz_do_csv import *
 from networkx import greedy_color
 # to importuju kvuli konci kodu
 from collections import defaultdict
+from ocislovani import modify_id_column
 
 
 def pocty(barvy):
@@ -26,6 +27,8 @@ def main():
     #print(f"id_vsech_ucitelu: {id_vsech_ucitelu}")
     ucitele_seminaru = nacti_ucitele_seminaru("ocislovane_seminare_kolize.csv")
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik("ocislovane_seminare_kolize.csv")
+    # správně očísluju vstupní tabulky
+    modify_id_column("seminare_kolize.csv", "zapsani.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
     rozvrh = Rozvrh()
     rozvrh.nacti_povolene_bloky_seminaru("ocislovane_seminare_kolize.csv")
@@ -72,7 +75,7 @@ def main():
     vsichni.graf = nx.from_dict_of_dicts(zmergovany_graf_dict)
     vsichni.graf_colors = zmergovane_barvy
     vsichni.zobraz_obarveny_graf(
-        *vsichni.obarvi_graf_lip(7, rozvrh.povolene_bloky_seminaru))
+        *vsichni.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
 
 
     vsichni.poradi = oktava.poradi

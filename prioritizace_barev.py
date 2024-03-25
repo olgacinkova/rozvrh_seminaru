@@ -274,7 +274,7 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
 
     nodes = strategy(G, colors)
     for u in nodes:
-        #print("aktualni vrchol " + str(u))
+        print("aktualni vrchol " + str(u))
         if u not in colors:
             if u not in povolene_bloky_seminaru.keys():
                 # pokud neni v tabulce pozadavku ucitelu, dam k nemu, ze muze byt ve vsech blocich
@@ -290,9 +290,10 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
             # print("barvy sousedu (vzdy par vrchol:jeho_barva) " + str(neighbour_colors_dict))
             # print("povolene barvy " + str(povolene_bloky_seminaru[u]))
             v_povolenych_ne_v_sousedech = povolene_bloky_seminaru[u] - neighbour_colors
+            
+
             # vahy sousednich hran: dict, kde je vzdy hrana z vrcholu U do jeho souseda a jeji vaha
             vahy_sousednich_hran = dict()
-
             for v in neighbour_colors_dict.keys():  # pro vrchol v sousedech
                 hrana = (u, v)
                 # data o barve i ohodnoceni hrany mezi u a v
@@ -303,14 +304,27 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
             # abych pak odebirala ty s mensimi hodnotami
             serazene_vahy_sousednich_hran = dict(
                 sorted(vahy_sousednich_hran.items(), key=lambda item: item[1]))
+            barvy_vahy_celkem = dict() # vzdy barva a celkova hodnota vah hran ktere jsou ji obarvene
+            for barva in neighbour_colors:
+                barvy_vahy_celkem[barva] = 0
+            for hrana in vahy_sousednich_hran.keys():
+                vrchol_kam_hrana_vede = hrana[1]
+                barva_hrany = neighbour_colors_dict[vrchol_kam_hrana_vede]
+                barvy_vahy_celkem[barva_hrany] += vahy_sousednich_hran[hrana]
+            barvy_vahy_celkem_serazene_barvy = sorted(barvy_vahy_celkem, key=lambda x: barvy_vahy_celkem[x])# barvy serazene od nejmene hodnotne podle hodnot jejich hran
 
-            if (len(v_povolenych_ne_v_sousedech)) == 0:
+
+            while (len(v_povolenych_ne_v_sousedech)) == 0:
                 # pokud vsechny povolene barvy nevyplacali sousedi
                 # najdi v sousedech vrchol V ktery ma nejakou z povolenych barev U
                 # pokud je takovy vrchol V jen jeden, smazu mezi V a U hranu
                 # pokud je vrcholu V vic, musim najit ten s nejlehci hranou.
+                
+                breakpoint()
+
                 hrana_k_odstraneni = None
                 hodnota_hrany = None
+                #breakpoint()
                 for hrana in serazene_vahy_sousednich_hran.keys():
                     v = hrana[1]  # sousedni vrchol
                     # pokud je barva sousedniho vrcholu stejna jako nejaka z povolenych barev u
@@ -322,8 +336,12 @@ def prioritizovane_barveni(G, povolene_bloky_seminaru, strategy='largest_first',
                 G.remove_edge(hrana_k_odstraneni[0], hrana_k_odstraneni[1])
                 print(
                     f"ODSTRANENA HRANA {hrana_k_odstraneni[0]} a {hrana_k_odstraneni[1]} s hodnotou {hodnota_hrany}")
-                # neighbour_colors.remove(neighbour_colors_dict[hrana_k_odstraneni[1]])
+                #breakpoint()
+                neighbour_colors.remove(neighbour_colors_dict[hrana_k_odstraneni[1]])
                 del neighbour_colors_dict[hrana_k_odstraneni[1]]
+                v_povolenych_ne_v_sousedech = povolene_bloky_seminaru[u] - neighbour_colors
+                #breakpoint()
+                
 
             # Find the first unused color.
             # for color in itertools.count(1)

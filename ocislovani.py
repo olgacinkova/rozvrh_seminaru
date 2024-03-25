@@ -33,4 +33,4 @@ def modify_id_column(seminare_kolize, zapsani) -> None:
                     writer.writerow(row)
 
 
-modify_id_column("seminare_kolize.csv", "zapsani.csv")
+
