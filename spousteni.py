@@ -11,22 +11,24 @@ from ocislovani import modify_id_column
 
 
 def pocty(barvy):
-    pocitadlo = {} 
+    pocitadlo = {}
     for barva in barvy:
         if barva in pocitadlo:
-            pocitadlo[barva]+=1
+            pocitadlo[barva] += 1
         else:
             pocitadlo[barva] = 1
     print(pocitadlo)
 
+
 def main():
     zaci_seminaru = nacti_zaky_seminaru("ocislovane_zapsani.csv")
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
-    id_vsech_seminaru = nacti_id_vsech_seminaru("ocislovane_seminare_kolize.csv")
+    id_vsech_seminaru = nacti_id_vsech_seminaru(
+        "ocislovane_seminare_kolize.csv")
     id_vsech_ucitelu = nacti_id_vsech_ucitelu("ocislovane_seminare_kolize.csv")
-    #print(f"id_vsech_ucitelu: {id_vsech_ucitelu}")
     ucitele_seminaru = nacti_ucitele_seminaru("ocislovane_seminare_kolize.csv")
-    seminare_rocniky = ktery_seminar_pro_ktery_rocnik("ocislovane_seminare_kolize.csv")
+    seminare_rocniky = ktery_seminar_pro_ktery_rocnik(
+        "ocislovane_seminare_kolize.csv")
     # správně očísluju vstupní tabulky
     modify_id_column("seminare_kolize.csv", "zapsani.csv")
     # instance pro kazdy seminar schovane v listu vsechny_seminare
@@ -37,36 +39,28 @@ def main():
     for e in vsechny_seminare:
         e.uloz_data_pro_seminar(
             "ocislovane_zapsani.csv", "ocislovane_seminare_kolize.csv", id_vsech_ucitelu)
-    #print(vsechny_seminare[0].vrat_id)
+
 
     # instance: jednotlive rocniky
-    #kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
+    # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
     kvinta_sexta = Rocnik([5, 6])
     kvinta_sexta.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                                       seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     kvinta_sexta.zobraz_graf()
-    kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
     kvinta_sexta.zobraz_obarveny_graf(
-        *kvinta_sexta.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)) # meli by se vejit do dvou bloku
+        *kvinta_sexta.obarvi_graf_lip(2, rozvrh.povolene_bloky_seminaru))  # meli by se vejit do dvou bloku
     septima = Rocnik(7)
 
     septima.uloz_data_pro_rocnik(
         zaci_rocniku, zaci_seminaru, seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     septima.zobraz_graf()
-    # septima.obarvi_graf_lip(6, rozvrh.povolene_bloky_seminaru)
-    #septima.zobraz_obarveny_graf(
-    #    *septima.obarvi_graf_lip(5, rozvrh.povolene_bloky_seminaru))
-    
+
     oktava = Rocnik([8])
     oktava.uloz_data_pro_rocnik(zaci_rocniku, zaci_seminaru,
                                 seminare_rocniky, vsechny_seminare, ucitele_seminaru)
     oktava.zobraz_graf()
-    # oktava.obarvi_graf_lip(10, rozvrh.povolene_bloky_seminaru)
-    #oktava.zobraz_obarveny_graf(
-    #    *oktava.obarvi_graf_lip(9, rozvrh.povolene_bloky_seminaru))
     # rozsirovani grafu o jednotlive rocniky a jeho obarvovani
     # chovam se jako by to byl rocnik, ale je to slepeny graf rocniku
-    pozadovany_pocet_bloku = 8
     vsichni = Rocnik(0)
     vsichni.poradi = septima.poradi
     zmergovany_graf_dict, zmergovane_barvy = merge_weighted_graphs(septima.graf_dict, septima.graf_colors,
@@ -76,7 +70,6 @@ def main():
     vsichni.graf_colors = zmergovane_barvy
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(7, rozvrh.povolene_bloky_seminaru))
-
 
     vsichni.poradi = oktava.poradi
     # po obarveni pridavam jeste oktavu
@@ -88,10 +81,6 @@ def main():
     vsichni.graf_colors = zmergovane_barvy
     vsichni.zobraz_obarveny_graf(
         *vsichni.obarvi_graf_lip(7, rozvrh.povolene_bloky_seminaru))
-
-    print("posledni obarveni")
-    #print(vsichni.obarveny_graf_dict)
-    #print(f"pary seminar:blok {vsichni.obarveny_graf_colors}")
 
     # kolik jsme pouzili barev - resp. na kolik je to bloku
     colors_set = set(vsichni.obarveny_graf_colors.values())
@@ -105,7 +94,8 @@ def main():
     color_dict = defaultdict(set)
     for id, color in vsichni.obarveny_graf_colors.items():
         color_dict[color].add(id)
-    print(f"zde dictionary, kde je vzdy blok a mnozina jeho seminaru: {color_dict}")
+    print(
+        f"zde dictionary, kde je vzdy blok a mnozina jeho seminaru: {color_dict}")
 
     return
 

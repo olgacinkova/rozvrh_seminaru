@@ -48,16 +48,15 @@ class Seminar:
         row = df[df['id'] == id_seminare]
         if row['pro5'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(5)  # kvinta
-            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+
         if row['pro6'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(6)  # sexta
-            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+
         if row['pro7'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(7)  # septima
-            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
+
         if row['pro8'].iloc[0] == 1:
             self.pro_ktere_rocniky.add(8)  # oktáva
-            #print(f"seminar {id_seminare} je pro {self.pro_ktere_rocniky}")
 
     def uloz_kteri_zaci_tam_chodi(self, soubor_zapsani):
         """
@@ -171,7 +170,7 @@ class Rocnik:
     def uloz_poradi(self):
         if self.__kolikaty == [5, 6]:  # kvinta a sexta
             self.poradi = [2, 4, 6, 1, 3, 5, 7, 8,
-                            9, 10, 11, 12]  # maji mit dva bloky
+                           9, 10, 11, 12]  # maji mit dva bloky
         elif self.__kolikaty == [7]:  # septima
             self.poradi = [1, 3, 5, 2, 4, 6, 7, 8,
                            9, 10, 11, 12]  # maji mit 5 bloku
@@ -190,7 +189,6 @@ class Rocnik:
             for x in self.__kolikaty:
                 if x in e.pro_ktere_rocniky:
                     self.ucitele = self.ucitele.union(e.kdo_seminar_uci)
-        #print(f"rocnik {self.__kolikaty} ma tyto ucitele {self.ucitele}")
 
     def uloz_id_seminaru_rocniku(self, seminare_rocniky: dict):
         """
@@ -217,24 +215,21 @@ class Rocnik:
         # projdu kazdemu uciteli rocniku jeho mnozinu seminaru
 
         for ucitel, mnozina in self.ucitele_a_jejich_seminare.items():
-            # atribut __kolikaty, ale jako mnozina (set) 
+            # atribut __kolikaty, ale jako mnozina (set)
             kolikaty_set = set()
             for x in self.__kolikaty:
                 kolikaty_set.add(x)
             for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
                 # pokud neni seminar pro dany rocnik/dane rocniky
-                #breakpoint()
+
                 # pokud sdili alespon jeden z danych rocniku
-                #print(f"kolikaty rocnik {kolikaty_set}")
-                #print(f"seminar {konkretni_seminar}")
-                prunik = kolikaty_set.intersection(vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
-                #print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
+
+                prunik = kolikaty_set.intersection(
+                    vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
+
                 if not prunik:
-                    #breakpoint()
+
                     mnozina.remove(konkretni_seminar)
-                    #breakpoint()
-                #print(f"konecna mnozina seminaru {mnozina}")
-        #print(self.ucitele_a_jejich_seminare)
 
     def uloz_zaky_a_jejich_seminare(self, zaci_seminaru, vsechny_seminare):
         """
@@ -252,27 +247,15 @@ class Rocnik:
 
         # projdu kazdemu zakovi rocniku jeho mnozinu seminaru
         for zak, mnozina in self.zaci_a_jejich_seminare.items():
-                kolikaty_set = set()
-                for x in self.__kolikaty:
-                    kolikaty_set.add(x)
-                for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
-                    # pokud je seminar pro dany rocnik
-                                    #breakpoint()
-                    # pokud sdili alespon jeden z danych rocniku
-                    #print(f"kolikaty rocnik {kolikaty_set}")
-                    #print(f"seminar {konkretni_seminar}")
-                    #breakpoint()
-                    prunik = kolikaty_set.intersection(vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
-                    #print(f"pro ktere je rocniky {vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky}")
-                    #breakpoint()
-                    if not prunik:
-                        mnozina.remove(konkretni_seminar)
-                    #print(f"konecna mnozina seminaru {mnozina}")
-        #print(self.zaci_a_jejich_seminare)
-                    
+            kolikaty_set = set()
+            for x in self.__kolikaty:
+                kolikaty_set.add(x)
+            for konkretni_seminar in mnozina.copy():  # pro kazdy seminar v mnozine zkontroluju, zda je pro dany rocnik
+                prunik = kolikaty_set.intersection(
+                    vsechny_seminare[konkretni_seminar-1].pro_ktere_rocniky)
 
-            #breakpoint()
-
+                if not prunik:
+                    mnozina.remove(konkretni_seminar)
 
     def uloz_graf(self):
         """
@@ -380,7 +363,6 @@ class Rocnik:
         self.uloz_zaky_a_jejich_seminare(zaci_seminaru, vsechny_seminare)
         self.uloz_graf()
 
-
     def obarvi_graf_lip(self, B, povolene_bloky_seminaru):
         # B = pozadovany pocet barev
         # obarvím graf
@@ -391,7 +373,6 @@ class Rocnik:
         # pokud odebraná hrana má hodnotu profesora, vratim graf a jeho chrom cislo
 
         # vytvorim seznam hran podle velikosti - zacina hranou s nejmensi hodnotou
-
 
         pocet_odstranenych_hran = 0
         celkova_hodnota_odstanenych_hran = 0
@@ -405,8 +386,7 @@ class Rocnik:
         graph_coloring = prioritizovane_barveni(
             self.obarveny_graf, povolene_bloky_seminaru, colors=self.graf_colors, poradi=self.poradi)
         self.obarveny_graf_colors = graph_coloring
-        #print("obarveno takto:")
-        #print(self.obarveny_graf_colors)
+
         unique_colors = set(graph_coloring.values())
         graph_color_to_mpl_color = dict(zip(unique_colors, mpl.TABLEAU_COLORS))
         node_colors = [graph_color_to_mpl_color[graph_coloring[n]]
@@ -416,14 +396,14 @@ class Rocnik:
         labels = {e: self.obarveny_graf.edges[e]['weight']
                   for e in self.obarveny_graf.edges}
         while chrom > B:
-            print(chrom)
-            #if len(serazene_hrany) == 0:
+
+            # if len(serazene_hrany) == 0:
             #    raise Exception(
             #        "moc malinke pozadovane chromaticke cislo :( to nejde obarvit")
             nejmensi = serazene_hrany.pop(0)  # hrana s nejmensi hodnotou
             pocet_odstranenych_hran += 1
             celkova_hodnota_odstanenych_hran += nejmensi[2]['weight']
-            #print("aktualne nejmene hodnotna hrana: " + str(nejmensi))
+
             if nejmensi[2]['weight'] == 100:
                 print("tady, uz bychom odstranovali profesory - koncim barveni")
                 break
@@ -431,8 +411,6 @@ class Rocnik:
             graph_coloring = prioritizovane_barveni(
                 self.obarveny_graf, povolene_bloky_seminaru, colors=self.obarveny_graf_colors)
             self.obarveny_graf_colors = graph_coloring
-            #print("barvim znovu")
-            #print(self.obarveny_graf_colors)
             unique_colors = set(graph_coloring.values())
             graph_color_to_mpl_color = dict(
                 zip(unique_colors, mpl.TABLEAU_COLORS))
@@ -443,7 +421,8 @@ class Rocnik:
             labels = {e: self.obarveny_graf.edges[e]['weight']
                       for e in self.obarveny_graf.edges}
         self.obarveny_graf_dict = nx.to_dict_of_dicts(self.obarveny_graf)
-        #print(f"pouzili jsme {chrom} barev")
-        print(f"při barvení grafu pro {self.__kolikaty[0]} bylo odstraneno {pocet_odstranenych_hran} hran")
-        print(f"celkova hodnota odstanenych hran: {celkova_hodnota_odstanenych_hran}")
+        print(
+            f"při barvení grafu pro {self.__kolikaty[0]} bylo odstraneno {pocet_odstranenych_hran} hran")
+        print(
+            f"celkova hodnota odstanenych hran: {celkova_hodnota_odstanenych_hran}")
         return node_colors, labels
