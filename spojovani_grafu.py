@@ -27,6 +27,11 @@ def merge_weighted_graphs(pridavek_graf: dict, pridavek_colors: dict, zaklad_gra
         if node not in merged_graph.keys():
             merged_graph[node] = pridavek_graf[node]
             #merged_colors[node] = 0
+    
+    for node, neighbors in pridavek_graf.items():
+        for neighbor, weight in neighbors.items():
+            if neighbor in merged_graph:
+                merged_graph[node][neighbor] = weight
 
     print(f"kolik jsem pridala vrcholu: {len(merged_graph.keys())-len(zaklad_graf.keys())}")
     return merged_graph, merged_colors

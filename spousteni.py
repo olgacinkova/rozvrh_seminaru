@@ -21,16 +21,18 @@ def pocty(barvy):
 
 
 def main():
+    # správně očísluju vstupní tabulky
+    modify_id_column("seminare_kolize.csv", "zapsani.csv")
     zaci_seminaru = nacti_zaky_seminaru("ocislovane_zapsani.csv")
     zaci_rocniku = nacti_zaky_rocniku("zaci.csv")
     id_vsech_seminaru = nacti_id_vsech_seminaru(
         "ocislovane_seminare_kolize.csv")
     id_vsech_ucitelu = nacti_id_vsech_ucitelu("ocislovane_seminare_kolize.csv")
+    # print(f"id_vsech_ucitelu: {id_vsech_ucitelu}")
     ucitele_seminaru = nacti_ucitele_seminaru("ocislovane_seminare_kolize.csv")
     seminare_rocniky = ktery_seminar_pro_ktery_rocnik(
         "ocislovane_seminare_kolize.csv")
-    # správně očísluju vstupní tabulky
-    modify_id_column("seminare_kolize.csv", "zapsani.csv")
+
     # instance pro kazdy seminar schovane v listu vsechny_seminare
     rozvrh = Rozvrh()
     rozvrh.nacti_povolene_bloky_seminaru("ocislovane_seminare_kolize.csv")
@@ -39,7 +41,6 @@ def main():
     for e in vsechny_seminare:
         e.uloz_data_pro_seminar(
             "ocislovane_zapsani.csv", "ocislovane_seminare_kolize.csv", id_vsech_ucitelu)
-
 
     # instance: jednotlive rocniky
     # kvinta a sexta muzou byt jako jedna instance, protoze s nimi manipuluji vzdy zaroven
